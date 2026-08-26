@@ -1,0 +1,275 @@
+<section class="orders-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div class="header-content">
+      <h1>
+        {{ revampFallback().PAGE_HEADER.TITLE }}
+      </h1>
+
+      <p>
+        {{ revampFallback().PAGE_HEADER.DESCRIPTION }}
+      </p>
+    </div>
+
+    <div class="header-actions">
+
+      <button type="button" class="btn btn-secondary">
+        {{ revampFallback().PAGE_HEADER.EXPORT }}
+      </button>
+
+      <button type="button" class="btn btn-primary">
+        {{ revampFallback().PAGE_HEADER.NEW_ORDER }}
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- STATS -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <p class="stat-label">{{ revampFallback().STATS.TOTAL_ORDERS }}</p>
+      <p class="stat-value">{{ totalOrders }}</p>
+    </div>
+
+    <div class="stat-card">
+      <p class="stat-label">{{ revampFallback().STATS.PENDING }}</p>
+      <p class="stat-value stat-pending">{{ pendingCount }}</p>
+    </div>
+
+    <div class="stat-card">
+      <p class="stat-label">{{ revampFallback().STATS.PROCESSING }}</p>
+      <p class="stat-value stat-processing">{{ processingCount }}</p>
+    </div>
+
+    <div class="stat-card">
+      <p class="stat-label">{{ revampFallback().STATS.DELIVERED }}</p>
+      <p class="stat-value stat-delivered">{{ deliveredCount }}</p>
+    </div>
+
+    <div class="stat-card">
+      <p class="stat-label">{{ revampFallback().STATS.REVENUE }}</p>
+      <p class="stat-value">{{ totalRevenue | currency:'INR':'symbol':'1.0-0' }}</p>
+    </div>
+
+  </div>
+
+
+  <!-- TABLE CARD -->
+  <section class="table-card">
+
+    <div class="card-header">
+
+      <div class="header-content">
+        <h2>
+          {{ revampFallback().TABLE.TITLE }}
+        </h2>
+
+        <p>
+          {{ revampFallback().TABLE.DESCRIPTION }}
+        </p>
+      </div>
+
+      <span class="order-count">
+        {{ filteredOrders.length }} Orders
+      </span>
+
+    </div>
+
+
+    <!-- TOOLBAR -->
+    <div class="table-toolbar">
+
+      <div class="search-box">
+        <input
+          type="text"
+          [placeholder]="revampFallback().SEARCH.PLACEHOLDER"
+          (input)="onSearchInput($any($event.target).value)"
+        />
+      </div>
+
+      <select
+        class="status-select"
+        [ngModel]="statusFilter"
+        (ngModelChange)="onStatusChange($event)"
+      >
+        <option
+          *ngFor="let s of revampFallback().TABLE.STATUSES"
+          [value]="s"
+        >
+          {{ s }}
+        </option>
+      </select>
+
+    </div>
+
+
+    <!-- TABLE -->
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>{{ revampFallback().TABLE.HEADERS.ORDER_ID }}</th>
+            <th>{{ revampFallback().TABLE.HEADERS.CUSTOMER }}</th>
+            <th>{{ revampFallback().TABLE.HEADERS.PRODUCT }}</th>
+            <th>{{ revampFallback().TABLE.HEADERS.AMOUNT }}</th>
+            <th>{{ revampFallback().TABLE.HEADERS.DATE }}</th>
+            <th>{{ revampFallback().TABLE.HEADERS.STATUS }}</th>
+            <th>{{ revampFallback().TABLE.HEADERS.ACTIONS }}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="let order of pagedOrders; trackBy: trackByOrder"
+          >
+
+            <td class="order-id">
+              {{ order?.id }}
+            </td>
+
+            <td>
+              <div class="customer-cell">
+                <span class="customer-name">{{ order?.customerName }}</span>
+                <span class="customer-email">{{ order?.customerEmail }}</span>
+              </div>
+            </td>
+
+            <td>
+              <div class="product-cell">
+
+                <span class="product-icon">
+                  {{ getIcon(order?.product ?? '') }}
+                </span>
+
+                <span>
+                  {{ order?.product }}
+                  <span class="items-count" *ngIf="(order?.itemsCount ?? 0) > 1">
+                    +{{ (order?.itemsCount ?? 1) - 1 }} more
+                  </span>
+                </span>
+
+              </div>
+            </td>
+
+            <td class="amount-cell">
+              {{ order?.amount | currency:'INR':'symbol':'1.0-0' }}
+            </td>
+
+            <td class="date-cell">
+              {{ order?.date | date:'dd MMM y' }}
+            </td>
+
+            <td>
+              <span
+                class="status"
+                [ngClass]="statusClass(order?.status)"
+              >
+                {{ order?.status }}
+              </span>
+            </td>
+
+            <td class="actions-cell">
+
+              <button
+                type="button"
+                class="action-btn view-btn"
+                [attr.aria-label]="revampFallback().ACTIONS.VIEW"
+                (click)="viewOrder(order)"
+              >
+                👁
+              </button>
+
+              <button
+                type="button"
+                class="action-btn edit-btn"
+                [attr.aria-label]="revampFallback().ACTIONS.EDIT"
+              >
+                ✏️
+              </button>
+
+              <button
+                type="button"
+                class="action-btn delete-btn"
+                [attr.aria-label]="revampFallback().ACTIONS.DELETE"
+              >
+                🗑
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+      <!-- EMPTY STATE -->
+      <div
+        class="empty-state"
+        *ngIf="!pagedOrders.length"
+      >
+
+        <div class="empty-icon">
+          📦
+        </div>
+
+        <h3>
+          {{ revampFallback().EMPTY_STATE.TITLE }}
+        </h3>
+
+        <p>
+          {{ revampFallback().EMPTY_STATE.DESCRIPTION }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER / PAGINATION -->
+    <div class="table-footer">
+
+      <p class="results-count">
+        Showing {{ pagedOrders.length }} of {{ filteredOrders.length }} orders
+      </p>
+
+      <div class="pagination">
+
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)"
+        >
+          Prev
+        </button>
+
+        <span class="page-info">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
+
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="currentPage === totalPages"
+          (click)="goToPage(currentPage + 1)"
+        >
+          Next
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
