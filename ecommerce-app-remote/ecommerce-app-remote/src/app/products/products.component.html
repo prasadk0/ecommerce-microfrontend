@@ -1,0 +1,181 @@
+<section class="products-card">
+
+  <!-- HEADER -->
+  <div class="card-header">
+    <div class="header-content">
+      <h2>
+        {{ revampFallback().TABLE.TITLE }}
+      </h2>
+
+      <p>
+        {{ revampFallback().TABLE.DESCRIPTION }}
+      </p>
+    </div>
+
+    <span class="product-count">
+      {{ revampFallback().TABLE.PRODUCTS.length }} Products
+    </span>
+  </div>
+
+
+  <!-- PRODUCTS GRID -->
+  <div class="products-grid">
+
+    <article
+      class="product-card"
+      *ngFor="let product of revampFallback().TABLE.PRODUCTS; trackBy: trackByProduct"
+    >
+
+      <!-- TOP -->
+      <div class="product-top">
+
+        <div class="product-icon">
+          {{ product?.icon }}
+        </div>
+
+        <div class="product-actions">
+
+          <button
+            type="button"
+            class="action-btn view-btn"
+            [attr.aria-label]="revampFallback().ACTIONS.VIEW"
+          >
+            👁
+          </button>
+
+          <button
+            type="button"
+            class="action-btn edit-btn"
+            [attr.aria-label]="revampFallback().ACTIONS.EDIT"
+          >
+            ✏️
+          </button>
+
+          <button
+            type="button"
+            class="action-btn delete-btn"
+            [attr.aria-label]="revampFallback().ACTIONS.DELETE"
+          >
+            🗑
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- PRODUCT NAME -->
+      <div class="product-details">
+
+        <h3>
+          {{ product?.name }}
+        </h3>
+
+        <p>
+          {{ product?.description }}
+        </p>
+
+      </div>
+
+
+      <!-- CATEGORY -->
+      <div class="category-row">
+
+        <span class="label">
+          {{ revampFallback().TABLE.HEADERS.CATEGORY }}
+        </span>
+
+        <span class="category">
+          {{ product?.category }}
+        </span>
+
+      </div>
+
+
+      <!-- PRICE / STOCK -->
+      <div class="product-stats">
+
+        <div class="stat">
+
+          <span class="label">
+            {{ revampFallback().TABLE.HEADERS.PRICE }}
+          </span>
+
+          <strong class="price">
+            {{ product?.price }}
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span class="label">
+            {{ revampFallback().TABLE.HEADERS.STOCK }}
+          </span>
+
+          <span
+            class="stock"
+            [ngClass]="{
+              'low-stock':
+                (product?.stock ?? 0) > 0 &&
+                (product?.stock ?? 0) <= 20,
+
+              'out-stock':
+                (product?.stock ?? 0) === 0
+            }"
+          >
+            {{ product?.stock }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- STATUS -->
+      <div class="status-row">
+
+        <span class="label">
+          {{ revampFallback().TABLE.HEADERS.STATUS }}
+        </span>
+
+        <span
+          class="status"
+          [ngClass]="
+            product?.status
+              ?.toLowerCase()
+              ?.replace(' ', '-')
+          "
+        >
+          {{ product?.status }}
+        </span>
+
+      </div>
+
+    </article>
+
+
+    <!-- EMPTY STATE -->
+    <div
+      class="empty-state"
+      *ngIf="!revampFallback().TABLE.PRODUCTS.length"
+    >
+
+      <div class="empty-icon">
+        📦
+      </div>
+
+      <h3>
+        {{ revampFallback().EMPTY_STATE.TITLE }}
+      </h3>
+
+      <p>
+        {{ revampFallback().EMPTY_STATE.DESCRIPTION }}
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
