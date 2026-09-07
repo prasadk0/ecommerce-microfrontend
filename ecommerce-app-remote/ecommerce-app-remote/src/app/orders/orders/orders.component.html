@@ -85,22 +85,12 @@
     <div class="table-toolbar">
 
       <div class="search-box">
-        <input
-          type="text"
-          [placeholder]="revampFallback().SEARCH.PLACEHOLDER"
-          (input)="onSearchInput($any($event.target).value)"
-        />
+        <input type="text" [placeholder]="revampFallback().SEARCH.PLACEHOLDER"
+          (input)="onSearchInput($any($event.target).value)" />
       </div>
 
-      <select
-        class="status-select"
-        [ngModel]="statusFilter"
-        (ngModelChange)="onStatusChange($event)"
-      >
-        <option
-          *ngFor="let s of revampFallback().TABLE.STATUSES"
-          [value]="s"
-        >
+      <select class="status-select" [ngModel]="statusFilter" (ngModelChange)="onStatusChange($event)">
+        <option *ngFor="let s of revampFallback().TABLE.STATUSES" [value]="s">
           {{ s }}
         </option>
       </select>
@@ -127,9 +117,7 @@
 
         <tbody>
 
-          <tr
-            *ngFor="let order of pagedOrders; trackBy: trackByOrder"
-          >
+          <tr *ngFor="let order of pagedOrders; trackBy: trackByOrder">
 
             <td class="order-id">
               {{ order?.id }}
@@ -168,41 +156,28 @@
             </td>
 
             <td>
-              <span
-                class="status"
-                [ngClass]="statusClass(order?.status)"
-              >
+              <span class="status" [ngClass]="statusClass(order?.status)">
                 {{ order?.status }}
               </span>
             </td>
 
             <td class="actions-cell">
+              <div class="actions-wrapper">
 
-              <button
-                type="button"
-                class="action-btn view-btn"
-                [attr.aria-label]="revampFallback().ACTIONS.VIEW"
-                (click)="viewOrder(order)"
-              >
-                👁
-              </button>
+                <button type="button" class="action-btn view-btn" [attr.aria-label]="revampFallback().ACTIONS.VIEW"
+                  (click)="viewOrder(order)">
+                  👁
+                </button>
 
-              <button
-                type="button"
-                class="action-btn edit-btn"
-                [attr.aria-label]="revampFallback().ACTIONS.EDIT"
-              >
-                ✏️
-              </button>
+                <button type="button" class="action-btn edit-btn" [attr.aria-label]="revampFallback().ACTIONS.EDIT">
+                  ✏️
+                </button>
 
-              <button
-                type="button"
-                class="action-btn delete-btn"
-                [attr.aria-label]="revampFallback().ACTIONS.DELETE"
-              >
-                🗑
-              </button>
+                <button type="button" class="action-btn delete-btn" [attr.aria-label]="revampFallback().ACTIONS.DELETE">
+                  🗑
+                </button>
 
+              </div>
             </td>
 
           </tr>
@@ -213,10 +188,7 @@
 
 
       <!-- EMPTY STATE -->
-      <div
-        class="empty-state"
-        *ngIf="!pagedOrders.length"
-      >
+      <div class="empty-state" *ngIf="!pagedOrders.length">
 
         <div class="empty-icon">
           📦
@@ -244,12 +216,7 @@
 
       <div class="pagination">
 
-        <button
-          type="button"
-          class="page-btn"
-          [disabled]="currentPage === 1"
-          (click)="goToPage(currentPage - 1)"
-        >
+        <button type="button" class="page-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
           Prev
         </button>
 
@@ -257,12 +224,8 @@
           Page {{ currentPage }} of {{ totalPages }}
         </span>
 
-        <button
-          type="button"
-          class="page-btn"
-          [disabled]="currentPage === totalPages"
-          (click)="goToPage(currentPage + 1)"
-        >
+        <button type="button" class="page-btn" [disabled]="currentPage === totalPages"
+          (click)="goToPage(currentPage + 1)">
           Next
         </button>
 
