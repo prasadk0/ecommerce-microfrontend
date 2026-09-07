@@ -12,6 +12,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './profile/profile.component';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { LoaderComponent } from './loader/loader.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { DialogModule } from 'primeng/dialog';
+import { CarouselModule } from 'primeng/carousel';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,13 +25,17 @@ import { LoaderComponent } from './loader/loader.component';
     LoginComponent,
     SignupComponent,
     ProfileComponent,
-    LoaderComponent
+    LoaderComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DialogModule,
+    CarouselModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {

@@ -1,7 +1,9 @@
 <section class="products-card">
 
   <!-- HEADER -->
-  <div class="card-header">
+
+  <div class="card-header" >
+
     <div class="header-content">
       <h2>
         {{ revampFallback().TABLE.TITLE }}
@@ -23,7 +25,10 @@
 
     <article
       class="product-card"
-      *ngFor="let product of revampFallback().TABLE.PRODUCTS; trackBy: trackByProduct"
+      *ngFor="
+        let product of revampFallback().TABLE.PRODUCTS;
+        trackBy: trackByProduct"
+       (click)="viewProduct(product)"
     >
 
       <!-- TOP -->
@@ -39,24 +44,27 @@
             type="button"
             class="action-btn view-btn"
             [attr.aria-label]="revampFallback().ACTIONS.VIEW"
+            [title]="revampFallback().ACTIONS.VIEW"
           >
-            👁
+            <i class="pi pi-eye"></i>
           </button>
 
           <button
             type="button"
             class="action-btn edit-btn"
             [attr.aria-label]="revampFallback().ACTIONS.EDIT"
+            [title]="revampFallback().ACTIONS.EDIT"
           >
-            ✏️
+            <i class="pi pi-pencil"></i>
           </button>
 
           <button
             type="button"
             class="action-btn delete-btn"
             [attr.aria-label]="revampFallback().ACTIONS.DELETE"
+            [title]="revampFallback().ACTIONS.DELETE"
           >
-            🗑
+            <i class="pi pi-trash"></i>
           </button>
 
         </div>
@@ -163,7 +171,7 @@
     >
 
       <div class="empty-icon">
-        📦
+        <i class="pi pi-inbox"></i>
       </div>
 
       <h3>

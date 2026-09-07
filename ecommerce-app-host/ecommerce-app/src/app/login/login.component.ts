@@ -56,7 +56,7 @@ export class LoginComponent {
             // );
 
             this.authService.saveToken(response.token)
-            this.router.navigate(['/']);
+            this.router.navigate(['/welcome']);
 
           }),
 

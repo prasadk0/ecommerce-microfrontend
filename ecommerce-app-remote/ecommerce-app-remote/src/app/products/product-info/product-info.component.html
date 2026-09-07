@@ -1,0 +1,244 @@
+<section class="product-info-page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goBack()">
+
+      <i class="pi pi-arrow-left"></i>
+      <span>Back to Products</span>
+
+    </button>
+
+    <div class="header-title">
+      <span>Products</span>
+      <i class="pi pi-angle-right"></i>
+      <strong>Product Details</strong>
+    </div>
+
+  </div>
+
+
+  <!-- PRODUCT DETAILS -->
+  <div *ngIf="product" class="product-details">
+
+
+    <!-- =========================
+         IMAGE SECTION
+    ========================== -->
+
+    <div class="product-images">
+
+      <div class="main-image-container"
+           #mainImageContainer
+           (mouseenter)="onImageMouseEnter()"
+           (mouseleave)="onImageMouseLeave()"
+           (mousemove)="onImageMouseMove($event)">
+
+        <img
+          class="main-product-image"
+          [src]="product.images[currentImageIndex]"
+          [alt]="product.name"
+        />
+
+        <!-- ZOOM LENS (tracks the cursor over the image) -->
+        <div
+          *ngIf="showZoom"
+          class="zoom-lens"
+          [ngStyle]="lensStyle">
+        </div>
+
+        <!-- Previous -->
+        <button
+          type="button"
+          class="carousel-btn previous"
+          (click)="previousImage()">
+
+          <i class="pi pi-chevron-left"></i>
+
+        </button>
+
+
+        <!-- Next -->
+        <button
+          type="button"
+          class="carousel-btn next"
+          (click)="nextImage()">
+
+          <i class="pi pi-chevron-right"></i>
+
+        </button>
+
+
+        <!-- Counter -->
+        <div class="image-counter">
+          {{ currentImageIndex + 1 }} / {{ product.images.length }}
+        </div>
+
+        <!-- ZOOM RESULT (Amazon-style side preview panel) -->
+        <div
+          *ngIf="showZoom"
+          class="zoom-result"
+          [ngStyle]="zoomResultStyle">
+        </div>
+
+      </div>
+
+
+      <!-- THUMBNAILS -->
+
+      <div class="carousel-thumbnails">
+
+        <button
+          type="button"
+          *ngFor="let image of product.images; let i = index"
+          class="thumbnail"
+          [class.active]="i === currentImageIndex"
+          (click)="selectImage(i)">
+
+          <img
+            [src]="image"
+            [alt]="product.name"
+          />
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         PRODUCT INFORMATION
+    ========================== -->
+
+    <div class="product-content">
+
+      <!-- Product heading -->
+
+      <div class="product-heading">
+
+        <div>
+
+          <h1>{{ product.name }}</h1>
+
+          <p class="product-id">
+            Product ID: #{{ product.id }}
+          </p>
+
+        </div>
+
+        <span class="status-badge">
+          <span class="status-dot"></span>
+          {{ product.status }}
+        </span>
+
+      </div>
+
+
+      <!-- Description -->
+
+      <p class="description">
+        {{ product.description }}
+      </p>
+
+
+      <!-- Price -->
+
+      <div class="price-section">
+
+        <span class="price-label">
+          Price
+        </span>
+
+        <strong class="price">
+          ₹{{ product.price | number }}
+        </strong>
+
+      </div>
+
+
+      <!-- Information -->
+
+      <div class="product-info-grid">
+
+        <div class="info-item">
+
+          <div class="info-icon">
+            <i class="pi pi-tag"></i>
+          </div>
+
+          <div>
+            <span>Category</span>
+            <strong>{{ product.category }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <div class="info-icon">
+            <i class="pi pi-box"></i>
+          </div>
+
+          <div>
+            <span>Stock</span>
+            <strong>{{ product.stock }} units</strong>
+          </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <div class="info-icon">
+            <i class="pi pi-check-circle"></i>
+          </div>
+
+          <div>
+            <span>Status</span>
+            <strong>{{ product.status }}</strong>
+          </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <div class="info-icon">
+            <i class="pi pi-hashtag"></i>
+          </div>
+
+          <div>
+            <span>Product ID</span>
+            <strong>#{{ product.id }}</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- NOT FOUND -->
+
+  <div *ngIf="!product" class="not-found">
+
+    <i class="pi pi-exclamation-circle"></i>
+
+    <h2>Product Not Found</h2>
+
+    <p>
+      No product exists with this ID.
+    </p>
+
+  </div>
+
+</section>

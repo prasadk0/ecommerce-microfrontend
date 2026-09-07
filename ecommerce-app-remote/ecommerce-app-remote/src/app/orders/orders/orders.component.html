@@ -16,10 +16,12 @@
     <div class="header-actions">
 
       <button type="button" class="btn btn-secondary">
+        <i class="pi pi-download"></i>
         {{ revampFallback().PAGE_HEADER.EXPORT }}
       </button>
 
       <button type="button" class="btn btn-primary">
+        <i class="pi pi-plus"></i>
         {{ revampFallback().PAGE_HEADER.NEW_ORDER }}
       </button>
 
@@ -32,28 +34,50 @@
   <div class="stats-grid">
 
     <div class="stat-card">
-      <p class="stat-label">{{ revampFallback().STATS.TOTAL_ORDERS }}</p>
-      <p class="stat-value">{{ totalOrders }}</p>
+      <p class="stat-label">
+        {{ revampFallback().STATS.TOTAL_ORDERS }}
+      </p>
+      <p class="stat-value">
+        {{ totalOrders }}
+      </p>
     </div>
 
     <div class="stat-card">
-      <p class="stat-label">{{ revampFallback().STATS.PENDING }}</p>
-      <p class="stat-value stat-pending">{{ pendingCount }}</p>
+      <p class="stat-label">
+        {{ revampFallback().STATS.PENDING }}
+      </p>
+      <p class="stat-value stat-pending">
+        {{ pendingCount }}
+      </p>
     </div>
 
     <div class="stat-card">
-      <p class="stat-label">{{ revampFallback().STATS.PROCESSING }}</p>
-      <p class="stat-value stat-processing">{{ processingCount }}</p>
+      <p class="stat-label">
+        {{ revampFallback().STATS.PROCESSING }}
+      </p>
+      <p class="stat-value stat-processing">
+        {{ processingCount }}
+      </p>
     </div>
 
     <div class="stat-card">
-      <p class="stat-label">{{ revampFallback().STATS.DELIVERED }}</p>
-      <p class="stat-value stat-delivered">{{ deliveredCount }}</p>
+      <p class="stat-label">
+        {{ revampFallback().STATS.DELIVERED }}
+      </p>
+
+      <p class="stat-value stat-delivered">
+        {{ deliveredCount }}
+      </p>
     </div>
 
     <div class="stat-card">
-      <p class="stat-label">{{ revampFallback().STATS.REVENUE }}</p>
-      <p class="stat-value">{{ totalRevenue | currency:'INR':'symbol':'1.0-0' }}</p>
+      <p class="stat-label">
+        {{ revampFallback().STATS.REVENUE }}
+      </p>
+
+      <p class="stat-value">
+        {{ totalRevenue | currency:'INR':'symbol':'1.0-0' }}
+      </p>
     </div>
 
   </div>
@@ -85,12 +109,20 @@
     <div class="table-toolbar">
 
       <div class="search-box">
-        <input type="text" [placeholder]="revampFallback().SEARCH.PLACEHOLDER"
+        <i class="pi pi-search search-icon"></i>
+        <input
+          type="text"
+          [placeholder]="revampFallback().SEARCH.PLACEHOLDER"
           (input)="onSearchInput($any($event.target).value)" />
       </div>
 
-      <select class="status-select" [ngModel]="statusFilter" (ngModelChange)="onStatusChange($event)">
-        <option *ngFor="let s of revampFallback().TABLE.STATUSES" [value]="s">
+      <select
+        class="status-select"
+        [ngModel]="statusFilter"
+        (ngModelChange)="onStatusChange($event)">
+        <option
+          *ngFor="let s of revampFallback().TABLE.STATUSES"
+          [value]="s">
           {{ s }}
         </option>
       </select>
@@ -105,19 +137,34 @@
 
         <thead>
           <tr>
-            <th>{{ revampFallback().TABLE.HEADERS.ORDER_ID }}</th>
-            <th>{{ revampFallback().TABLE.HEADERS.CUSTOMER }}</th>
-            <th>{{ revampFallback().TABLE.HEADERS.PRODUCT }}</th>
-            <th>{{ revampFallback().TABLE.HEADERS.AMOUNT }}</th>
-            <th>{{ revampFallback().TABLE.HEADERS.DATE }}</th>
-            <th>{{ revampFallback().TABLE.HEADERS.STATUS }}</th>
-            <th>{{ revampFallback().TABLE.HEADERS.ACTIONS }}</th>
+            <th>
+              {{ revampFallback().TABLE.HEADERS.ORDER_ID }}
+            </th>
+            <th>
+              {{ revampFallback().TABLE.HEADERS.CUSTOMER }}
+            </th>
+            <th>
+              {{ revampFallback().TABLE.HEADERS.PRODUCT }}
+            </th>
+            <th>
+              {{ revampFallback().TABLE.HEADERS.AMOUNT }}
+            </th>
+            <th>
+              {{ revampFallback().TABLE.HEADERS.DATE }}
+            </th>
+            <th>
+              {{ revampFallback().TABLE.HEADERS.STATUS }}
+            </th>
+            <th>
+              {{ revampFallback().TABLE.HEADERS.ACTIONS }}
+            </th>
           </tr>
         </thead>
 
         <tbody>
 
-          <tr *ngFor="let order of pagedOrders; trackBy: trackByOrder">
+          <tr
+            *ngFor="let order of pagedOrders; trackBy: trackByOrder">
 
             <td class="order-id">
               {{ order?.id }}
@@ -125,8 +172,12 @@
 
             <td>
               <div class="customer-cell">
-                <span class="customer-name">{{ order?.customerName }}</span>
-                <span class="customer-email">{{ order?.customerEmail }}</span>
+                <span class="customer-name">
+                  {{ order?.customerName }}
+                </span>
+                <span class="customer-email">
+                  {{ order?.customerEmail }}
+                </span>
               </div>
             </td>
 
@@ -139,7 +190,9 @@
 
                 <span>
                   {{ order?.product }}
-                  <span class="items-count" *ngIf="(order?.itemsCount ?? 0) > 1">
+                  <span
+                    class="items-count"
+                    *ngIf="(order?.itemsCount ?? 0) > 1">
                     +{{ (order?.itemsCount ?? 1) - 1 }} more
                   </span>
                 </span>
@@ -156,7 +209,10 @@
             </td>
 
             <td>
-              <span class="status" [ngClass]="statusClass(order?.status)">
+              <span
+                class="status"
+                [ngClass]="statusClass(order?.status)">
+
                 {{ order?.status }}
               </span>
             </td>
@@ -164,17 +220,33 @@
             <td class="actions-cell">
               <div class="actions-wrapper">
 
-                <button type="button" class="action-btn view-btn" [attr.aria-label]="revampFallback().ACTIONS.VIEW"
+                <button
+                  type="button"
+                  class="action-btn view-btn"
+                  [attr.aria-label]="revampFallback().ACTIONS.VIEW"
+                  [title]="revampFallback().ACTIONS.VIEW"
                   (click)="viewOrder(order)">
-                  👁
+
+                  <i class="pi pi-eye"></i>
+
                 </button>
 
-                <button type="button" class="action-btn edit-btn" [attr.aria-label]="revampFallback().ACTIONS.EDIT">
-                  ✏️
+                <button
+                  type="button"
+                  class="action-btn edit-btn"
+                  [attr.aria-label]="revampFallback().ACTIONS.EDIT"
+                  [title]="revampFallback().ACTIONS.EDIT">
+                  <i class="pi pi-pencil"></i>
+
                 </button>
 
-                <button type="button" class="action-btn delete-btn" [attr.aria-label]="revampFallback().ACTIONS.DELETE">
-                  🗑
+                <button
+                  type="button"
+                  class="action-btn delete-btn"
+                  [attr.aria-label]="revampFallback().ACTIONS.DELETE"
+                  [title]="revampFallback().ACTIONS.DELETE">
+                  <i class="pi pi-trash"></i>
+
                 </button>
 
               </div>
@@ -188,10 +260,12 @@
 
 
       <!-- EMPTY STATE -->
-      <div class="empty-state" *ngIf="!pagedOrders.length">
+      <div
+        class="empty-state"
+        *ngIf="!pagedOrders.length">
 
         <div class="empty-icon">
-          📦
+          <i class="pi pi-inbox"></i>
         </div>
 
         <h3>
@@ -215,8 +289,13 @@
       </p>
 
       <div class="pagination">
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)">
 
-        <button type="button" class="page-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+          <i class="pi pi-chevron-left"></i>
           Prev
         </button>
 
@@ -224,9 +303,13 @@
           Page {{ currentPage }} of {{ totalPages }}
         </span>
 
-        <button type="button" class="page-btn" [disabled]="currentPage === totalPages"
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="currentPage === totalPages"
           (click)="goToPage(currentPage + 1)">
           Next
+          <i class="pi pi-chevron-right"></i>
         </button>
 
       </div>

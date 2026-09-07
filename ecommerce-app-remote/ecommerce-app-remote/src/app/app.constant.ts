@@ -33,62 +33,68 @@ export const PRODUCTS_CONSTANTS = {
       ACTIONS: 'Actions'
     },
 
-    PRODUCTS: [
-      {
-        name: 'Wireless Headphones',
-        description: 'Premium wireless headphones',
-        category: 'Electronics',
-        price: '₹2,499',
-        stock: 128,
-        status: 'In Stock',
-        icon: '🎧'
-      },
-      {
-        name: 'Smart Watch',
-        description: 'Advanced fitness smart watch',
-        category: 'Electronics',
-        price: '₹4,999',
-        stock: 96,
-        status: 'In Stock',
-        icon: '⌚'
-      },
-      {
-        name: 'Laptop Stand',
-        description: 'Adjustable aluminum laptop stand',
-        category: 'Accessories',
-        price: '₹1,799',
-        stock: 82,
-        status: 'In Stock',
-        icon: '💻'
-      },
-      {
-        name: 'Bluetooth Speaker',
-        description: 'Portable wireless speaker',
-        category: 'Electronics',
-        price: '₹1,899',
-        stock: 74,
-        status: 'In Stock',
-        icon: '🔊'
-      },
-      {
-        name: 'USB-C Hub',
-        description: 'Multi-port USB-C adapter',
-        category: 'Accessories',
-        price: '₹1,299',
-        stock: 12,
-        status: 'Low Stock',
-        icon: '🔌'
-      },
-      {
-        name: 'Gaming Mouse',
-        description: 'High precision gaming mouse',
-        category: 'Gaming',
-        price: '₹1,599',
-        stock: 0,
-        status: 'Out of Stock',
-        icon: '🖱️'
-      }
-    ]
+   PRODUCTS: [
+  {
+    id: 1,
+    name: 'Wireless Headphones',
+    description: 'Premium wireless headphones',
+    category: 'Electronics',
+    price: '₹2,499',
+    stock: 128,
+    status: 'In Stock',
+    icon: '🎧'
+  },
+  {
+    id: 2,
+    name: 'Smart Watch',
+    description: 'Advanced fitness smart watch',
+    category: 'Electronics',
+    price: '₹4,999',
+    stock: 96,
+    status: 'In Stock',
+    icon: '⌚'
+  },
+  {
+    id: 3,
+    name: 'Laptop Stand',
+    description: 'Adjustable aluminum laptop stand',
+    category: 'Accessories',
+    price: '₹1,799',
+    stock: 82,
+    status: 'In Stock',
+    icon: '💻'
+  },
+  {
+    id: 4,
+    name: 'Bluetooth Speaker',
+    description: 'Portable wireless speaker',
+    category: 'Electronics',
+    price: '₹1,899',
+    stock: 74,
+    status: 'In Stock',
+    icon: '🔊'
+  },
+  {
+    id: 5,
+    name: 'USB-C Hub',
+    description: 'Multi-port USB-C adapter',
+    category: 'Accessories',
+    price: '₹1,299',
+    stock: 12,
+    status: 'Low Stock',
+    icon: '🔌'
+  },
+  {
+    id: 6,
+    name: 'Gaming Mouse',
+    description: 'High precision gaming mouse',
+    category: 'Gaming',
+    price: '₹1,599',
+    stock: 0,
+    status: 'Out of Stock',
+    icon: '🖱️'
+  }
+]
   },
 
   ACTIONS: {
@@ -126,7 +132,7 @@ export const ORDERS_CONSTANTS = {
     TITLE: 'Orders',
     DESCRIPTION: 'Manage and track customer orders',
     EXPORT: 'Export',
-    NEW_ORDER: '+ New Order'
+    NEW_ORDER: 'New Order'
   },
 
   SEARCH: {

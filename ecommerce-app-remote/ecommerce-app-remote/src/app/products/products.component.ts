@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 
 import { PRODUCTS_CONSTANTS } from '../app.constant';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -13,6 +14,13 @@ import { PRODUCTS_CONSTANTS } from '../app.constant';
 })
 export class ProductsComponent {
 
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+viewProduct(product: any): void {
+  this.router.navigate([product.id], {
+  relativeTo: this.route
+});
+}
   revampFallback() {
     return PRODUCTS_CONSTANTS;
   }

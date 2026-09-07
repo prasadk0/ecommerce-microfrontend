@@ -432,3 +432,26 @@ tbody tr:hover {
     box-shadow: 0 5px 12px rgba(220, 38, 38, 0.3);
   }
 }
+
+.search-box {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.search-box input {
+  padding-left: 38px;
+}
+
+.btn,
+.action-btn,
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
