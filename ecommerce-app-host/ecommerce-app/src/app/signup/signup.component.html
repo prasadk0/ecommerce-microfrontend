@@ -1,0 +1,156 @@
+<div class="signup-page">
+
+  <div class="signup-container">
+
+    <section class="signup-header">
+
+      <h1>
+        {{ revampFallback().PAGE_TITLE }}
+      </h1>
+
+      <p>
+        {{ revampFallback().PAGE_SUBTITLE }}
+      </p>
+
+    </section>
+
+    <form
+      #signupForm="ngForm"
+      (ngSubmit)="onSignup()"
+      class="signup-form"
+    >
+
+      <!-- Full Name -->
+      <div class="form-group">
+
+        <label for="fullName">
+          {{ revampFallback().FULL_NAME_LABEL }}
+        </label>
+
+        <input
+          id="fullName"
+          type="text"
+          name="fullName"
+          [(ngModel)]="signupData.fullName"
+          [placeholder]="revampFallback().FULL_NAME_PLACEHOLDER"
+          required
+        />
+
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+
+        <label for="username">
+          {{ revampFallback().USERNAME_LABEL }}
+        </label>
+
+        <input
+          id="username"
+          type="text"
+          name="username"
+          [(ngModel)]="signupData.username"
+          [placeholder]="revampFallback().USERNAME_PLACEHOLDER"
+          required
+        />
+
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+
+        <label for="email">
+          {{ revampFallback().EMAIL_LABEL }}
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="signupData.email"
+          [placeholder]="revampFallback().EMAIL_PLACEHOLDER"
+          required
+        />
+
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+
+        <label for="password">
+          {{ revampFallback().PASSWORD_LABEL }}
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="signupData.password"
+          [placeholder]="revampFallback().PASSWORD_PLACEHOLDER"
+          required
+        />
+
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+
+        <label for="confirmPassword">
+          {{ revampFallback().CONFIRM_PASSWORD_LABEL }}
+        </label>
+
+        <input
+          id="confirmPassword"
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="signupData.confirmPassword"
+          [placeholder]="revampFallback().CONFIRM_PASSWORD_PLACEHOLDER"
+          required
+        />
+
+      </div>
+
+      <!-- Terms -->
+      <div class="terms">
+
+        <input
+          id="terms"
+          type="checkbox"
+          name="terms"
+          [(ngModel)]="signupData.terms"
+          required
+        />
+
+        <label for="terms">
+          {{ revampFallback().TERMS_TEXT }}
+        </label>
+
+      </div>
+
+      <!-- Signup Button -->
+      <button
+        type="submit"
+        class="signup-btn"
+        [disabled]="!signupForm.valid"
+      >
+        {{ revampFallback().SIGNUP_BUTTON }}
+      </button>
+
+      <!-- Sign In -->
+      <div class="signin-link">
+
+        <span>
+          {{ revampFallback().ALREADY_HAVE_ACCOUNT }}
+        </span>
+
+        <a routerLink="/login">
+          {{ revampFallback().SIGN_IN }}
+        </a>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

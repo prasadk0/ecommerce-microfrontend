@@ -4,7 +4,6 @@ export const NAVBAR_FALLBACK = {
     'home': 'Home',
     'products': 'Products',
     'orders': 'Orders',
-    'data-generator': 'Test Data',
     'notifications': 'Notifications',
     'profile': 'Profile',
     'logout': 'Logout'
@@ -186,3 +185,103 @@ export const HOME_CONSTANTS = {
   }
 
 };
+
+export const SIGNUP_CONSTANTS = {
+  PAGE_TITLE: 'Create Account',
+  PAGE_SUBTITLE: 'Enter your details to create your account',
+
+  FULL_NAME_LABEL: 'Full Name',
+  FULL_NAME_PLACEHOLDER: 'Enter your full name',
+
+  EMAIL_LABEL: 'Email Address',
+  EMAIL_PLACEHOLDER: 'Enter your email',
+
+  PASSWORD_LABEL: 'Password',
+  PASSWORD_PLACEHOLDER: 'Create a password',
+
+  CONFIRM_PASSWORD_LABEL: 'Confirm Password',
+  CONFIRM_PASSWORD_PLACEHOLDER: 'Confirm your password',
+
+  TERMS_TEXT: 'I agree to the Terms & Conditions',
+
+  SIGNUP_BUTTON: 'Create Account',
+
+  ALREADY_HAVE_ACCOUNT: 'Already have an account?',
+  SIGN_IN: 'Sign In',
+
+  PASSWORD_NOT_MATCH: 'Passwords do not match',
+  USERNAME_LABEL: 'Username',
+  USERNAME_PLACEHOLDER: 'Enter your username',
+};
+
+export const LOGIN_CONSTANTS = {
+  PAGE_TITLE: 'Welcome Back',
+  PAGE_SUBTITLE: 'Sign in to continue to your account',
+
+  EMAIL_LABEL: 'Username',
+  EMAIL_PLACEHOLDER: 'Enter your username',
+
+  PASSWORD_LABEL: 'Password',
+  PASSWORD_PLACEHOLDER: 'Enter your password',
+
+  REMEMBER_ME: 'Remember me',
+
+  FORGOT_PASSWORD: 'Forgot Password?',
+
+  LOGIN_BUTTON: 'Sign In',
+
+  DONT_HAVE_ACCOUNT: "Don't have an account?",
+  SIGN_UP: 'Sign Up',
+
+  LOGIN_SUCCESS: 'Login successful',
+  LOGIN_FAILED: 'Invalid email or password'
+};
+
+
+export const PROFILE_FALLBACK = {
+
+  PAGE_HEADER: {
+    TITLE: 'My Profile',
+    DESCRIPTION: 'Manage your personal information and account settings.'
+  },
+
+  PROFILE: {
+    STATUS: 'Active'
+  },
+
+  PERSONAL_INFO: {
+    TITLE: 'Personal Information',
+    DESCRIPTION: 'View and update your personal details.'
+  },
+
+  FIELDS: {
+    NAME: 'Full Name',
+    EMAIL: 'Email Address',
+    PHONE: 'Phone Number',
+    ROLE: 'Role',
+    MEMBER_SINCE: 'Member Since',
+    LOCATION: 'Location'
+  },
+
+  SECURITY: {
+    TITLE: 'Security',
+    DESCRIPTION: 'Manage your account security and login settings.',
+
+    PASSWORD_TITLE: 'Password',
+    PASSWORD_DESCRIPTION: 'Keep your account secure with a strong password.',
+
+    LOGIN_TITLE: 'Login Security',
+    LOGIN_DESCRIPTION: 'Your account is protected by authentication.',
+
+    ENABLED: 'Enabled'
+  },
+
+  BUTTONS: {
+    EDIT: 'Edit Profile',
+    SAVE: 'Save Changes',
+    CANCEL: 'Cancel',
+    CHANGE_PASSWORD: 'Change Password'
+  }
+
+};
+

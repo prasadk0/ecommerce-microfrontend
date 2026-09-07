@@ -16,7 +16,7 @@ export class NavbarComponent {
 
   isMenuOpen = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
@@ -27,8 +27,9 @@ export class NavbarComponent {
   }
 
   logout(): void {
-    this.closeMenu();
-    this.router.navigate(['/']);
+    this.isMenuOpen = false;
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   revampFallback() {

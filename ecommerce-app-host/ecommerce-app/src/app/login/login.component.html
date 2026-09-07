@@ -1,0 +1,137 @@
+<div class="login-page">
+
+  <div class="login-container">
+
+    <!-- Header -->
+    <section class="login-header">
+
+      <div class="logo">
+        <div class="logo-icon">A</div>
+
+        <span>
+          {{ revampFallback().PAGE_TITLE }}
+        </span>
+      </div>
+
+      <div class="header-content">
+
+        <h1>
+          {{ revampFallback().PAGE_TITLE }}
+        </h1>
+
+        <p>
+          {{ revampFallback().PAGE_SUBTITLE }}
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- Login Form -->
+    <form
+      #loginForm="ngForm"
+      (ngSubmit)="onLogin()"
+      class="login-form"
+    >
+
+      <!-- Email -->
+      <div class="form-group">
+
+        <label for="email">
+          {{ revampFallback().EMAIL_LABEL }}
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="loginData.email"
+          [placeholder]="revampFallback().EMAIL_PLACEHOLDER"
+          required
+        />
+
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+
+        <label for="password">
+          {{ revampFallback().PASSWORD_LABEL }}
+        </label>
+
+        <div class="password-wrapper">
+
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="loginData.password"
+            [placeholder]="revampFallback().PASSWORD_PLACEHOLDER"
+            required
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="showPassword = !showPassword"
+          >
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- Remember Me + Forgot Password -->
+      <div class="login-options">
+
+        <label class="remember-me">
+
+          <input
+            type="checkbox"
+            name="rememberMe"
+            [(ngModel)]="loginData.rememberMe"
+          />
+
+          <span>
+            {{ revampFallback().REMEMBER_ME }}
+          </span>
+
+        </label>
+
+        <button
+          type="button"
+          class="forgot-password-btn"
+        >
+          {{ revampFallback().FORGOT_PASSWORD }}
+        </button>
+
+      </div>
+
+      <!-- Login Button -->
+      <button
+        type="submit"
+        class="login-btn"
+        [disabled]="!loginForm.valid"
+      >
+        {{ revampFallback().LOGIN_BUTTON }}
+      </button>
+
+      <!-- Signup -->
+      <div class="signup-link">
+
+        <span>
+          {{ revampFallback().DONT_HAVE_ACCOUNT }}
+        </span>
+
+        <a routerLink="/signup">
+          {{ revampFallback().SIGN_UP }}
+        </a>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

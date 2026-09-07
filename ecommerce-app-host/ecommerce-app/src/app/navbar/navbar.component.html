@@ -1,6 +1,6 @@
 <nav class="navbar">
 
-  <div class="navbar-brand">
+  <div routerLink="/" class="navbar-brand">
 
     <div class="brand-logo">
       EC
@@ -17,12 +17,7 @@
 
   <div class="navbar-menu">
 
-    <a
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="nav-link"
-    >
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
       <span class="nav-icon">⌂</span>
 
       <span>
@@ -31,11 +26,7 @@
     </a>
 
 
-    <a
-      routerLink="/products"
-      routerLinkActive="active"
-      class="nav-link"
-    >
+    <a routerLink="/products" routerLinkActive="active" class="nav-link">
       <span class="nav-icon">▣</span>
 
       <span>
@@ -44,11 +35,7 @@
     </a>
 
 
-    <a
-      routerLink="/orders"
-      routerLinkActive="active"
-      class="nav-link"
-    >
+    <a routerLink="/orders" routerLinkActive="active" class="nav-link">
       <span class="nav-icon">☷</span>
 
       <span>
@@ -57,17 +44,6 @@
     </a>
 
 
-    <a
-      routerLink="/data-generator"
-      routerLinkActive="active"
-      class="nav-link"
-    >
-      <span class="nav-icon">⚙</span>
-
-      <span>
-        {{ revampFallback().navbar['data-generator'] }}
-      </span>
-    </a>
 
   </div>
 
@@ -78,11 +54,7 @@
 
     <!-- Notification -->
 
-    <button
-      type="button"
-      class="notification-btn"
-      [attr.aria-label]="revampFallback().navbar.notifications"
-    >
+    <button type="button" class="notification-btn" [attr.aria-label]="revampFallback().navbar.notifications">
       <span class="notification-icon">♧</span>
 
       <span class="notification-badge">
@@ -104,7 +76,7 @@
         A
       </div>
 
-      <div class="profile-details">
+      <div routerLink="/profile" class="profile-details">
 
         <span class="profile-name">
           Admin
@@ -125,24 +97,15 @@
 
     <!-- Logout -->
 
-    <button
-      type="button"
-      class="logout-btn"
-      (click)="logout()"
-      [attr.aria-label]="revampFallback().navbar.logout"
-    >
+    <button type="button" class="logout-btn" (click)="logout()" [attr.aria-label]="revampFallback().navbar.logout"
+      [title]="revampFallback().navbar.logout">
       ↪
     </button>
 
 
     <!-- Mobile Menu Button -->
 
-    <button
-      type="button"
-      class="mobile-menu-btn"
-      (click)="toggleMenu()"
-      aria-label="Toggle navigation"
-    >
+    <button type="button" class="mobile-menu-btn" (click)="toggleMenu()" aria-label="Toggle navigation">
       <span></span>
       <span></span>
       <span></span>
@@ -155,73 +118,39 @@
 
 <!-- ================= MOBILE MENU ================= -->
 
-<div
-  class="mobile-menu"
-  [class.open]="isMenuOpen"
->
+<div class="mobile-menu" [class.open]="isMenuOpen">
 
-  <a
-    routerLink="/"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-    (click)="closeMenu()"
-  >
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">
     <span>⌂</span>
 
     {{ revampFallback().navbar.home }}
   </a>
 
 
-  <a
-    routerLink="/products"
-    routerLinkActive="active"
-    (click)="closeMenu()"
-  >
+  <a routerLink="/products" routerLinkActive="active" (click)="closeMenu()">
     <span>▣</span>
 
     {{ revampFallback().navbar.products }}
   </a>
 
 
-  <a
-    routerLink="/orders"
-    routerLinkActive="active"
-    (click)="closeMenu()"
-  >
+  <a routerLink="/orders" routerLinkActive="active" (click)="closeMenu()">
     <span>☷</span>
 
     {{ revampFallback().navbar.orders }}
   </a>
 
-
-  <a
-    routerLink="/data-generator"
-    routerLinkActive="active"
-    (click)="closeMenu()"
-  >
-    <span>⚙</span>
-
-    {{ revampFallback().navbar['data-generator'] }}
-  </a>
-
-
   <div class="mobile-divider"></div>
 
 
-  <a
-    routerLink="/profile"
-    (click)="closeMenu()"
-  >
+  <a routerLink="/profile" (click)="closeMenu()">
     <span>♙</span>
 
     Profile
   </a>
 
 
-  <a
-    routerLink="/settings"
-    (click)="closeMenu()"
-  >
+  <a routerLink="/settings" (click)="closeMenu()">
     <span>⚙</span>
 
     Settings
@@ -231,11 +160,7 @@
   <div class="mobile-divider"></div>
 
 
-  <button
-    type="button"
-    class="mobile-logout"
-    (click)="logout()"
-  >
+  <button type="button" class="mobile-logout" (click)="logout()">
     <span>↪</span>
 
     {{ revampFallback().navbar.logout }}

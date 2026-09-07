@@ -2,6 +2,10 @@ import { loadRemoteModule } from '@angular-architects/module-federation';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+import { authGuard } from './guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -12,21 +16,38 @@ const routes: Routes = [
         type: 'module',
         remoteEntry: 'http://localhost:4201/remoteEntry.js',
         exposedModule: './ProductsModule'
-      }).then(m => m.ProductsModule)
+      }).then(m => m.ProductsModule),
+    canActivate: [authGuard]
   }
   ,
-   {
+  {
     path: 'orders',
     loadChildren: () =>
       loadRemoteModule({
         type: 'module',
         remoteEntry: 'http://localhost:4201/remoteEntry.js',
         exposedModule: './OrdersModule'
-      }).then(m => m.OrdersModule)
+      }).then(m => m.OrdersModule),
+    canActivate: [authGuard]
   },
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [authGuard]
+  }
+  ,
+  {
+    path: 'signup',
+    component: SignupComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate:[authGuard]
   }
 ];
 

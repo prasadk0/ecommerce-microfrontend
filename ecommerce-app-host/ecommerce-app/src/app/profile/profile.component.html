@@ -1,0 +1,291 @@
+<section class="profile-page">
+  <!-- ================= PROFILE CONTENT ================= -->
+
+  <div class="profile-container">
+
+    <!-- ================= PROFILE CARD ================= -->
+
+    <div class="profile-card">
+
+      <div class="profile-card-header">
+
+        <div class="profile-avatar-large">
+          A
+        </div>
+
+        <div class="profile-main-info">
+
+          <h2>
+            {{ profile.name }}
+          </h2>
+
+          <span class="profile-role">
+            {{ profile.role }}
+          </span>
+
+          <span class="profile-status">
+            <span class="status-dot"></span>
+            {{ revampFallback().PROFILE.STATUS }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="profile-divider"></div>
+
+
+      <!-- ================= PERSONAL INFORMATION ================= -->
+
+      <div class="section-header">
+
+        <div>
+          <h3>
+            {{ revampFallback().PERSONAL_INFO.TITLE }}
+          </h3>
+
+          <p>
+            {{ revampFallback().PERSONAL_INFO.DESCRIPTION }}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="edit-btn"
+          (click)="toggleEdit()"
+        >
+          {{ isEditing
+            ? revampFallback().BUTTONS.CANCEL
+            : revampFallback().BUTTONS.EDIT
+          }}
+        </button>
+
+      </div>
+
+
+      <div class="profile-grid">
+
+        <!-- Full Name -->
+
+        <div class="info-field">
+
+          <label>
+            {{ revampFallback().FIELDS.NAME }}
+          </label>
+
+          <input
+            *ngIf="isEditing"
+            type="text"
+            [(ngModel)]="profile.name"
+          />
+
+          <span *ngIf="!isEditing">
+            {{ profile.name }}
+          </span>
+
+        </div>
+
+
+        <!-- Email -->
+
+        <div class="info-field">
+
+          <label>
+            {{ revampFallback().FIELDS.EMAIL }}
+          </label>
+
+          <input
+            *ngIf="isEditing"
+            type="email"
+            [(ngModel)]="profile.email"
+          />
+
+          <span *ngIf="!isEditing">
+            {{ profile.email }}
+          </span>
+
+        </div>
+
+
+        <!-- Phone -->
+
+        <div class="info-field">
+
+          <label>
+            {{ revampFallback().FIELDS.PHONE }}
+          </label>
+
+          <input
+            *ngIf="isEditing"
+            type="tel"
+            [(ngModel)]="profile.phone"
+          />
+
+          <span *ngIf="!isEditing">
+            {{ profile.phone }}
+          </span>
+
+        </div>
+
+
+        <!-- Role -->
+
+        <div class="info-field">
+
+          <label>
+            {{ revampFallback().FIELDS.ROLE }}
+          </label>
+
+          <span>
+            {{ profile.role }}
+          </span>
+
+        </div>
+
+
+        <!-- Member Since -->
+
+        <div class="info-field">
+
+          <label>
+            {{ revampFallback().FIELDS.MEMBER_SINCE }}
+          </label>
+
+          <span>
+            {{ profile.memberSince }}
+          </span>
+
+        </div>
+
+
+        <!-- Location -->
+
+        <div class="info-field">
+
+          <label>
+            {{ revampFallback().FIELDS.LOCATION }}
+          </label>
+
+          <input
+            *ngIf="isEditing"
+            type="text"
+            [(ngModel)]="profile.location"
+          />
+
+          <span *ngIf="!isEditing">
+            {{ profile.location }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= SAVE BUTTON ================= -->
+
+      <div
+        class="save-section"
+        *ngIf="isEditing"
+      >
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancelEdit()"
+        >
+          {{ revampFallback().BUTTONS.CANCEL }}
+        </button>
+
+        <button
+          type="button"
+          class="save-btn"
+          (click)="saveProfile()"
+        >
+          {{ revampFallback().BUTTONS.SAVE }}
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= SECURITY CARD ================= -->
+
+    <div class="security-card">
+
+      <div class="section-header">
+
+        <div>
+
+          <h3>
+            {{ revampFallback().SECURITY.TITLE }}
+          </h3>
+
+          <p>
+            {{ revampFallback().SECURITY.DESCRIPTION }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="security-item">
+
+        <div class="security-icon">
+          🔒
+        </div>
+
+        <div class="security-info">
+
+          <strong>
+            {{ revampFallback().SECURITY.PASSWORD_TITLE }}
+          </strong>
+
+          <span>
+            {{ revampFallback().SECURITY.PASSWORD_DESCRIPTION }}
+          </span>
+
+        </div>
+
+        <button
+          type="button"
+          class="security-btn"
+          (click)="changePassword()"
+        >
+          {{ revampFallback().BUTTONS.CHANGE_PASSWORD }}
+        </button>
+
+      </div>
+
+
+      <div class="security-item">
+
+        <div class="security-icon">
+          🛡
+        </div>
+
+        <div class="security-info">
+
+          <strong>
+            {{ revampFallback().SECURITY.LOGIN_TITLE }}
+          </strong>
+
+          <span>
+            {{ revampFallback().SECURITY.LOGIN_DESCRIPTION }}
+          </span>
+
+        </div>
+
+        <span class="enabled-badge">
+          {{ revampFallback().SECURITY.ENABLED }}
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
