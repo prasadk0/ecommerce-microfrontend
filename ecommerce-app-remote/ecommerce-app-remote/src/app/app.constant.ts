@@ -192,3 +192,45 @@ export const ORDERS_CONSTANTS = {
     DESCRIPTION: 'There are no orders matching your search.'
   }
 };
+
+export const NOTIFICATIONS_CONSTANTS = {
+
+  BREADCRUMB: {
+    DASHBOARD: 'Dashboard',
+    NOTIFICATIONS: 'Notifications'
+  },
+
+  PAGE_HEADER: {
+    TITLE: 'Notifications',
+    DESCRIPTION: 'Stay updated with your latest store activities.',
+    MARK_ALL_AS_READ: 'Mark all as read'
+  },
+
+  SUMMARY: {
+    UNREAD: 'Unread',
+    ORDERS: 'Orders',
+    PRODUCTS: 'Products',
+    SYSTEM: 'System'
+  },
+
+  TABS: {
+    ALL: 'All',
+    UNREAD: 'Unread',
+    ORDERS: 'Orders',
+    PRODUCTS: 'Products'
+  },
+
+  TOOLBAR: {
+    FILTER: 'Filter'
+  },
+
+  ACTIONS: {
+    DELETE: 'Delete'
+  },
+
+  EMPTY_STATE: {
+    TITLE: 'No notifications',
+    DESCRIPTION: "You're all caught up. There are no notifications to show."
+  }
+
+};

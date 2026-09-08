@@ -32,6 +32,16 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'notification',
+    loadChildren: () =>
+      loadRemoteModule({
+        type: 'module',
+        remoteEntry: 'http://localhost:4201/remoteEntry.js',
+        exposedModule: './NotificationModule'
+      }).then(m => m.NotificationModule),
+    canActivate: [authGuard]
+  },
+  {
     path: '',
     component: HomeComponent,
     canActivate: [authGuard]

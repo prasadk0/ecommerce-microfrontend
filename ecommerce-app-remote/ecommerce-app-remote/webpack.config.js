@@ -34,6 +34,7 @@ module.exports = {
       exposes: {
         './ProductsModule': './src/app/products/products.module.ts',
         './OrdersModule': './src/app/orders/orders.module.ts',
+         './NotificationModule': './src/app/notification/notification.module.ts',
       },
 
       // For hosts (please adjust)
