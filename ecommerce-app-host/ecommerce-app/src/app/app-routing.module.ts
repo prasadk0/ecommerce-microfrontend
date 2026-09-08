@@ -8,25 +8,81 @@ import { authGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
+// const routes: Routes = [
+//   {
+//     path: 'products',
+
+//     loadChildren: () =>
+//       loadRemoteModule({
+//         type: 'module',
+//         remoteEntry: 'http://localhost:4201/remoteEntry.js',
+//         exposedModule: './ProductsModule'
+//       }).then(m => m.ProductsModule),
+//     canActivate: [authGuard]
+//   }
+//   ,
+//   {
+//     path: 'orders',
+//     loadChildren: () =>
+//       loadRemoteModule({
+//         type: 'module',
+//         remoteEntry: 'http://localhost:4201/remoteEntry.js',
+//         exposedModule: './OrdersModule'
+//       }).then(m => m.OrdersModule),
+//     canActivate: [authGuard]
+//   },
+//   {
+//     path: 'notification',
+//     loadChildren: () =>
+//       loadRemoteModule({
+//         type: 'module',
+//         remoteEntry: 'http://localhost:4201/remoteEntry.js',
+//         exposedModule: './NotificationModule'
+//       }).then(m => m.NotificationModule),
+//     canActivate: [authGuard]
+//   },
+//   {
+//     path: '',
+//     component: HomeComponent,
+//     canActivate: [authGuard]
+//   }
+//   ,
+//   {
+//     path: 'signup',
+//     component: SignupComponent
+//   },
+//   {
+//     path: 'login',
+//     component: LoginComponent
+//   },
+//   {
+//     path: 'profile',
+//     component: ProfileComponent,
+//     canActivate: [authGuard]
+//   },
+//   {
+//     path: 'welcome',
+//     component: WelcomePageComponent
+//   },
+// ];
+
 const routes: Routes = [
   {
     path: 'products',
-
     loadChildren: () =>
       loadRemoteModule({
         type: 'module',
-        remoteEntry: 'http://localhost:4201/remoteEntry.js',
+        remoteEntry: 'https://ecommerce-microfrontend-1.onrender.com/remoteEntry.js',
         exposedModule: './ProductsModule'
       }).then(m => m.ProductsModule),
     canActivate: [authGuard]
-  }
-  ,
+  },
   {
     path: 'orders',
     loadChildren: () =>
       loadRemoteModule({
         type: 'module',
-        remoteEntry: 'http://localhost:4201/remoteEntry.js',
+        remoteEntry: 'https://ecommerce-microfrontend-1.onrender.com/remoteEntry.js',
         exposedModule: './OrdersModule'
       }).then(m => m.OrdersModule),
     canActivate: [authGuard]
@@ -36,17 +92,17 @@ const routes: Routes = [
     loadChildren: () =>
       loadRemoteModule({
         type: 'module',
-        remoteEntry: 'http://localhost:4201/remoteEntry.js',
+        remoteEntry: 'https://ecommerce-microfrontend-1.onrender.com/remoteEntry.js',
         exposedModule: './NotificationModule'
       }).then(m => m.NotificationModule),
     canActivate: [authGuard]
   },
+
   {
     path: '',
     component: HomeComponent,
     canActivate: [authGuard]
-  }
-  ,
+  },
   {
     path: 'signup',
     component: SignupComponent
@@ -63,9 +119,8 @@ const routes: Routes = [
   {
     path: 'welcome',
     component: WelcomePageComponent
-  },
+  }
 ];
-
 
 @NgModule({
   imports: [
