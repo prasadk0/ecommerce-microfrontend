@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Order, OrderStatus } from './order.model';
 import { getProductIcon, ORDERS_CONSTANTS } from 'src/app/app.constant';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-orders',
@@ -135,5 +136,57 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.totalRevenue = this.allOrders
       .filter(o => o.status !== 'Cancelled')
       .reduce((sum, o) => sum + o.amount, 0);
+  }
+
+  exportToExcel(): void {
+    const ordersToExport = this.filteredOrders;
+
+    if (!ordersToExport.length) {
+      alert('No orders available to export.');
+      return;
+    }
+
+    const excelData = ordersToExport.map(order => ({
+      'Order ID': order.id,
+      'Customer Name': order.customerName,
+      'Customer Email': order.customerEmail,
+      'Product': order.product,
+      'Items': order.itemsCount ?? 1,
+      'Amount': order.amount,
+      'Date': order.date,
+      'Status': order.status
+    }));
+
+    const worksheet: XLSX.WorkSheet =
+      XLSX.utils.json_to_sheet(excelData);
+
+    const workbook: XLSX.WorkBook =
+      XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      'Orders'
+    );
+
+    worksheet['!cols'] = [
+      { wch: 15 }, 
+      { wch: 25 }, 
+      { wch: 30 }, 
+      { wch: 25 }, 
+      { wch: 10 }, 
+      { wch: 15 }, 
+      { wch: 18 }, 
+      { wch: 15 }
+    ];
+
+
+    const fileName =
+      `orders-${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(
+      workbook,
+      fileName
+    );
+
   }
 }
