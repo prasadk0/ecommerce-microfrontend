@@ -1,9 +1,13 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component
 } from '@angular/core';
 
 import { Router } from '@angular/router';
+
+import { AuthService } from '../services/auth.service';
+
 import { NAVBAR_FALLBACK } from '../app.constant';
 
 @Component({
@@ -16,7 +20,11 @@ export class NavbarComponent {
 
   isMenuOpen = false;
 
-  constructor(private router: Router) { }
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly cdr: ChangeDetectorRef
+  ) {}
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
@@ -28,7 +36,8 @@ export class NavbarComponent {
 
   logout(): void {
     this.isMenuOpen = false;
-    localStorage.removeItem('token');
+    this.authService.logout();
+    this.cdr.markForCheck();
     this.router.navigate(['/login']);
   }
 

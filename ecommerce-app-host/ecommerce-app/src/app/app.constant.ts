@@ -187,31 +187,117 @@ export const HOME_CONSTANTS = {
 };
 
 export const SIGNUP_CONSTANTS = {
-  PAGE_TITLE: 'Create Account',
-  PAGE_SUBTITLE: 'Enter your details to create your account',
+   PAGE_TITLE: 'Create Account',
+
+  PAGE_SUBTITLE:
+    'Sign up to get started with your account',
 
   FULL_NAME_LABEL: 'Full Name',
-  FULL_NAME_PLACEHOLDER: 'Enter your full name',
 
-  EMAIL_LABEL: 'Email Address',
-  EMAIL_PLACEHOLDER: 'Enter your email',
+  FULL_NAME_PLACEHOLDER:
+    'Enter your full name',
+
+  FULL_NAME_REQUIRED:
+    'Full name is required.',
+
+  FULL_NAME_MIN_LENGTH:
+    'Full name must be at least 3 characters.',
+
+  FULL_NAME_MAX_LENGTH:
+    'Full name cannot exceed 50 characters.',
+
+  FULL_NAME_PATTERN:
+    'Full name can contain only letters and spaces.',
+
+
+  USERNAME_LABEL: 'Username',
+
+  USERNAME_PLACEHOLDER:
+    'Enter your username',
+
+  USERNAME_REQUIRED:
+    'Username is required.',
+
+  USERNAME_MIN_LENGTH:
+    'Username must be at least 3 characters.',
+
+  USERNAME_MAX_LENGTH:
+    'Username cannot exceed 20 characters.',
+
+  USERNAME_PATTERN:
+    'Username can contain letters, numbers and underscore only.',
+
+
+  EMAIL_LABEL: 'Email',
+
+  EMAIL_PLACEHOLDER:
+    'Enter your email',
+
+  EMAIL_REQUIRED:
+    'Email is required.',
+
+  EMAIL_INVALID:
+    'Please enter a valid email address.',
+
 
   PASSWORD_LABEL: 'Password',
-  PASSWORD_PLACEHOLDER: 'Create a password',
 
-  CONFIRM_PASSWORD_LABEL: 'Confirm Password',
-  CONFIRM_PASSWORD_PLACEHOLDER: 'Confirm your password',
+  PASSWORD_PLACEHOLDER:
+    'Enter your password',
 
-  TERMS_TEXT: 'I agree to the Terms & Conditions',
+  PASSWORD_REQUIRED:
+    'Password is required.',
 
-  SIGNUP_BUTTON: 'Create Account',
+  PASSWORD_MIN_LENGTH:
+    'Password must be at least 8 characters.',
 
-  ALREADY_HAVE_ACCOUNT: 'Already have an account?',
-  SIGN_IN: 'Sign In',
+  PASSWORD_MAX_LENGTH:
+    'Password cannot exceed 30 characters.',
 
-  PASSWORD_NOT_MATCH: 'Passwords do not match',
-  USERNAME_LABEL: 'Username',
-  USERNAME_PLACEHOLDER: 'Enter your username',
+  PASSWORD_PATTERN:
+    'Password must contain uppercase, lowercase, number and special character.',
+
+
+  CONFIRM_PASSWORD_LABEL:
+    'Confirm Password',
+
+  CONFIRM_PASSWORD_PLACEHOLDER:
+    'Re-enter your password',
+
+  CONFIRM_PASSWORD_REQUIRED:
+    'Please confirm your password.',
+
+  PASSWORD_NOT_MATCH:
+    'Passwords do not match.',
+
+
+  TERMS_TEXT:
+    'I agree to the Terms and Conditions.',
+
+  TERMS_REQUIRED:
+    'You must accept the Terms and Conditions.',
+
+
+  SIGNUP_BUTTON:
+    'Sign Up',
+
+  ALREADY_HAVE_ACCOUNT:
+    'Already have an account?',
+
+  SIGN_IN:
+    'Sign In',
+
+
+  SHOW_PASSWORD:
+    'Show',
+
+  HIDE_PASSWORD:
+    'Hide',
+
+
+  SIGNUP_FAILED:
+    'Signup failed. Please try again.'
+
 };
 
 export const LOGIN_CONSTANTS = {
