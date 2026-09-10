@@ -1,0 +1,717 @@
+/* =========================================================
+   ADD PRODUCT DIALOG
+========================================================= */
+
+:host ::ng-deep .add-product-dialog {
+  border-radius: 16px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.25);
+}
+
+
+/* =========================================================
+   DIALOG HEADER
+========================================================= */
+
+:host ::ng-deep .add-product-dialog .p-dialog-header {
+  padding: 20px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #eef2f7;
+}
+
+:host ::ng-deep .add-product-dialog .p-dialog-title {
+  color: #111827;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   DIALOG CLOSE BUTTON
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-header
+.p-dialog-header-close {
+  width: 34px !important;
+  height: 34px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: #ffffff !important;
+  border: 1px solid #9ca3af !important;
+  border-radius: 5px !important;
+
+  color: #374151 !important;
+
+  box-shadow: none !important;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/* CLOSE BUTTON HOVER */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-header
+.p-dialog-header-close:hover {
+  background: #f3f4f6 !important;
+  border-color: #6b7280 !important;
+  color: #111827 !important;
+}
+
+
+/* CLOSE BUTTON FOCUS */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-header
+.p-dialog-header-close:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+/* CLOSE ICON */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-header
+.p-dialog-header-close
+.p-dialog-header-close-icon {
+  width: 14px !important;
+  height: 14px !important;
+  font-size: 14px !important;
+}
+
+
+/* =========================================================
+   DIALOG CONTENT
+========================================================= */
+
+:host ::ng-deep .add-product-dialog .p-dialog-content {
+  padding: 24px;
+  background: #ffffff;
+}
+
+.add-product-form {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   FORM FIELD
+========================================================= */
+
+.form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 8px;
+
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TEXT INPUT
+========================================================= */
+
+:host ::ng-deep .add-product-dialog input.p-inputtext {
+  width: 100%;
+  height: 42px;
+
+  padding: 10px 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+
+  color: #111827;
+  background: #ffffff;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+:host ::ng-deep
+.add-product-dialog
+input.p-inputtext:hover {
+  border-color: #9ca3af;
+}
+
+:host ::ng-deep
+.add-product-dialog
+input.p-inputtext:focus {
+  border-color: #4f46e5 !important;
+
+  box-shadow:
+    0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+
+  outline: none;
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+:host ::ng-deep .add-product-dialog textarea.p-inputtextarea {
+  width: 100%;
+  min-height: 100px;
+
+  padding: 10px 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+
+  color: #111827;
+  background: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+
+  resize: vertical;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+:host ::ng-deep
+.add-product-dialog
+textarea.p-inputtextarea:hover {
+  border-color: #9ca3af;
+}
+
+:host ::ng-deep
+.add-product-dialog
+textarea.p-inputtextarea:focus {
+  border-color: #4f46e5 !important;
+
+  box-shadow:
+    0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+
+  outline: none;
+}
+
+
+/* =========================================================
+   PRICE + STOCK
+========================================================= */
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   INPUT NUMBER
+========================================================= */
+
+:host ::ng-deep .add-product-dialog .p-inputnumber {
+  display: flex;
+  width: 100%;
+}
+
+
+/* INPUT NUMBER INPUT */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber
+.p-inputnumber-input {
+  width: 100%;
+  height: 42px;
+
+  box-sizing: border-box;
+
+  padding: 10px 12px;
+
+  border: 1px solid #d1d5db;
+
+  color: #111827;
+  background: #ffffff;
+
+  font-size: 14px;
+}
+
+
+/* INPUT NUMBER FOCUS */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber
+.p-inputnumber-input:focus {
+  border-color: #4f46e5 !important;
+
+  box-shadow:
+    0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+
+  outline: none;
+}
+
+
+/* =========================================================
+   INPUT NUMBER BUTTON CONTAINER
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber
+.p-inputnumber-button {
+  width: 34px !important;
+  height: 21px !important;
+
+  padding: 0 !important;
+
+  background: #f9fafb !important;
+
+  border: 1px solid #d1d5db !important;
+
+  color: #374151 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  box-shadow: none !important;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/* =========================================================
+   INCREMENT BUTTON
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber
+.p-inputnumber-button-up {
+  border-bottom: 0 !important;
+
+  border-top-right-radius: 6px !important;
+}
+
+
+/* =========================================================
+   DECREMENT BUTTON
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber
+.p-inputnumber-button-down {
+  border-top: 0 !important;
+
+  border-bottom-right-radius: 6px !important;
+}
+
+
+/* =========================================================
+   INPUT NUMBER BUTTON HOVER
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber
+.p-inputnumber-button:hover {
+  background: #eef2ff !important;
+
+  color: #4f46e5 !important;
+
+  border-color: #c7d2fe !important;
+}
+
+
+/* =========================================================
+   INPUT NUMBER BUTTON FOCUS
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber
+.p-inputnumber-button:focus {
+  outline: none !important;
+
+  box-shadow: none !important;
+}
+
+
+/* =========================================================
+   INPUT NUMBER ICON
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber
+.p-inputnumber-button
+.p-button-icon {
+  font-size: 11px !important;
+}
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+:host ::ng-deep .add-product-dialog .p-dropdown {
+  width: 100%;
+
+  min-height: 42px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 7px;
+
+  background: #ffffff;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+:host ::ng-deep
+.add-product-dialog
+.p-dropdown:hover {
+  border-color: #9ca3af;
+}
+
+:host ::ng-deep
+.add-product-dialog
+.p-dropdown.p-focus {
+  border-color: #4f46e5 !important;
+
+  box-shadow:
+    0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+}
+
+:host ::ng-deep
+.add-product-dialog
+.p-dropdown-label {
+  display: flex;
+  align-items: center;
+
+  min-height: 42px;
+
+  padding: 0 12px;
+
+  font-size: 14px;
+
+  color: #111827;
+}
+
+:host ::ng-deep
+.add-product-dialog
+.p-dropdown-trigger {
+  width: 40px;
+
+  color: #6b7280;
+}
+
+
+/* =========================================================
+   DIALOG FOOTER
+========================================================= */
+
+:host ::ng-deep .add-product-dialog .p-dialog-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 16px 24px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #eef2f7;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button.add-cancel-btn {
+  height: 42px;
+
+  padding: 0 16px;
+
+  background: #ffffff !important;
+
+  border: 1px solid #9ca3af !important;
+
+  border-radius: 7px !important;
+
+  color: #6b7280 !important;
+
+  font-size: 14px !important;
+
+  font-weight: 600 !important;
+
+  box-shadow: none !important;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/* CANCEL HOVER */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button.add-cancel-btn:hover {
+  background: #f9fafb !important;
+
+  border-color: #6b7280 !important;
+
+  color: #374151 !important;
+}
+
+
+/* CANCEL FOCUS */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button.add-cancel-btn:focus {
+  outline: none !important;
+
+  box-shadow: none !important;
+}
+
+
+/* =========================================================
+   ADD PRODUCT BUTTON
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button.add-save-btn {
+  height: 42px;
+
+  padding: 0 18px;
+
+  background: #4f46e5 !important;
+
+  border: 1px solid #4f46e5 !important;
+
+  border-radius: 7px !important;
+
+  color: #ffffff !important;
+
+  font-size: 14px !important;
+
+  font-weight: 600 !important;
+
+  box-shadow: none !important;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/* SAVE HOVER */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button.add-save-btn:hover {
+  background: #4338ca !important;
+
+  border-color: #4338ca !important;
+
+  color: #ffffff !important;
+}
+
+
+/* SAVE ACTIVE */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button.add-save-btn:active {
+  background: #3730a3 !important;
+
+  border-color: #3730a3 !important;
+}
+
+
+/* SAVE FOCUS */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button.add-save-btn:focus {
+  outline: none !important;
+
+  box-shadow: none !important;
+}
+
+
+/* =========================================================
+   BUTTON ICON
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button
+.p-button-icon {
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTON TEXT
+========================================================= */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dialog-footer
+.p-button
+.p-button-label {
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BACKDROP
+========================================================= */
+
+:host ::ng-deep .p-dialog-mask {
+  background: rgba(15, 23, 42, 0.55);
+
+  backdrop-filter: blur(4px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 576px) {
+
+  :host ::ng-deep .add-product-dialog {
+    width: calc(100vw - 32px) !important;
+
+    max-width: calc(100vw - 32px);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  :host ::ng-deep
+  .add-product-dialog
+  .p-dialog-content {
+    padding: 18px;
+  }
+
+  :host ::ng-deep
+  .add-product-dialog
+  .p-dialog-header {
+    padding: 18px;
+  }
+
+  :host ::ng-deep
+  .add-product-dialog
+  .p-dialog-footer {
+    padding: 14px 18px;
+  }
+}
+
+/* VALIDATION ERROR */
+
+.error-message {
+  display: block;
+  margin-top: 5px;
+  color: #dc2626;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* INVALID INPUT */
+
+:host ::ng-deep
+.add-product-dialog
+input.p-inputtext.ng-invalid.ng-touched,
+:host ::ng-deep
+.add-product-dialog
+textarea.p-inputtextarea.ng-invalid.ng-touched {
+  border-color: #dc2626 !important;
+}
+
+:host ::ng-deep
+.add-product-dialog
+input.p-inputtext.ng-invalid.ng-touched:focus,
+:host ::ng-deep
+.add-product-dialog
+textarea.p-inputtextarea.ng-invalid.ng-touched:focus {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+}
+
+/* INPUT NUMBER INVALID */
+
+:host ::ng-deep
+.add-product-dialog
+.p-inputnumber.ng-invalid.ng-touched
+.p-inputnumber-input {
+  border-color: #dc2626 !important;
+}
+
+/* DROPDOWN INVALID */
+
+:host ::ng-deep
+.add-product-dialog
+.p-dropdown.ng-invalid.ng-touched {
+  border-color: #dc2626 !important;
+}

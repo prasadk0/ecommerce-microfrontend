@@ -319,3 +319,9 @@
   </section>
 
 </section>
+
+<app-order-tracking-dialog
+  [visible]="showOrderTracking"
+  [order]="selectedOrder"
+  (visibleChange)="closeOrderTracking()">
+</app-order-tracking-dialog>

@@ -2,9 +2,10 @@
 
   <!-- HEADER -->
 
-  <div class="card-header" >
+  <div class="card-header">
 
     <div class="header-content">
+
       <h2>
         {{ revampFallback().TABLE.TITLE }}
       </h2>
@@ -12,57 +13,93 @@
       <p>
         {{ revampFallback().TABLE.DESCRIPTION }}
       </p>
+
     </div>
 
-    <span class="product-count">
-      {{ revampFallback().TABLE.PRODUCTS.length }} Products
-    </span>
+    <div class="header-actions">
+
+      <span class="product-count">
+        {{ products.length }} Products
+      </span>
+
+      <!-- ADD PRODUCT -->
+
+      <button
+        type="button"
+        class="add-product-btn"
+        (click)="openAddProduct()"
+      >
+        <i class="pi pi-plus"></i>
+        <span>Add Product</span>
+      </button>
+
+    </div>
+
   </div>
 
 
   <!-- PRODUCTS GRID -->
+
   <div class="products-grid">
 
     <article
       class="product-card"
-      *ngFor="
-        let product of revampFallback().TABLE.PRODUCTS;
-        trackBy: trackByProduct"
-       (click)="viewProduct(product)"
+      *ngFor="let product of products; trackBy: trackByProduct"
+      (click)="viewProduct(product)"
     >
 
       <!-- TOP -->
+
       <div class="product-top">
+
+        <!-- PRODUCT ICON -->
 
         <div class="product-icon">
           {{ product?.icon }}
         </div>
 
-        <div class="product-actions">
+
+        <!-- ACTIONS -->
+
+        <div
+          class="product-actions"
+          (click)="$event.stopPropagation()"
+        >
+
+          <!-- VIEW -->
 
           <button
             type="button"
             class="action-btn view-btn"
             [attr.aria-label]="revampFallback().ACTIONS.VIEW"
             [title]="revampFallback().ACTIONS.VIEW"
+            (click)="viewProduct(product)"
           >
             <i class="pi pi-eye"></i>
           </button>
+
+
+          <!-- EDIT -->
 
           <button
             type="button"
             class="action-btn edit-btn"
             [attr.aria-label]="revampFallback().ACTIONS.EDIT"
             [title]="revampFallback().ACTIONS.EDIT"
+            (click)="editProduct(product)"
           >
             <i class="pi pi-pencil"></i>
           </button>
+
+
+          <!-- DELETE -->
 
           <button
             type="button"
             class="action-btn delete-btn"
             [attr.aria-label]="revampFallback().ACTIONS.DELETE"
             [title]="revampFallback().ACTIONS.DELETE"
+            (click)="deleteProduct(product)"
           >
             <i class="pi pi-trash"></i>
           </button>
@@ -72,7 +109,8 @@
       </div>
 
 
-      <!-- PRODUCT NAME -->
+      <!-- PRODUCT DETAILS -->
+
       <div class="product-details">
 
         <h3>
@@ -87,6 +125,7 @@
 
 
       <!-- CATEGORY -->
+
       <div class="category-row">
 
         <span class="label">
@@ -101,7 +140,10 @@
 
 
       <!-- PRICE / STOCK -->
+
       <div class="product-stats">
+
+        <!-- PRICE -->
 
         <div class="stat">
 
@@ -115,6 +157,8 @@
 
         </div>
 
+
+        <!-- STOCK -->
 
         <div class="stat">
 
@@ -142,6 +186,7 @@
 
 
       <!-- STATUS -->
+
       <div class="status-row">
 
         <span class="label">
@@ -165,9 +210,10 @@
 
 
     <!-- EMPTY STATE -->
+
     <div
       class="empty-state"
-      *ngIf="!revampFallback().TABLE.PRODUCTS.length"
+      *ngIf="!products.length"
     >
 
       <div class="empty-icon">
@@ -187,3 +233,22 @@
   </div>
 
 </section>
+
+
+<!-- EDIT PRODUCT DIALOG -->
+
+<app-edit-product-dialog
+  [visible]="showEditDialog"
+  [product]="selectedProduct"
+  (save)="onProductSave($event)"
+  (visibleChange)="onDialogClose()"
+></app-edit-product-dialog>
+
+
+<!-- ADD PRODUCT DIALOG -->
+
+<app-add-product-dialog
+  [visible]="showAddDialog"
+  (save)="onProductAdd($event)"
+  (visibleChange)="onAddDialogClose()"
+></app-add-product-dialog>

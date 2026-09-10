@@ -1,0 +1,301 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="false"
+  [header]="revampFallback().EDIT_PRODUCT.HEADER"
+  [style]="{ width: '600px' }"
+  [breakpoints]="{
+    '768px': '90vw',
+    '576px': '95vw'
+  }"
+  styleClass="edit-product-dialog"
+  (onHide)="close()"
+>
+
+  <form
+    [formGroup]="productForm"
+    (ngSubmit)="saveProduct()"
+    class="edit-product-form"
+  >
+
+    <div class="form-field">
+
+      <label for="productName">
+        {{ revampFallback().EDIT_PRODUCT.FIELDS.PRODUCT_NAME.LABEL }}
+      </label>
+
+      <input
+        id="productName"
+        type="text"
+        pInputText
+        formControlName="name"
+        [placeholder]="
+          revampFallback().EDIT_PRODUCT.FIELDS.PRODUCT_NAME.PLACEHOLDER
+        "
+      />
+
+      <small
+        class="error-message"
+        *ngIf="isInvalid('name')"
+      >
+
+        <span
+          *ngIf="
+            getControl('name')?.errors?.['required']
+          "
+        >
+          {{ revampFallback().EDIT_PRODUCT.VALIDATION.PRODUCT_NAME_REQUIRED }}
+        </span>
+
+        <span
+          *ngIf="
+            getControl('name')?.errors?.['maxlength']
+          "
+        >
+          {{ revampFallback().EDIT_PRODUCT.VALIDATION.PRODUCT_NAME_MAX_LENGTH }}
+        </span>
+
+      </small>
+
+    </div>
+
+
+    <div class="form-field">
+
+      <label for="productDescription">
+        {{ revampFallback().EDIT_PRODUCT.FIELDS.DESCRIPTION.LABEL }}
+      </label>
+
+      <textarea
+        id="productDescription"
+        pInputTextarea
+        formControlName="description"
+        rows="4"
+        [placeholder]="
+          revampFallback().EDIT_PRODUCT.FIELDS.DESCRIPTION.PLACEHOLDER
+        "
+      ></textarea>
+
+      <small
+        class="error-message"
+        *ngIf="isInvalid('description')"
+      >
+        {{ revampFallback().EDIT_PRODUCT.VALIDATION.DESCRIPTION_MAX_LENGTH }}
+      </small>
+
+    </div>
+
+
+    <div class="form-field">
+
+      <label for="productCategory">
+        {{ revampFallback().EDIT_PRODUCT.FIELDS.CATEGORY.LABEL }}
+      </label>
+
+      <input
+        id="productCategory"
+        type="text"
+        pInputText
+        formControlName="category"
+        [placeholder]="
+          revampFallback().EDIT_PRODUCT.FIELDS.CATEGORY.PLACEHOLDER
+        "
+      />
+
+      <small
+        class="error-message"
+        *ngIf="isInvalid('category')"
+      >
+
+        <span
+          *ngIf="
+            getControl('category')?.errors?.['required']
+          "
+        >
+          {{ revampFallback().EDIT_PRODUCT.VALIDATION.CATEGORY_REQUIRED }}
+        </span>
+
+        <span
+          *ngIf="
+            getControl('category')?.errors?.['maxlength']
+          "
+        >
+          {{ revampFallback().EDIT_PRODUCT.VALIDATION.CATEGORY_MAX_LENGTH }}
+        </span>
+
+      </small>
+
+    </div>
+
+
+    <div class="form-row">
+
+      <div class="form-field">
+
+        <label for="productPrice">
+          {{ revampFallback().EDIT_PRODUCT.FIELDS.PRICE.LABEL }}
+        </label>
+
+        <p-inputNumber
+          inputId="productPrice"
+          formControlName="price"
+          mode="currency"
+          currency="INR"
+          locale="en-IN"
+          [min]="0"
+          [showButtons]="false"
+        ></p-inputNumber>
+
+        <small
+          class="error-message"
+          *ngIf="isInvalid('price')"
+        >
+
+          <span
+            *ngIf="
+              getControl('price')?.errors?.['required']
+            "
+          >
+            {{ revampFallback().EDIT_PRODUCT.VALIDATION.PRICE_REQUIRED }}
+          </span>
+
+          <span
+            *ngIf="
+              getControl('price')?.errors?.['min']
+            "
+          >
+            {{ revampFallback().EDIT_PRODUCT.VALIDATION.PRICE_MIN }}
+          </span>
+
+        </small>
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label for="productStock">
+          {{ revampFallback().EDIT_PRODUCT.FIELDS.STOCK.LABEL }}
+        </label>
+
+        <p-inputNumber
+          inputId="productStock"
+          formControlName="stock"
+          [min]="0"
+          [showButtons]="true"
+          buttonLayout="stacked"
+          incrementButtonIcon="pi pi-chevron-up"
+          decrementButtonIcon="pi pi-chevron-down"
+        ></p-inputNumber>
+
+        <small
+          class="error-message"
+          *ngIf="isInvalid('stock')"
+        >
+
+          <span
+            *ngIf="
+              getControl('stock')?.errors?.['required']
+            "
+          >
+            {{ revampFallback().EDIT_PRODUCT.VALIDATION.STOCK_REQUIRED }}
+          </span>
+
+          <span
+            *ngIf="
+              getControl('stock')?.errors?.['min']
+            "
+          >
+            {{ revampFallback().EDIT_PRODUCT.VALIDATION.STOCK_MIN }}
+          </span>
+
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-field">
+
+      <label for="productStatus">
+        {{ revampFallback().EDIT_PRODUCT.FIELDS.STATUS.LABEL }}
+      </label>
+
+      <p-dropdown
+        inputId="productStatus"
+        formControlName="status"
+        [options]="statusOptions"
+        optionLabel="label"
+        optionValue="value"
+        [placeholder]="
+          revampFallback().EDIT_PRODUCT.FIELDS.STATUS.PLACEHOLDER
+        "
+      ></p-dropdown>
+
+      <small
+        class="error-message"
+        *ngIf="isInvalid('status')"
+      >
+        {{ revampFallback().EDIT_PRODUCT.VALIDATION.STATUS_REQUIRED }}
+      </small>
+
+    </div>
+
+
+    <div class="form-field">
+
+      <label for="productIcon">
+        {{ revampFallback().EDIT_PRODUCT.FIELDS.ICON.LABEL }}
+      </label>
+
+      <input
+        id="productIcon"
+        type="text"
+        pInputText
+        formControlName="icon"
+        [placeholder]="
+          revampFallback().EDIT_PRODUCT.FIELDS.ICON.PLACEHOLDER
+        "
+      />
+
+      <small
+        class="error-message"
+        *ngIf="isInvalid('icon')"
+      >
+        {{ revampFallback().EDIT_PRODUCT.VALIDATION.ICON_MAX_LENGTH }}
+      </small>
+
+    </div>
+
+  </form>
+
+
+  <ng-template pTemplate="footer">
+
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      class="edit-cancel-btn"
+      (click)="close()"
+    >
+      {{ revampFallback().EDIT_PRODUCT.FOOTER.CANCEL }}
+    </button>
+
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      class="edit-save-btn"
+      (click)="saveProduct()"
+    >
+      {{ revampFallback().EDIT_PRODUCT.FOOTER.SAVE }}
+    </button>
+
+  </ng-template>
+
+</p-dialog>

@@ -6,9 +6,16 @@ import {
   OnInit
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil
+} from 'rxjs/operators';
 import { Order, OrderStatus } from './order.model';
-import { getProductIcon, ORDERS_CONSTANTS } from 'src/app/app.constant';
+import {
+  getProductIcon,
+  ORDERS_CONSTANTS
+} from 'src/app/app.constant';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -33,10 +40,15 @@ export class OrdersComponent implements OnInit, OnDestroy {
   processingCount = 0;
   deliveredCount = 0;
   totalRevenue = 0;
+  selectedOrder: Order | null = null;
+  showOrderTracking = false;
   private readonly searchTerm$ = new Subject<string>();
+
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private readonly cdr: ChangeDetectorRef) {}
+  constructor(
+    private readonly cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.computeSummary();
@@ -49,10 +61,15 @@ export class OrdersComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(term => {
+
         this.searchTerm = term;
+
         this.currentPage = 1;
+
         this.applyFilters();
+
         this.cdr.markForCheck();
+
       });
   }
 
@@ -73,94 +90,231 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.searchTerm$.next(value);
   }
 
-  onStatusChange(value: OrderStatus | 'All'): void {
+  onStatusChange(
+    value: OrderStatus | 'All'
+  ): void {
     this.statusFilter = value;
     this.currentPage = 1;
     this.applyFilters();
+    this.cdr.markForCheck();
   }
 
   goToPage(page: number): void {
-    if (page < 1 || page > this.totalPages || page === this.currentPage) {
+    if (
+      page < 1 ||
+      page > this.totalPages ||
+      page === this.currentPage
+    ) {
       return;
     }
     this.currentPage = page;
     this.paginate();
+    this.cdr.markForCheck();
   }
 
   viewOrder(order: Order): void {
-    console.log('View order', order.id);
+    this.selectedOrder = {
+      ...order
+    };
+    this.showOrderTracking = true;
+    this.cdr.markForCheck();
+  }
+  
+  closeOrderTracking(): void {
+
+    this.showOrderTracking = false;
+
+    this.selectedOrder = null;
+
+    this.cdr.markForCheck();
+
   }
 
-  trackByOrder(_index: number, order: Order): string {
+  trackByOrder(
+    _index: number,
+    order: Order
+  ): string {
+
     return order.id;
+
   }
 
-  statusClass(status: string | undefined): string {
-    return status ? status.toLowerCase().replace(' ', '-') : '';
+  statusClass(
+    status: string | undefined
+  ): string {
+
+    return status
+      ? status.toLowerCase().replace(/ /g, '-')
+      : '';
+
   }
+
 
   private applyFilters(): void {
-    const term = this.searchTerm.trim().toLowerCase();
-    const status = this.statusFilter;
 
-    this.filteredOrders = this.allOrders.filter(order => {
-      const matchesSearch =
-        !term ||
-        order.id.toLowerCase().includes(term) ||
-        order.customerName.toLowerCase().includes(term) ||
-        order.product.toLowerCase().includes(term);
+    const term =
+      this.searchTerm
+        .trim()
+        .toLowerCase();
 
-      const matchesStatus = status === ORDERS_CONSTANTS.FILTER.STATUS_ALL || order.status === status;
+    const status =
+      this.statusFilter;
 
-      return matchesSearch && matchesStatus;
-    });
+    this.filteredOrders =
+      this.allOrders.filter(order => {
 
-    this.totalPages = Math.max(1, Math.ceil(this.filteredOrders.length / this.pageSize));
-    if (this.currentPage > this.totalPages) {
-      this.currentPage = this.totalPages;
+        const matchesSearch =
+          !term ||
+          order.id
+            .toLowerCase()
+            .includes(term) ||
+
+          order.customerName
+            .toLowerCase()
+            .includes(term) ||
+
+          order.product
+            .toLowerCase()
+            .includes(term);
+
+        const matchesStatus =
+          status ===
+          ORDERS_CONSTANTS.FILTER.STATUS_ALL ||
+
+          order.status === status;
+
+        return (
+          matchesSearch &&
+          matchesStatus
+        );
+
+      });
+
+    this.totalPages =
+      Math.max(
+        1,
+        Math.ceil(
+          this.filteredOrders.length /
+          this.pageSize
+        )
+      );
+    if (
+      this.currentPage >
+      this.totalPages
+    ) {
+
+      this.currentPage =
+        this.totalPages;
+
     }
 
     this.paginate();
+
   }
 
   private paginate(): void {
-    const start = (this.currentPage - 1) * this.pageSize;
-    this.pagedOrders = this.filteredOrders.slice(start, start + this.pageSize);
+
+    const start =
+      (this.currentPage - 1) *
+      this.pageSize;
+
+    this.pagedOrders =
+      this.filteredOrders.slice(
+        start,
+        start + this.pageSize
+      );
+
   }
 
   private computeSummary(): void {
-    this.totalOrders = this.allOrders.length;
-    this.pendingCount = this.allOrders.filter(o => o.status === 'Pending').length;
-    this.processingCount = this.allOrders.filter(o => o.status === 'Processing').length;
-    this.deliveredCount = this.allOrders.filter(o => o.status === 'Delivered').length;
-    this.totalRevenue = this.allOrders
-      .filter(o => o.status !== 'Cancelled')
-      .reduce((sum, o) => sum + o.amount, 0);
+
+    this.totalOrders =
+      this.allOrders.length;
+
+    this.pendingCount =
+      this.allOrders.filter(
+        order =>
+          order.status === 'Pending'
+      ).length;
+
+    this.processingCount =
+      this.allOrders.filter(
+        order =>
+          order.status === 'Processing'
+      ).length;
+
+    this.deliveredCount =
+      this.allOrders.filter(
+        order =>
+          order.status === 'Delivered'
+      ).length;
+
+    this.totalRevenue =
+      this.allOrders
+        .filter(
+          order =>
+            order.status !== 'Cancelled'
+        )
+        .reduce(
+          (sum, order) =>
+            sum + order.amount,
+          0
+        );
+
   }
 
   exportToExcel(): void {
-    const ordersToExport = this.filteredOrders;
+
+    const ordersToExport =
+      this.filteredOrders;
 
     if (!ordersToExport.length) {
-      alert('No orders available to export.');
+
+      alert(
+        'No orders available to export.'
+      );
+
       return;
+
     }
 
-    const excelData = ordersToExport.map(order => ({
-      'Order ID': order.id,
-      'Customer Name': order.customerName,
-      'Customer Email': order.customerEmail,
-      'Product': order.product,
-      'Items': order.itemsCount ?? 1,
-      'Amount': order.amount,
-      'Date': order.date,
-      'Status': order.status
-    }));
+    const excelData =
+      ordersToExport.map(order => ({
 
-    const worksheet: XLSX.WorkSheet =
-      XLSX.utils.json_to_sheet(excelData);
+        'Order ID':
+          order.id,
 
-    const workbook: XLSX.WorkBook =
+        'Customer Name':
+          order.customerName,
+
+        'Customer Email':
+          order.customerEmail,
+
+        'Product':
+          order.product,
+
+        'Items':
+          order.itemsCount ?? 1,
+
+        'Amount':
+          order.amount,
+
+        'Date':
+          order.date,
+
+        'Status':
+          order.status
+
+      }));
+
+    const worksheet:
+      XLSX.WorkSheet =
+      XLSX.utils.json_to_sheet(
+        excelData
+      );
+
+    const workbook:
+      XLSX.WorkBook =
       XLSX.utils.book_new();
 
     XLSX.utils.book_append_sheet(
@@ -170,19 +324,30 @@ export class OrdersComponent implements OnInit, OnDestroy {
     );
 
     worksheet['!cols'] = [
-      { wch: 15 }, 
-      { wch: 25 }, 
-      { wch: 30 }, 
-      { wch: 25 }, 
-      { wch: 10 }, 
-      { wch: 15 }, 
-      { wch: 18 }, 
+
+      { wch: 15 },
+
+      { wch: 25 },
+
+      { wch: 30 },
+
+      { wch: 25 },
+
+      { wch: 10 },
+
+      { wch: 15 },
+
+      { wch: 18 },
+
       { wch: 15 }
+
     ];
 
-
     const fileName =
-      `orders-${new Date().toISOString().split('T')[0]}.xlsx`;
+      `orders-${new Date()
+        .toISOString()
+        .split('T')[0]
+      }.xlsx`;
     XLSX.writeFile(
       workbook,
       fileName

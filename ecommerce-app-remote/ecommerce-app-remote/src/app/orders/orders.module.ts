@@ -4,17 +4,23 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersComponent } from './orders/orders.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { OrderTrackingDialogComponent } from './order-tracking-dialog/order-tracking-dialog.component';
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
   declarations: [
-    OrdersComponent
+    OrdersComponent,
+    OrderTrackingDialogComponent
   ],
   imports: [
     CommonModule,
     OrdersRoutingModule,
     FormsModule,
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    DialogModule,
   ]
 })
 export class OrdersModule { }
