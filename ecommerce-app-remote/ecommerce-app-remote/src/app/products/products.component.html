@@ -1,68 +1,347 @@
 <section class="products-card">
 
   <!-- HEADER -->
-
-  <div class="card-header" >
+  <div class="card-header">
 
     <div class="header-content">
+
       <h2>
-        {{ revampFallback().TABLE.TITLE }}
+        {{ revampFallback().PAGE_HEADER.TITLE }}
       </h2>
 
       <p>
-        {{ revampFallback().TABLE.DESCRIPTION }}
+        {{ revampFallback().PAGE_HEADER.DESCRIPTION }}
       </p>
+
     </div>
 
-    <span class="product-count">
-      {{ revampFallback().TABLE.PRODUCTS.length }} Products
-    </span>
+    <div class="header-actions">
+
+      <span class="product-count">
+        {{ filteredProducts.length }}
+        {{ revampFallback().PAGE_HEADER.TITLE }}
+      </span>
+
+      <!-- ADD PRODUCT -->
+      <button
+        type="button"
+        class="add-product-btn"
+        (click)="openAddProduct()"
+      >
+        <i class="pi pi-plus"></i>
+
+        <span>
+          {{ revampFallback().PAGE_HEADER.ADD_PRODUCT }}
+        </span>
+      </button>
+
+    </div>
+
   </div>
 
 
-  <!-- PRODUCTS GRID -->
+  <!-- =========================================
+       FILTERS
+  ========================================== -->
+
+  <div class="filters-container">
+
+    <!-- SEARCH -->
+    <div class="filter-search">
+
+      <i class="pi pi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Search products..."
+        aria-label="Search products"
+      />
+
+      <button
+        *ngIf="searchTerm"
+        type="button"
+        class="clear-search-btn"
+        (click)="searchTerm = ''; onSearchChange()"
+        aria-label="Clear search"
+        title="Clear search"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+
+    </div>
+
+
+    <!-- CATEGORY -->
+    <div class="filter-field">
+
+      <label for="categoryFilter">
+        Category
+      </label>
+
+      <select
+        id="categoryFilter"
+        [(ngModel)]="selectedCategory"
+        (ngModelChange)="onFilterChange()"
+      >
+
+        <option value="all">
+          All Categories
+        </option>
+
+        <option
+          *ngFor="let category of categories"
+          [value]="category"
+        >
+          {{ category }}
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- PRICE -->
+    <div class="filter-field">
+
+      <label for="priceFilter">
+        Price
+      </label>
+
+      <select
+        id="priceFilter"
+        [(ngModel)]="selectedPrice"
+        (ngModelChange)="onFilterChange()"
+      >
+
+        <option value="all">
+          All Prices
+        </option>
+
+        <option value="0-1000">
+          ₹0 - ₹1,000
+        </option>
+
+        <option value="1000-5000">
+          ₹1,000 - ₹5,000
+        </option>
+
+        <option value="5000-10000">
+          ₹5,000 - ₹10,000
+        </option>
+
+        <option value="10000+">
+          ₹10,000+
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- STOCK -->
+    <div class="filter-field">
+
+      <label for="stockFilter">
+        Stock
+      </label>
+
+      <select
+        id="stockFilter"
+        [(ngModel)]="selectedStock"
+        (ngModelChange)="onFilterChange()"
+      >
+
+        <option value="all">
+          All Stock
+        </option>
+
+        <option value="in-stock">
+          In Stock
+        </option>
+
+        <option value="low-stock">
+          Low Stock
+        </option>
+
+        <option value="out-of-stock">
+          Out of Stock
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- STATUS -->
+    <div class="filter-field">
+
+      <label for="statusFilter">
+        Status
+      </label>
+
+      <select
+        id="statusFilter"
+        [(ngModel)]="selectedStatus"
+        (ngModelChange)="onFilterChange()"
+      >
+
+        <option value="all">
+          All Status
+        </option>
+
+        <option
+          *ngFor="let status of statusOptions.slice(1)"
+          [value]="status"
+        >
+          {{ status }}
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- SORT -->
+    <div class="filter-field">
+
+      <label for="sortFilter">
+        Sort By
+      </label>
+
+      <select
+        id="sortFilter"
+        [(ngModel)]="selectedSort"
+        (ngModelChange)="onFilterChange()"
+      >
+
+        <option value="default">
+          Default
+        </option>
+
+        <option value="name-asc">
+          Name: A → Z
+        </option>
+
+        <option value="name-desc">
+          Name: Z → A
+        </option>
+
+        <option value="price-low-high">
+          Price: Low → High
+        </option>
+
+        <option value="price-high-low">
+          Price: High → Low
+        </option>
+
+        <option value="stock-low-high">
+          Stock: Low → High
+        </option>
+
+        <option value="stock-high-low">
+          Stock: High → Low
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- CLEAR -->
+    <button
+      type="button"
+      class="clear-filters-btn"
+      (click)="clearFilters()"
+    >
+      <i class="pi pi-filter-slash"></i>
+
+      <span>
+        Clear
+      </span>
+    </button>
+
+  </div>
+
+
+  <!-- =========================================
+       FILTER RESULT
+  ========================================== -->
+
+  <div class="filter-result">
+
+    <span>
+      Showing
+      <strong>{{ filteredProducts.length }}</strong>
+      of
+      <strong>{{ products.length }}</strong>
+      products
+    </span>
+
+  </div>
+
+
+  <!-- =========================================
+       PRODUCTS GRID
+  ========================================== -->
+
   <div class="products-grid">
 
     <article
       class="product-card"
       *ngFor="
-        let product of revampFallback().TABLE.PRODUCTS;
-        trackBy: trackByProduct"
-       (click)="viewProduct(product)"
+        let product of filteredProducts;
+        trackBy: trackByProduct
+      "
+      (click)="viewProduct(product)"
     >
 
       <!-- TOP -->
       <div class="product-top">
 
+        <!-- PRODUCT ICON -->
         <div class="product-icon">
           {{ product?.icon }}
         </div>
 
-        <div class="product-actions">
+        <!-- ACTIONS -->
+        <div
+          class="product-actions"
+          (click)="$event.stopPropagation()"
+        >
 
+          <!-- VIEW -->
           <button
             type="button"
             class="action-btn view-btn"
             [attr.aria-label]="revampFallback().ACTIONS.VIEW"
             [title]="revampFallback().ACTIONS.VIEW"
+            (click)="viewProduct(product)"
           >
             <i class="pi pi-eye"></i>
           </button>
 
+
+          <!-- EDIT -->
           <button
             type="button"
             class="action-btn edit-btn"
             [attr.aria-label]="revampFallback().ACTIONS.EDIT"
             [title]="revampFallback().ACTIONS.EDIT"
+            (click)="editProduct(product)"
           >
             <i class="pi pi-pencil"></i>
           </button>
 
+
+          <!-- DELETE -->
           <button
             type="button"
             class="action-btn delete-btn"
             [attr.aria-label]="revampFallback().ACTIONS.DELETE"
             [title]="revampFallback().ACTIONS.DELETE"
+            (click)="deleteProduct(product)"
           >
             <i class="pi pi-trash"></i>
           </button>
@@ -72,7 +351,7 @@
       </div>
 
 
-      <!-- PRODUCT NAME -->
+      <!-- PRODUCT DETAILS -->
       <div class="product-details">
 
         <h3>
@@ -103,6 +382,7 @@
       <!-- PRICE / STOCK -->
       <div class="product-stats">
 
+        <!-- PRICE -->
         <div class="stat">
 
           <span class="label">
@@ -116,6 +396,7 @@
         </div>
 
 
+        <!-- STOCK -->
         <div class="stat">
 
           <span class="label">
@@ -167,23 +448,52 @@
     <!-- EMPTY STATE -->
     <div
       class="empty-state"
-      *ngIf="!revampFallback().TABLE.PRODUCTS.length"
+      *ngIf="!filteredProducts.length"
     >
 
       <div class="empty-icon">
-        <i class="pi pi-inbox"></i>
+        <i class="pi pi-search"></i>
       </div>
 
       <h3>
-        {{ revampFallback().EMPTY_STATE.TITLE }}
+        No products found
       </h3>
 
       <p>
-        {{ revampFallback().EMPTY_STATE.DESCRIPTION }}
+        Try changing your filters or search criteria.
       </p>
+
+      <button
+        type="button"
+        class="clear-empty-btn"
+        (click)="clearFilters()"
+      >
+        Clear Filters
+      </button>
 
     </div>
 
   </div>
 
 </section>
+
+
+<!-- EDIT PRODUCT DIALOG -->
+
+<app-edit-product-dialog
+  [visible]="showEditDialog"
+  [product]="selectedProduct"
+  (save)="onProductSave($event)"
+  (visibleChange)="onDialogClose()"
+>
+</app-edit-product-dialog>
+
+
+<!-- ADD PRODUCT DIALOG -->
+
+<app-add-product-dialog
+  [visible]="showAddDialog"
+  (save)="onProductAdd($event)"
+  (visibleChange)="onAddDialogClose()"
+>
+</app-add-product-dialog>

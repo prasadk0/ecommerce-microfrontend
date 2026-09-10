@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { authGuard } from './guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 // const routes: Routes = [
 //   {
@@ -119,6 +120,10 @@ const routes: Routes = [
   {
     path: 'welcome',
     component: WelcomePageComponent
+  },
+   {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
   }
 ];
 

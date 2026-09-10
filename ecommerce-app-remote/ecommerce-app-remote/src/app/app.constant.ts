@@ -107,6 +107,171 @@ export const PRODUCTS_CONSTANTS = {
     TITLE: 'No Products Found',
     DESCRIPTION: 'There are no products matching your search.'
   }
+  ,
+
+  ADD_PRODUCT :{
+  HEADER: 'Add Product',
+
+  FIELDS: {
+    PRODUCT_NAME: {
+      LABEL: 'Product Name',
+      PLACEHOLDER: 'Enter product name'
+    },
+
+    DESCRIPTION: {
+      LABEL: 'Description',
+      PLACEHOLDER: 'Enter product description'
+    },
+
+    CATEGORY: {
+      LABEL: 'Category',
+      PLACEHOLDER: 'Enter category'
+    },
+
+    PRICE: {
+      LABEL: 'Price'
+    },
+
+    STOCK: {
+      LABEL: 'Stock'
+    },
+
+    STATUS: {
+      LABEL: 'Status',
+      PLACEHOLDER: 'Select status'
+    },
+
+    ICON: {
+      LABEL: 'Product Icon',
+      PLACEHOLDER: 'Example: 📱'
+    }
+  },
+
+  VALIDATION: {
+    PRODUCT_NAME_REQUIRED: 'Product name is required.',
+    PRODUCT_NAME_MAX_LENGTH:
+      'Product name cannot exceed 100 characters.',
+
+    DESCRIPTION_MAX_LENGTH:
+      'Description cannot exceed 500 characters.',
+
+    CATEGORY_REQUIRED: 'Category is required.',
+    CATEGORY_MAX_LENGTH:
+      'Category cannot exceed 100 characters.',
+
+    PRICE_REQUIRED: 'Price is required.',
+    PRICE_MIN: 'Price cannot be negative.',
+
+    STOCK_REQUIRED: 'Stock is required.',
+    STOCK_MIN: 'Stock cannot be negative.',
+
+    STATUS_REQUIRED: 'Status is required.',
+
+    ICON_MAX_LENGTH:
+      'Icon cannot exceed 10 characters.'
+  },
+
+  STATUS_OPTIONS: [
+    {
+      label: 'Active',
+      value: 'Active'
+    },
+    {
+      label: 'Inactive',
+      value: 'Inactive'
+    },
+    {
+      label: 'Out of Stock',
+      value: 'Out of Stock'
+    }
+  ],
+
+  DEFAULTS: {
+    ID: '',
+    NAME: '',
+    DESCRIPTION: '',
+    CATEGORY: '',
+    PRICE: 0,
+    STOCK: 0,
+    STATUS: 'Active',
+    ICON: '📦'
+  },
+
+  FOOTER: {
+    CANCEL: 'Cancel',
+    ADD_PRODUCT: 'Add Product'
+  }
+},
+EDIT_PRODUCT: {
+  HEADER: 'Edit Product',
+
+  FIELDS: {
+    PRODUCT_NAME: {
+      LABEL: 'Product Name',
+      PLACEHOLDER: 'Enter product name'
+    },
+
+    DESCRIPTION: {
+      LABEL: 'Description',
+      PLACEHOLDER: 'Enter product description'
+    },
+
+    CATEGORY: {
+      LABEL: 'Category',
+      PLACEHOLDER: 'Enter category'
+    },
+
+    PRICE: {
+      LABEL: 'Price'
+    },
+
+    STOCK: {
+      LABEL: 'Stock'
+    },
+
+    STATUS: {
+      LABEL: 'Status',
+      PLACEHOLDER: 'Select status'
+    },
+
+    ICON: {
+      LABEL: 'Product Icon',
+      PLACEHOLDER: 'Example: 📱'
+    }
+  },
+
+  VALIDATION: {
+    PRODUCT_NAME_REQUIRED: 'Product name is required.',
+    PRODUCT_NAME_MAX_LENGTH:
+      'Product name cannot exceed 100 characters.',
+
+    DESCRIPTION_MAX_LENGTH:
+      'Description cannot exceed 500 characters.',
+
+    CATEGORY_REQUIRED: 'Category is required.',
+    CATEGORY_MAX_LENGTH:
+      'Category cannot exceed 100 characters.',
+
+    PRICE_REQUIRED: 'Price is required.',
+    PRICE_MIN:
+      'Price cannot be negative.',
+
+    STOCK_REQUIRED: 'Stock is required.',
+    STOCK_MIN:
+      'Stock cannot be negative.',
+
+    STATUS_REQUIRED:
+      'Status is required.',
+
+    ICON_MAX_LENGTH:
+      'Icon cannot exceed 10 characters.'
+  },
+
+  FOOTER: {
+    CANCEL: 'Cancel',
+    SAVE: 'Save Changes'
+  }
+},
 
 };
 
@@ -190,7 +355,103 @@ export const ORDERS_CONSTANTS = {
   EMPTY_STATE: {
     TITLE: 'No Orders Found',
     DESCRIPTION: 'There are no orders matching your search.'
+  },
+
+TRACKING: {
+  HEADER: {
+    ORDER_DETAILS: 'ORDER DETAILS',
+    ORDERED_ON: 'Ordered on',
+    CURRENT: 'Current'
+  },
+
+  DELIVERY_STATUS: {
+    TITLE: 'Delivery Status',
+    DESCRIPTION: 'Track your order journey',
+    CANCELLED_TITLE: 'Order Cancelled',
+    CANCELLED_DESCRIPTION: 'This order has been cancelled.'
+  },
+
+  TIMELINE: {
+    ORDER_PLACED: {
+      LABEL: 'Order Placed',
+      DESCRIPTION: 'Your order has been placed successfully.'
+    },
+
+    ORDER_CONFIRMED: {
+      LABEL: 'Order Confirmed',
+      DESCRIPTION: 'Your order has been confirmed by the seller.'
+    },
+
+    PACKED: {
+      LABEL: 'Packed',
+      DESCRIPTION: 'Your package has been packed and is ready for shipment.'
+    },
+
+    SHIPPED: {
+      LABEL: 'Shipped',
+      DESCRIPTION: 'Your package has been handed over to the delivery partner.'
+    },
+
+    OUT_FOR_DELIVERY: {
+      LABEL: 'Out for Delivery',
+      DESCRIPTION: 'Your package is on the way to your delivery address.'
+    },
+
+    DELIVERED: {
+      LABEL: 'Delivered',
+      DESCRIPTION: 'Your order has been delivered successfully.'
+    }
+  },
+
+  PRODUCT_DETAILS: {
+    TITLE: 'Product Details',
+    DESCRIPTION: 'Items included in this order',
+    QUANTITY: 'Quantity'
+  },
+
+  CUSTOMER_DETAILS: {
+    TITLE: 'Customer Details',
+    DESCRIPTION: 'Customer information',
+    CUSTOMER_NAME: 'Customer Name',
+    EMAIL: 'Email'
+  },
+
+  DELIVERY_INFORMATION: {
+    TITLE: 'Delivery Information',
+    DESCRIPTION: 'Shipping information',
+    DELIVERY_PARTNER: 'Delivery Partner',
+    DELIVERY_PARTNER_NAME: 'Fast Delivery',
+    TRACKING_ID: 'Tracking ID',
+    TRACKING_PREFIX: 'TRK-'
+  },
+
+  PAYMENT_INFORMATION: {
+    TITLE: 'Payment Information',
+    DESCRIPTION: 'Payment details',
+    PAYMENT_METHOD: 'Payment Method',
+    PAYMENT_STATUS: 'Payment Status',
+    PAID: 'Paid'
+  },
+
+  ORDER_SUMMARY: {
+    TITLE: 'Order Summary',
+    DESCRIPTION: 'Payment breakdown',
+    ITEM_TOTAL: 'Item Total',
+    DELIVERY_CHARGES: 'Delivery Charges',
+    FREE: 'FREE',
+    TOTAL_AMOUNT: 'Total Amount'
+  },
+
+  FOOTER: {
+    CLOSE: 'Close'
+  },
+
+  DEFAULTS: {
+    PRODUCT_ICON: '📦',
+    EMPTY_PRODUCT_ICON: '🛍️'
   }
+}
+
 };
 
 export const NOTIFICATIONS_CONSTANTS = {

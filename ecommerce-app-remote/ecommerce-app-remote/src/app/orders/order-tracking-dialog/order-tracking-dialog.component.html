@@ -1,0 +1,467 @@
+<p-dialog
+  [visible]="visible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+  [style]="{ width: '720px' }"
+  [breakpoints]="{
+    '768px': '80vw',
+    '576px': '85vw'
+  }"
+  styleClass="order-tracking-dialog"
+  (onHide)="close()"
+>
+
+  <div
+    class="tracking-header"
+    *ngIf="order"
+  >
+
+    <div>
+
+      <span class="header-label">
+        {{ revampFallback().TRACKING.HEADER.ORDER_DETAILS }}
+      </span>
+
+      <h2>
+        {{ order.id }}
+      </h2>
+
+      <p>
+        {{ revampFallback().TRACKING.HEADER.ORDERED_ON }}
+        {{ order.date | date:'dd MMM yyyy' }}
+      </p>
+
+    </div>
+
+    <span
+      class="status-badge"
+      [ngClass]="
+        order.status
+          .toLowerCase()
+          .replace(' ', '-')
+      "
+    >
+      {{ order.status }}
+    </span>
+
+  </div>
+
+  <div
+    class="tracking-content"
+    *ngIf="order"
+  >
+
+    <section class="tracking-section">
+
+      <div class="section-title">
+
+        <div class="section-icon">
+          <i class="pi pi-truck"></i>
+        </div>
+
+        <div>
+          <h3>
+            {{ revampFallback().TRACKING.DELIVERY_STATUS.TITLE }}
+          </h3>
+
+          <p>
+            {{ revampFallback().TRACKING.DELIVERY_STATUS.DESCRIPTION }}
+          </p>
+        </div>
+
+      </div>
+
+      <div
+        class="cancelled-order"
+        *ngIf="isCancelled()"
+      >
+
+        <div class="cancelled-icon">
+          <i class="pi pi-times"></i>
+        </div>
+
+        <div>
+
+          <strong>
+            {{ revampFallback().TRACKING.DELIVERY_STATUS.CANCELLED_TITLE }}
+          </strong>
+
+          <p>
+            {{ revampFallback().TRACKING.DELIVERY_STATUS.CANCELLED_DESCRIPTION }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div
+        class="timeline"
+        *ngIf="!isCancelled()"
+      >
+
+        <div
+          class="timeline-item"
+          *ngFor="
+            let step of timeline;
+            let last = last
+          "
+          [class.completed]="step.completed"
+          [class.current]="step.current"
+        >
+
+          <div class="timeline-left">
+
+            <div class="timeline-dot">
+
+              <i
+                *ngIf="step.completed"
+                class="pi pi-check"
+              ></i>
+
+              <span
+                *ngIf="!step.completed"
+                class="pending-dot"
+              ></span>
+
+            </div>
+
+            <div
+              class="timeline-line"
+              *ngIf="!last"
+            ></div>
+
+          </div>
+
+          <div class="timeline-content">
+
+            <div class="timeline-title-row">
+
+              <h4>
+                {{ step.label }}
+              </h4>
+
+              <span
+                class="current-label"
+                *ngIf="step.current"
+              >
+                {{ revampFallback().TRACKING.HEADER.CURRENT }}
+              </span>
+
+            </div>
+
+            <span
+              class="timeline-date"
+              *ngIf="step.date"
+            >
+              {{ step.date | date:'dd MMM yyyy' }}
+            </span>
+
+            <p>
+              {{ step.description }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="details-section">
+
+      <div class="section-title">
+
+        <div class="section-icon">
+          <i class="pi pi-shopping-bag"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            {{ revampFallback().TRACKING.PRODUCT_DETAILS.TITLE }}
+          </h3>
+
+          <p>
+            {{ revampFallback().TRACKING.PRODUCT_DETAILS.DESCRIPTION }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="product-detail-card">
+
+        <div class="product-image">
+          {{
+            order.product
+              ? revampFallback().TRACKING.DEFAULTS.PRODUCT_ICON
+              : revampFallback().TRACKING.DEFAULTS.EMPTY_PRODUCT_ICON
+          }}
+        </div>
+
+        <div class="product-info">
+
+          <h4>
+            {{ order.product }}
+          </h4>
+
+          <p>
+            {{ revampFallback().TRACKING.PRODUCT_DETAILS.QUANTITY }}:
+            {{ order.itemsCount }}
+          </p>
+
+        </div>
+
+        <strong class="product-price">
+          {{ order.amount | currency:'INR':'symbol':'1.0-0' }}
+        </strong>
+
+      </div>
+
+    </section>
+
+    <section class="details-section">
+
+      <div class="section-title">
+
+        <div class="section-icon">
+          <i class="pi pi-user"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            {{ revampFallback().TRACKING.CUSTOMER_DETAILS.TITLE }}
+          </h3>
+
+          <p>
+            {{ revampFallback().TRACKING.CUSTOMER_DETAILS.DESCRIPTION }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+
+          <span class="info-label">
+            {{ revampFallback().TRACKING.CUSTOMER_DETAILS.CUSTOMER_NAME }}
+          </span>
+
+          <strong>
+            {{ order.customerName }}
+          </strong>
+
+        </div>
+
+        <div class="info-item">
+
+          <span class="info-label">
+            {{ revampFallback().TRACKING.CUSTOMER_DETAILS.EMAIL }}
+          </span>
+
+          <strong>
+            {{ order.customerEmail }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="details-section">
+
+      <div class="section-title">
+
+        <div class="section-icon">
+          <i class="pi pi-map-marker"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            {{ revampFallback().TRACKING.DELIVERY_INFORMATION.TITLE }}
+          </h3>
+
+          <p>
+            {{ revampFallback().TRACKING.DELIVERY_INFORMATION.DESCRIPTION }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="delivery-card">
+
+        <div class="delivery-row">
+
+          <span>
+            <i class="pi pi-truck"></i>
+            {{ revampFallback().TRACKING.DELIVERY_INFORMATION.DELIVERY_PARTNER }}
+          </span>
+
+          <strong>
+            {{ revampFallback().TRACKING.DELIVERY_INFORMATION.DELIVERY_PARTNER_NAME }}
+          </strong>
+
+        </div>
+
+        <div class="delivery-row">
+
+          <span>
+            <i class="pi pi-box"></i>
+            {{ revampFallback().TRACKING.DELIVERY_INFORMATION.TRACKING_ID }}
+          </span>
+
+          <strong>
+            {{ revampFallback().TRACKING.DELIVERY_INFORMATION.TRACKING_PREFIX }}{{ order.id }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="details-section">
+
+      <div class="section-title">
+
+        <div class="section-icon">
+          <i class="pi pi-credit-card"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            {{ revampFallback().TRACKING.PAYMENT_INFORMATION.TITLE }}
+          </h3>
+
+          <p>
+            {{ revampFallback().TRACKING.PAYMENT_INFORMATION.DESCRIPTION }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="payment-card">
+
+        <div class="payment-row">
+
+          <span>
+            {{ revampFallback().TRACKING.PAYMENT_INFORMATION.PAYMENT_METHOD }}
+          </span>
+
+          <strong>
+            {{ order.paymentMethod }}
+          </strong>
+
+        </div>
+
+        <div class="payment-row">
+
+          <span>
+            {{ revampFallback().TRACKING.PAYMENT_INFORMATION.PAYMENT_STATUS }}
+          </span>
+
+          <span class="payment-success">
+            {{ revampFallback().TRACKING.PAYMENT_INFORMATION.PAID }}
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="details-section">
+
+      <div class="section-title">
+
+        <div class="section-icon">
+          <i class="pi pi-receipt"></i>
+        </div>
+
+        <div>
+
+          <h3>
+            {{ revampFallback().TRACKING.ORDER_SUMMARY.TITLE }}
+          </h3>
+
+          <p>
+            {{ revampFallback().TRACKING.ORDER_SUMMARY.DESCRIPTION }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="summary-card">
+
+        <div class="summary-row">
+
+          <span>
+            {{ revampFallback().TRACKING.ORDER_SUMMARY.ITEM_TOTAL }}
+          </span>
+
+          <span>
+            {{ order.amount | currency:'INR':'symbol':'1.0-0' }}
+          </span>
+
+        </div>
+
+        <div class="summary-row">
+
+          <span>
+            {{ revampFallback().TRACKING.ORDER_SUMMARY.DELIVERY_CHARGES }}
+          </span>
+
+          <span class="free">
+            {{ revampFallback().TRACKING.ORDER_SUMMARY.FREE }}
+          </span>
+
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-total">
+
+          <span>
+            {{ revampFallback().TRACKING.ORDER_SUMMARY.TOTAL_AMOUNT }}
+          </span>
+
+          <strong>
+            {{ order.amount | currency:'INR':'symbol':'1.0-0' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <ng-template pTemplate="footer">
+
+    <button
+      type="button"
+      pButton
+      icon="pi pi-times"
+      class="close-btn"
+      (click)="close()"
+    >
+      {{ revampFallback().TRACKING.FOOTER.CLOSE }}
+    </button>
+
+  </ng-template>
+
+</p-dialog>

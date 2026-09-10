@@ -43,11 +43,21 @@ module.exports = {
         // },
 
         shared: share({
-          "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' }, 
-          "@angular/common": { singleton: true, strictVersion: true, requiredVersion: 'auto' }, 
-          "@angular/common/http": { singleton: true, strictVersion: true, requiredVersion: 'auto' }, 
+          "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+          "@angular/common": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+          "@angular/common/http": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
           "@angular/router": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+          'primeng': {
+            singleton: true,
+            strictVersion: true,
+            requiredVersion: '16.9.1'
+          },
 
+          'primeicons': {
+            singleton: true,
+            strictVersion: true,
+            requiredVersion: '8.0.0'
+          },
           ...sharedMappings.getDescriptors()
         })
         

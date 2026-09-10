@@ -1,17 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:8080/api/users';
+
+  private readonly apiUrl =
+    'http://localhost:8080/api/users';
+
+  private readonly loginUrl =
+    'http://localhost:8080/api/auth/login';
+
   private readonly tokenKey = 'token';
+
+  private readonly loggedInSubject =
+    new BehaviorSubject<boolean>(
+      !!localStorage.getItem(this.tokenKey)
+    );
+
+  readonly isLoggedIn$ =
+    this.loggedInSubject.asObservable();
 
   constructor(
     private readonly http: HttpClient
-  ) { }
+  ) {}
 
   signup(userData: any): Observable<any> {
     return this.http.post<any>(
@@ -22,7 +36,7 @@ export class AuthService {
 
   login(userData: any): Observable<any> {
     return this.http.post<any>(
-      ` http://localhost:8080/api/auth/login`,
+      this.loginUrl,
       userData
     );
   }
@@ -32,6 +46,7 @@ export class AuthService {
       this.tokenKey,
       token
     );
+    this.loggedInSubject.next(true);
   }
 
   getToken(): string | null {
@@ -48,5 +63,6 @@ export class AuthService {
     localStorage.removeItem(
       this.tokenKey
     );
+    this.loggedInSubject.next(false);
   }
 }

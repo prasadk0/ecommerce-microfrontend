@@ -5,10 +5,26 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
+
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { Order, OrderStatus } from './order.model';
-import { getProductIcon, ORDERS_CONSTANTS } from 'src/app/app.constant';
+
+import {
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil
+} from 'rxjs/operators';
+
+import {
+  Order,
+  OrderStatus
+} from './order.model';
+
+import {
+  getProductIcon,
+  ORDERS_CONSTANTS
+} from 'src/app/app.constant';
+
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-orders',
@@ -18,28 +34,58 @@ import { getProductIcon, ORDERS_CONSTANTS } from 'src/app/app.constant';
 })
 export class OrdersComponent implements OnInit, OnDestroy {
 
-  private allOrders: Order[] = ORDERS_CONSTANTS.TABLE.ORDERS;
+  private readonly allOrders: Order[] = [
+    ...ORDERS_CONSTANTS.TABLE.ORDERS
+  ];
+
+  readonly constants = ORDERS_CONSTANTS;
 
   searchTerm = '';
-  statusFilter: OrderStatus | 'All' = ORDERS_CONSTANTS.FILTER.STATUS_ALL as OrderStatus | 'All';
-  readonly pageSize = 5;
-  currentPage = 1;
-  totalPages = 1;
-  filteredOrders: Order[] = [];
-  pagedOrders: Order[] = [];
-  totalOrders = 0;
-  pendingCount = 0;
-  processingCount = 0;
-  deliveredCount = 0;
-  totalRevenue = 0;
-  private readonly searchTerm$ = new Subject<string>();
-  private readonly destroy$ = new Subject<void>();
 
-  constructor(private readonly cdr: ChangeDetectorRef) {}
+  statusFilter: OrderStatus | 'All' =
+    ORDERS_CONSTANTS.FILTER.STATUS_ALL as
+    | OrderStatus
+    | 'All';
+
+  readonly pageSize = 5;
+
+  currentPage = 1;
+
+  totalPages = 1;
+
+  filteredOrders: Order[] = [];
+
+  pagedOrders: Order[] = [];
+
+  totalOrders = 0;
+
+  pendingCount = 0;
+
+  processingCount = 0;
+
+  deliveredCount = 0;
+
+  totalRevenue = 0;
+
+  selectedOrder: Order | null = null;
+
+  showOrderTracking = false;
+
+  private readonly searchTerm$ =
+    new Subject<string>();
+
+  private readonly destroy$ =
+    new Subject<void>();
+
+  constructor(
+    private readonly cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
+
     this.computeSummary();
-    this.applyFilters();
+
+    this.updateOrders();
 
     this.searchTerm$
       .pipe(
@@ -47,93 +93,410 @@ export class OrdersComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         takeUntil(this.destroy$)
       )
-      .subscribe(term => {
-        this.searchTerm = term;
-        this.currentPage = 1;
-        this.applyFilters();
-        this.cdr.markForCheck();
-      });
+      .subscribe(
+        term => {
+
+          this.searchTerm =
+            term.trim();
+
+          this.currentPage = 1;
+
+          this.updateOrders();
+
+          this.cdr.detectChanges();
+        }
+      );
   }
 
   ngOnDestroy(): void {
+
     this.destroy$.next();
+
     this.destroy$.complete();
+
+    this.searchTerm$.complete();
   }
 
   revampFallback() {
-    return ORDERS_CONSTANTS;
+    return this.constants;
   }
 
-  getIcon(productName: string): string {
-    return getProductIcon(productName);
+  getIcon(
+    productName: string
+  ): string {
+
+    return getProductIcon(
+      productName
+    );
   }
 
-  onSearchInput(value: string): void {
-    this.searchTerm$.next(value);
+  onSearchInput(
+    value: string
+  ): void {
+
+    this.searchTerm$.next(
+      value ?? ''
+    );
   }
 
-  onStatusChange(value: OrderStatus | 'All'): void {
-    this.statusFilter = value;
+  onStatusChange(
+    value: OrderStatus | 'All'
+  ): void {
+
+    this.statusFilter =
+      value;
+
     this.currentPage = 1;
-    this.applyFilters();
+
+    this.updateOrders();
+
+    this.cdr.detectChanges();
   }
 
-  goToPage(page: number): void {
-    if (page < 1 || page > this.totalPages || page === this.currentPage) {
+  private updateOrders(): void {
+
+    const search =
+      this.normalize(
+        this.searchTerm
+      );
+
+    const selectedStatus =
+      this.normalize(
+        String(
+          this.statusFilter
+        )
+      );
+
+    const allStatus =
+      this.normalize(
+        String(
+          ORDERS_CONSTANTS
+            .FILTER
+            .STATUS_ALL
+        )
+      );
+
+    const result =
+      this.allOrders.filter(
+        order => {
+
+          const id =
+            this.normalize(
+              String(
+                order.id ?? ''
+              )
+            );
+
+          const customerName =
+            this.normalize(
+              String(
+                order.customerName ?? ''
+              )
+            );
+
+          const customerEmail =
+            this.normalize(
+              String(
+                order.customerEmail ?? ''
+              )
+            );
+
+          const product =
+            this.normalize(
+              String(
+                order.product ?? ''
+              )
+            );
+
+          const status =
+            this.normalize(
+              String(
+                order.status ?? ''
+              )
+            );
+
+          const matchesSearch =
+            !search ||
+            id.includes(search) ||
+            customerName.includes(search) ||
+            customerEmail.includes(search) ||
+            product.includes(search) ||
+            status.includes(search);
+
+          const matchesStatus =
+            selectedStatus === allStatus ||
+            status === selectedStatus;
+
+          return (
+            matchesSearch &&
+            matchesStatus
+          );
+        }
+      );
+
+    this.filteredOrders = [
+      ...result
+    ];
+
+    this.totalPages =
+      Math.max(
+        1,
+        Math.ceil(
+          this.filteredOrders.length /
+          this.pageSize
+        )
+      );
+
+    if (
+      this.currentPage >
+      this.totalPages
+    ) {
+      this.currentPage = 1;
+    }
+
+    this.updatePagedOrders();
+  }
+
+  private updatePagedOrders(): void {
+
+    const start =
+      (this.currentPage - 1) *
+      this.pageSize;
+
+    const end =
+      start + this.pageSize;
+
+    this.pagedOrders = [
+      ...this.filteredOrders.slice(
+        start,
+        end
+      )
+    ];
+  }
+
+  goToPage(
+    page: number
+  ): void {
+
+    if (
+      page < 1 ||
+      page > this.totalPages
+    ) {
       return;
     }
-    this.currentPage = page;
-    this.paginate();
+
+    this.currentPage =
+      page;
+
+    this.updatePagedOrders();
+
+    this.cdr.detectChanges();
   }
 
-  viewOrder(order: Order): void {
-    console.log('View order', order.id);
+  viewOrder(
+    order: Order
+  ): void {
+
+    this.selectedOrder = {
+      ...order
+    };
+
+    this.showOrderTracking = true;
+
+    this.cdr.detectChanges();
   }
 
-  trackByOrder(_index: number, order: Order): string {
-    return order.id;
+  closeOrderTracking(): void {
+
+    this.showOrderTracking = false;
+
+    this.selectedOrder = null;
+
+    this.cdr.detectChanges();
   }
 
-  statusClass(status: string | undefined): string {
-    return status ? status.toLowerCase().replace(' ', '-') : '';
+  trackByOrder(
+    _index: number,
+    order: Order
+  ): string {
+
+    return String(
+      order.id
+    );
   }
 
-  private applyFilters(): void {
-    const term = this.searchTerm.trim().toLowerCase();
-    const status = this.statusFilter;
+  statusClass(
+    status: string | undefined
+  ): string {
 
-    this.filteredOrders = this.allOrders.filter(order => {
-      const matchesSearch =
-        !term ||
-        order.id.toLowerCase().includes(term) ||
-        order.customerName.toLowerCase().includes(term) ||
-        order.product.toLowerCase().includes(term);
-
-      const matchesStatus = status === ORDERS_CONSTANTS.FILTER.STATUS_ALL || order.status === status;
-
-      return matchesSearch && matchesStatus;
-    });
-
-    this.totalPages = Math.max(1, Math.ceil(this.filteredOrders.length / this.pageSize));
-    if (this.currentPage > this.totalPages) {
-      this.currentPage = this.totalPages;
+    if (!status) {
+      return '';
     }
 
-    this.paginate();
-  }
-
-  private paginate(): void {
-    const start = (this.currentPage - 1) * this.pageSize;
-    this.pagedOrders = this.filteredOrders.slice(start, start + this.pageSize);
+    return status
+      .trim()
+      .toLowerCase()
+      .replace(
+        /\s+/g,
+        '-'
+      );
   }
 
   private computeSummary(): void {
-    this.totalOrders = this.allOrders.length;
-    this.pendingCount = this.allOrders.filter(o => o.status === 'Pending').length;
-    this.processingCount = this.allOrders.filter(o => o.status === 'Processing').length;
-    this.deliveredCount = this.allOrders.filter(o => o.status === 'Delivered').length;
-    this.totalRevenue = this.allOrders
-      .filter(o => o.status !== 'Cancelled')
-      .reduce((sum, o) => sum + o.amount, 0);
+
+    this.totalOrders =
+      this.allOrders.length;
+
+    this.pendingCount =
+      this.allOrders.filter(
+        order =>
+          this.normalize(
+            String(
+              order.status ?? ''
+            )
+          ) === 'pending'
+      ).length;
+
+    this.processingCount =
+      this.allOrders.filter(
+        order =>
+          this.normalize(
+            String(
+              order.status ?? ''
+            )
+          ) === 'processing'
+      ).length;
+
+    this.deliveredCount =
+      this.allOrders.filter(
+        order =>
+          this.normalize(
+            String(
+              order.status ?? ''
+            )
+          ) === 'delivered'
+      ).length;
+
+    this.totalRevenue =
+      this.allOrders
+        .filter(
+          order =>
+            this.normalize(
+              String(
+                order.status ?? ''
+              )
+            ) !== 'cancelled'
+        )
+        .reduce(
+          (
+            sum,
+            order
+          ) =>
+            sum +
+            Number(
+              order.amount || 0
+            ),
+          0
+        );
+  }
+
+  private normalize(
+    value: string
+  ): string {
+
+    return String(
+      value ?? ''
+    )
+      .trim()
+      .toLowerCase();
+  }
+
+  exportToExcel(): void {
+
+    const ordersToExport =
+      this.filteredOrders;
+
+    if (
+      !ordersToExport.length
+    ) {
+
+      alert(
+        this.revampFallback()
+          .EMPTY_STATE
+          .DESCRIPTION
+      );
+
+      return;
+    }
+
+    const excelData =
+      ordersToExport.map(
+        order => ({
+
+          'Order ID':
+            order.id,
+
+          'Customer Name':
+            order.customerName,
+
+          'Customer Email':
+            order.customerEmail,
+
+          'Product':
+            order.product,
+
+          'Items':
+            order.itemsCount ?? 1,
+
+          'Amount':
+            order.amount,
+
+          'Date':
+            order.date,
+
+          'Status':
+            order.status
+
+        })
+      );
+
+    const worksheet:
+      XLSX.WorkSheet =
+      XLSX.utils.json_to_sheet(
+        excelData
+      );
+
+    const workbook:
+      XLSX.WorkBook =
+      XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      'Orders'
+    );
+
+    worksheet['!cols'] = [
+      { wch: 15 },
+      { wch: 25 },
+      { wch: 30 },
+      { wch: 25 },
+      { wch: 10 },
+      { wch: 15 },
+      { wch: 18 },
+      { wch: 15 }
+    ];
+
+    const fileName =
+      `orders-${new Date()
+        .toISOString()
+        .split('T')[0]
+      }.xlsx`;
+
+    XLSX.writeFile(
+      workbook,
+      fileName
+    );
+
   }
 }

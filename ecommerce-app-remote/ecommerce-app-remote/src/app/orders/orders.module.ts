@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersComponent } from './orders/orders.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-
+import { OrderTrackingDialogComponent } from './order-tracking-dialog/order-tracking-dialog.component';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
-    OrdersComponent
+    OrdersComponent,
+    OrderTrackingDialogComponent
   ],
   imports: [
     CommonModule,
-    OrdersRoutingModule,
     FormsModule,
-    BrowserModule
+    OrdersRoutingModule,
+    DialogModule
   ]
 })
-export class OrdersModule { }
+export class OrdersModule {}
