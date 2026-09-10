@@ -12,20 +12,25 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let routerSpy: jasmine.SpyObj<Router>;
+  let authServiceSpy: {
+    login: jest.Mock;
+    saveToken: jest.Mock;
+  };
+
+  let routerSpy: {
+    navigate: jest.Mock;
+  };
 
   beforeEach(async () => {
 
-    authServiceSpy = jasmine.createSpyObj(
-      'AuthService',
-      ['login', 'saveToken']
-    );
+    authServiceSpy = {
+      login: jest.fn(),
+      saveToken: jest.fn()
+    };
 
-    routerSpy = jasmine.createSpyObj(
-      'Router',
-      ['navigate']
-    );
+    routerSpy = {
+      navigate: jest.fn()
+    };
 
     await TestBed.configureTestingModule({
 
@@ -89,7 +94,7 @@ describe('LoginComponent', () => {
 
   it('should hide password initially', () => {
 
-    expect(component.showPassword).toBeFalse();
+    expect(component.showPassword).toBe(false);
 
   });
 
@@ -100,15 +105,15 @@ describe('LoginComponent', () => {
 
   it('should toggle password visibility', () => {
 
-    expect(component.showPassword).toBeFalse();
+    expect(component.showPassword).toBe(false);
 
     component.showPassword = true;
 
-    expect(component.showPassword).toBeTrue();
+    expect(component.showPassword).toBe(true);
 
     component.showPassword = false;
 
-    expect(component.showPassword).toBeFalse();
+    expect(component.showPassword).toBe(false);
 
   });
 
@@ -119,7 +124,7 @@ describe('LoginComponent', () => {
 
   it('should call AuthService.login when onLogin is called', () => {
 
-    authServiceSpy.login.and.returnValue(
+    authServiceSpy.login.mockReturnValue(
       of({
         token: 'test-token'
       })
@@ -142,7 +147,7 @@ describe('LoginComponent', () => {
 
   it('should send correct username and password to login service', () => {
 
-    authServiceSpy.login.and.returnValue(
+    authServiceSpy.login.mockReturnValue(
       of({
         token: 'test-token'
       })
@@ -168,7 +173,7 @@ describe('LoginComponent', () => {
 
   it('should save token after successful login', () => {
 
-    authServiceSpy.login.and.returnValue(
+    authServiceSpy.login.mockReturnValue(
       of({
         token: 'test-token'
       })
@@ -191,7 +196,7 @@ describe('LoginComponent', () => {
 
   it('should navigate to welcome page after successful login', () => {
 
-    authServiceSpy.login.and.returnValue(
+    authServiceSpy.login.mockReturnValue(
       of({
         token: 'test-token'
       })
@@ -214,9 +219,10 @@ describe('LoginComponent', () => {
 
   it('should not navigate when login fails', () => {
 
-    spyOn(console, 'error');
+    jest.spyOn(console, 'error')
+      .mockImplementation(() => {});
 
-    authServiceSpy.login.and.returnValue(
+    authServiceSpy.login.mockReturnValue(
       throwError(() => new Error('Invalid credentials'))
     );
 
@@ -230,6 +236,8 @@ describe('LoginComponent', () => {
 
     expect(authServiceSpy.saveToken)
       .not.toHaveBeenCalled();
+
+    jest.restoreAllMocks();
 
   });
 
@@ -255,7 +263,7 @@ describe('LoginComponent', () => {
     // Create an Observable that does NOT complete immediately.
     const loginResponse$ = new Subject<{ token: string }>();
 
-    authServiceSpy.login.and.returnValue(
+    authServiceSpy.login.mockReturnValue(
       loginResponse$
     );
 
@@ -287,3 +295,4 @@ describe('LoginComponent', () => {
   });
 
 });
+

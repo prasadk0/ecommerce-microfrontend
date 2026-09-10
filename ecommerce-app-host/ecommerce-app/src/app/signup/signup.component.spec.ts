@@ -12,20 +12,25 @@ describe('SignupComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
 
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let routerSpy: jasmine.SpyObj<Router>;
+  let authServiceSpy: {
+    signup: jest.Mock;
+  };
+
+  let routerSpy: {
+    navigate: jest.Mock;
+  };
+
 
   beforeEach(async () => {
 
-    authServiceSpy = jasmine.createSpyObj(
-      'AuthService',
-      ['signup']
-    );
+    authServiceSpy = {
+      signup: jest.fn()
+    };
 
-    routerSpy = jasmine.createSpyObj(
-      'Router',
-      ['navigate']
-    );
+    routerSpy = {
+      navigate: jest.fn()
+    };
+
 
     await TestBed.configureTestingModule({
 
@@ -50,10 +55,12 @@ describe('SignupComponent', () => {
 
     }).compileComponents();
 
+
     fixture = TestBed.createComponent(SignupComponent);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
+
   });
 
 
@@ -75,12 +82,14 @@ describe('SignupComponent', () => {
   it('should initialize signupData correctly', () => {
 
     expect(component.signupData).toEqual({
+
       fullName: '',
       email: '',
       username: '',
       password: '',
       confirmPassword: '',
       terms: false
+
     });
 
   });
@@ -92,7 +101,8 @@ describe('SignupComponent', () => {
 
   it('should hide password initially', () => {
 
-    expect(component.showPassword).toBeFalse();
+    expect(component.showPassword)
+      .toBe(false);
 
   });
 
@@ -103,7 +113,8 @@ describe('SignupComponent', () => {
 
   it('should hide confirm password initially', () => {
 
-    expect(component.showConfirmPassword).toBeFalse();
+    expect(component.showConfirmPassword)
+      .toBe(false);
 
   });
 
@@ -114,15 +125,18 @@ describe('SignupComponent', () => {
 
   it('should toggle password visibility', () => {
 
-    expect(component.showPassword).toBeFalse();
+    expect(component.showPassword)
+      .toBe(false);
 
     component.showPassword = true;
 
-    expect(component.showPassword).toBeTrue();
+    expect(component.showPassword)
+      .toBe(true);
 
     component.showPassword = false;
 
-    expect(component.showPassword).toBeFalse();
+    expect(component.showPassword)
+      .toBe(false);
 
   });
 
@@ -133,15 +147,18 @@ describe('SignupComponent', () => {
 
   it('should toggle confirm password visibility', () => {
 
-    expect(component.showConfirmPassword).toBeFalse();
+    expect(component.showConfirmPassword)
+      .toBe(false);
 
     component.showConfirmPassword = true;
 
-    expect(component.showConfirmPassword).toBeTrue();
+    expect(component.showConfirmPassword)
+      .toBe(true);
 
     component.showConfirmPassword = false;
 
-    expect(component.showConfirmPassword).toBeFalse();
+    expect(component.showConfirmPassword)
+      .toBe(false);
 
   });
 
@@ -164,20 +181,32 @@ describe('SignupComponent', () => {
 
   it('should show alert when passwords do not match', () => {
 
-    spyOn(window, 'alert');
+    const alertSpy = jest
+      .spyOn(window, 'alert')
+      .mockImplementation(() => {});
 
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'password456';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'password456';
+
 
     component.onSignup();
 
-    expect(window.alert)
+
+    expect(alertSpy)
       .toHaveBeenCalledWith(
         SIGNUP_CONSTANTS.PASSWORD_NOT_MATCH
       );
 
+
     expect(authServiceSpy.signup)
       .not.toHaveBeenCalled();
+
+
+    alertSpy.mockRestore();
 
   });
 
@@ -188,27 +217,43 @@ describe('SignupComponent', () => {
 
   it('should call AuthService.signup with correct payload', () => {
 
-    authServiceSpy.signup.and.returnValue(
+    authServiceSpy.signup.mockReturnValue(
       of({
         message: 'Signup successful'
       })
     );
 
-    component.signupData.fullName = 'Prasad Khairnar';
-    component.signupData.username = 'prasad';
-    component.signupData.email = 'prasad@gmail.com';
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'password123';
-    component.signupData.terms = true;
+
+    component.signupData.fullName =
+      'Prasad Khairnar';
+
+    component.signupData.username =
+      'prasad';
+
+    component.signupData.email =
+      'prasad@gmail.com';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'password123';
+
+    component.signupData.terms =
+      true;
+
 
     component.onSignup();
 
+
     expect(authServiceSpy.signup)
       .toHaveBeenCalledWith({
+
         name: 'Prasad Khairnar',
         username: 'prasad',
         email: 'prasad@gmail.com',
         password: 'password123'
+
       });
 
   });
@@ -220,23 +265,39 @@ describe('SignupComponent', () => {
 
   it('should navigate to login page after successful signup', () => {
 
-    authServiceSpy.signup.and.returnValue(
+    authServiceSpy.signup.mockReturnValue(
       of({
         message: 'Signup successful'
       })
     );
 
-    component.signupData.fullName = 'Prasad Khairnar';
-    component.signupData.username = 'prasad';
-    component.signupData.email = 'prasad@gmail.com';
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'password123';
-    component.signupData.terms = true;
+
+    component.signupData.fullName =
+      'Prasad Khairnar';
+
+    component.signupData.username =
+      'prasad';
+
+    component.signupData.email =
+      'prasad@gmail.com';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'password123';
+
+    component.signupData.terms =
+      true;
+
 
     component.onSignup();
 
+
     expect(routerSpy.navigate)
-      .toHaveBeenCalledWith(['/login']);
+      .toHaveBeenCalledWith([
+        '/login'
+      ]);
 
   });
 
@@ -247,24 +308,53 @@ describe('SignupComponent', () => {
 
   it('should show alert when signup API fails', () => {
 
-    spyOn(window, 'alert');
-    spyOn(console, 'error');
+    const alertSpy = jest
+      .spyOn(window, 'alert')
+      .mockImplementation(() => {});
 
-    authServiceSpy.signup.and.returnValue(
-      throwError(() => new Error('Signup failed'))
+
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+
+    authServiceSpy.signup.mockReturnValue(
+      throwError(() =>
+        new Error('Signup failed')
+      )
     );
 
-    component.signupData.fullName = 'Prasad Khairnar';
-    component.signupData.username = 'prasad';
-    component.signupData.email = 'prasad@gmail.com';
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'password123';
-    component.signupData.terms = true;
+
+    component.signupData.fullName =
+      'Prasad Khairnar';
+
+    component.signupData.username =
+      'prasad';
+
+    component.signupData.email =
+      'prasad@gmail.com';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'password123';
+
+    component.signupData.terms =
+      true;
+
 
     component.onSignup();
 
-    expect(window.alert)
-      .toHaveBeenCalledWith('Signup Failed!');
+
+    expect(alertSpy)
+      .toHaveBeenCalledWith(
+        'Signup Failed!'
+      );
+
+
+    alertSpy.mockRestore();
+    consoleSpy.mockRestore();
 
   });
 
@@ -275,24 +365,51 @@ describe('SignupComponent', () => {
 
   it('should not navigate when signup API fails', () => {
 
-    spyOn(window, 'alert');
-    spyOn(console, 'error');
+    const alertSpy = jest
+      .spyOn(window, 'alert')
+      .mockImplementation(() => {});
 
-    authServiceSpy.signup.and.returnValue(
-      throwError(() => new Error('Signup failed'))
+
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+
+    authServiceSpy.signup.mockReturnValue(
+      throwError(() =>
+        new Error('Signup failed')
+      )
     );
 
-    component.signupData.fullName = 'Prasad Khairnar';
-    component.signupData.username = 'prasad';
-    component.signupData.email = 'prasad@gmail.com';
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'password123';
-    component.signupData.terms = true;
+
+    component.signupData.fullName =
+      'Prasad Khairnar';
+
+    component.signupData.username =
+      'prasad';
+
+    component.signupData.email =
+      'prasad@gmail.com';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'password123';
+
+    component.signupData.terms =
+      true;
+
 
     component.onSignup();
 
+
     expect(routerSpy.navigate)
       .not.toHaveBeenCalled();
+
+
+    alertSpy.mockRestore();
+    consoleSpy.mockRestore();
 
   });
 
@@ -306,23 +423,37 @@ describe('SignupComponent', () => {
     const signupResponse$ =
       new Subject<{ message: string }>();
 
-    authServiceSpy.signup.and.returnValue(
+
+    authServiceSpy.signup.mockReturnValue(
       signupResponse$
     );
 
-    component.signupData.fullName = 'Prasad Khairnar';
-    component.signupData.username = 'prasad';
-    component.signupData.email = 'prasad@gmail.com';
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'password123';
-    component.signupData.terms = true;
+
+    component.signupData.fullName =
+      'Prasad Khairnar';
+
+    component.signupData.username =
+      'prasad';
+
+    component.signupData.email =
+      'prasad@gmail.com';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'password123';
+
+    component.signupData.terms =
+      true;
 
 
     // First click starts the request
     component.onSignup();
 
 
-    // These clicks happen while request is still running
+    // These clicks happen while request
+    // is still running
     component.onSignup();
     component.onSignup();
 
@@ -348,16 +479,22 @@ describe('SignupComponent', () => {
 
   it('should call signup when passwords match', () => {
 
-    authServiceSpy.signup.and.returnValue(
+    authServiceSpy.signup.mockReturnValue(
       of({
         message: 'Signup successful'
       })
     );
 
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'password123';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'password123';
+
 
     component.onSignup();
+
 
     expect(authServiceSpy.signup)
       .toHaveBeenCalled();
@@ -371,15 +508,26 @@ describe('SignupComponent', () => {
 
   it('should not call signup when passwords do not match', () => {
 
-    spyOn(window, 'alert');
+    const alertSpy = jest
+      .spyOn(window, 'alert')
+      .mockImplementation(() => {});
 
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'differentPassword';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'differentPassword';
+
 
     component.onSignup();
 
+
     expect(authServiceSpy.signup)
       .not.toHaveBeenCalled();
+
+
+    alertSpy.mockRestore();
 
   });
 
@@ -390,31 +538,46 @@ describe('SignupComponent', () => {
 
   it('should not send confirmPassword in signup payload', () => {
 
-    authServiceSpy.signup.and.returnValue(
+    authServiceSpy.signup.mockReturnValue(
       of({
         message: 'Signup successful'
       })
     );
 
-    component.signupData.fullName = 'Prasad';
-    component.signupData.username = 'prasad';
-    component.signupData.email = 'prasad@gmail.com';
-    component.signupData.password = 'password123';
-    component.signupData.confirmPassword = 'password123';
+
+    component.signupData.fullName =
+      'Prasad';
+
+    component.signupData.username =
+      'prasad';
+
+    component.signupData.email =
+      'prasad@gmail.com';
+
+    component.signupData.password =
+      'password123';
+
+    component.signupData.confirmPassword =
+      'password123';
+
 
     component.onSignup();
 
+
     const payload =
-      authServiceSpy.signup.calls.mostRecent().args[0];
+      authServiceSpy.signup.mock.calls[0][0];
+
 
     expect(payload).toEqual({
+
       name: 'Prasad',
       username: 'prasad',
       email: 'prasad@gmail.com',
       password: 'password123'
+
     });
 
-    // Jasmine-compatible check
+
     expect(payload.confirmPassword)
       .toBeUndefined();
 
