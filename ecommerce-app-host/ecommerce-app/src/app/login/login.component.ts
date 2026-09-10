@@ -118,6 +118,15 @@ export class LoginComponent {
     this.loginSubject.next();
   }
 
+  loginAsGuest(): void {
+    this.authService.saveToken(
+      'Guest'
+    );
+    this.loginSubject.next();
+
+    this.router.navigate(['/welcome']);
+  }
+
 
   revampFallback() {
     return this.constants;

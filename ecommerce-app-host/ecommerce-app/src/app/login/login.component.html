@@ -109,25 +109,45 @@
 
       </div>
 
-      <!-- Login Button -->
-      <button
-        type="submit"
-        class="login-btn"
-        [disabled]="!loginForm.valid"
-      >
-        {{ revampFallback().LOGIN_BUTTON }}
-      </button>
+<!-- Login Button -->
+<button
+  type="submit"
+  class="login-btn"
+  [disabled]="!loginForm.valid"
+>
+  {{ revampFallback().LOGIN_BUTTON }}
+</button>
 
-      <!-- Signup -->
-      <div class="signup-link">
+<!-- Guest Login -->
+<div class="guest-login">
 
-        <span>
-          {{ revampFallback().DONT_HAVE_ACCOUNT }}
-        </span>
+  <div class="guest-divider">
+    <span>OR</span>
+  </div>
 
-        <a routerLink="/signup">
-          {{ revampFallback().SIGN_UP }}
-        </a>
+  <button
+    type="button"
+    class="guest-login-btn"
+    (click)="loginAsGuest()"
+  >
+    <span class="guest-icon" aria-hidden="true">
+      👤
+    </span>
+
+  </button>
+
+</div>
+
+<!-- Signup -->
+<div class="signup-link">
+
+  <span>
+    {{ revampFallback().DONT_HAVE_ACCOUNT }}
+  </span>
+
+  <a routerLink="/signup">
+    {{ revampFallback().SIGN_UP }}
+  </a>
 
       </div>
 
