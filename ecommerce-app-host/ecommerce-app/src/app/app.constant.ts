@@ -371,3 +371,36 @@ export const PROFILE_FALLBACK = {
 
 };
 
+export const FORGOT_PASSWORD_CONSTANTS = {
+
+  PAGE: {
+    TITLE: 'Forgot Password?',
+    DESCRIPTION:
+      "Enter your email address and we'll send you instructions to reset your password."
+  },
+
+  FIELDS: {
+    EMAIL: {
+      LABEL: 'Email Address',
+      PLACEHOLDER: 'Enter your email address'
+    }
+  },
+
+  VALIDATION: {
+    EMAIL_REQUIRED: 'Email is required.',
+    EMAIL_INVALID: 'Please enter a valid email address.'
+  },
+
+  ACTIONS: {
+    SEND_LINK: 'Send Reset Link',
+    BACK_TO_LOGIN: 'Back to Login'
+  },
+
+  SUCCESS: {
+    TITLE: 'Check Your Email',
+    MESSAGE:
+      'If an account exists with this email address, you will receive a password reset link shortly.'
+  }
+
+};
+

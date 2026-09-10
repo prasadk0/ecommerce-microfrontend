@@ -28,16 +28,6 @@
 
       </button>
 
-      <button
-        type="button"
-        class="btn btn-primary">
-
-        <i class="pi pi-plus"></i>
-
-        {{ revampFallback().PAGE_HEADER.NEW_ORDER }}
-
-      </button>
-
     </div>
 
   </div>
@@ -215,10 +205,6 @@
               {{ revampFallback().TABLE.HEADERS.STATUS }}
             </th>
 
-            <th>
-              {{ revampFallback().TABLE.HEADERS.ACTIONS }}
-            </th>
-
           </tr>
 
         </thead>
@@ -234,7 +220,21 @@
 
             <!-- ORDER ID -->
             <td class="order-id">
-              {{ order.id }}
+
+              <button
+                type="button"
+                class="order-id-link"
+                (click)="viewOrder(order)"
+                [attr.aria-label]="
+                  revampFallback().ACTIONS.VIEW +
+                  ' ' +
+                  order.id
+                ">
+
+                {{ order.id }}
+
+              </button>
+
             </td>
 
 
@@ -323,64 +323,6 @@
                 {{ order.status }}
 
               </span>
-
-            </td>
-
-
-            <!-- ACTIONS -->
-            <td class="actions-cell">
-
-              <div class="actions-wrapper">
-
-                <!-- VIEW -->
-                <button
-                  type="button"
-                  class="action-btn view-btn"
-                  [attr.aria-label]="
-                    revampFallback().ACTIONS.VIEW
-                  "
-                  [title]="
-                    revampFallback().ACTIONS.VIEW
-                  "
-                  (click)="viewOrder(order)">
-
-                  <i class="pi pi-eye"></i>
-
-                </button>
-
-
-                <!-- EDIT -->
-                <button
-                  type="button"
-                  class="action-btn edit-btn"
-                  [attr.aria-label]="
-                    revampFallback().ACTIONS.EDIT
-                  "
-                  [title]="
-                    revampFallback().ACTIONS.EDIT
-                  ">
-
-                  <i class="pi pi-pencil"></i>
-
-                </button>
-
-
-                <!-- DELETE -->
-                <button
-                  type="button"
-                  class="action-btn delete-btn"
-                  [attr.aria-label]="
-                    revampFallback().ACTIONS.DELETE
-                  "
-                  [title]="
-                    revampFallback().ACTIONS.DELETE
-                  ">
-
-                  <i class="pi pi-trash"></i>
-
-                </button>
-
-              </div>
 
             </td>
 

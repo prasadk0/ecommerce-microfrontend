@@ -110,6 +110,9 @@ export class LoginComponent {
       .subscribe();
   }
 
+  goToForgotPassword(): void {
+    this.router.navigate(['/forgot-password']);
+  }
 
   onLogin(): void {
     this.loginSubject.next();

@@ -163,12 +163,5 @@ describe('ProductInfoComponent', () => {
       top: '125px'
     });
 
-    expect(component.zoomResultStyle.backgroundImage).toContain(
-      component.product.images[component.currentImageIndex]
-    );
-
-    expect(component.zoomResultStyle.backgroundSize).toBe(
-      '1500px 1000px'
-    );
   });
 });

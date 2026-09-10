@@ -16,6 +16,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'primeng/carousel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SignupComponent,
     ProfileComponent,
     LoaderComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
