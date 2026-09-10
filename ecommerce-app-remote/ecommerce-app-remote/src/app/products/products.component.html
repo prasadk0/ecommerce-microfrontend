@@ -1,17 +1,16 @@
 <section class="products-card">
 
   <!-- HEADER -->
-
   <div class="card-header">
 
     <div class="header-content">
 
       <h2>
-        {{ revampFallback().TABLE.TITLE }}
+        {{ revampFallback().PAGE_HEADER.TITLE }}
       </h2>
 
       <p>
-        {{ revampFallback().TABLE.DESCRIPTION }}
+        {{ revampFallback().PAGE_HEADER.DESCRIPTION }}
       </p>
 
     </div>
@@ -19,18 +18,21 @@
     <div class="header-actions">
 
       <span class="product-count">
-        {{ products.length }} Products
+        {{ products.length }}
+        {{ revampFallback().PAGE_HEADER.TITLE }}
       </span>
 
       <!-- ADD PRODUCT -->
-
       <button
         type="button"
         class="add-product-btn"
         (click)="openAddProduct()"
       >
         <i class="pi pi-plus"></i>
-        <span>Add Product</span>
+
+        <span>
+          {{ revampFallback().PAGE_HEADER.ADD_PRODUCT }}
+        </span>
       </button>
 
     </div>
@@ -39,7 +41,6 @@
 
 
   <!-- PRODUCTS GRID -->
-
   <div class="products-grid">
 
     <article
@@ -49,25 +50,21 @@
     >
 
       <!-- TOP -->
-
       <div class="product-top">
 
         <!-- PRODUCT ICON -->
-
         <div class="product-icon">
           {{ product?.icon }}
         </div>
 
 
         <!-- ACTIONS -->
-
         <div
           class="product-actions"
           (click)="$event.stopPropagation()"
         >
 
           <!-- VIEW -->
-
           <button
             type="button"
             class="action-btn view-btn"
@@ -80,7 +77,6 @@
 
 
           <!-- EDIT -->
-
           <button
             type="button"
             class="action-btn edit-btn"
@@ -93,7 +89,6 @@
 
 
           <!-- DELETE -->
-
           <button
             type="button"
             class="action-btn delete-btn"
@@ -110,7 +105,6 @@
 
 
       <!-- PRODUCT DETAILS -->
-
       <div class="product-details">
 
         <h3>
@@ -125,7 +119,6 @@
 
 
       <!-- CATEGORY -->
-
       <div class="category-row">
 
         <span class="label">
@@ -140,11 +133,9 @@
 
 
       <!-- PRICE / STOCK -->
-
       <div class="product-stats">
 
         <!-- PRICE -->
-
         <div class="stat">
 
           <span class="label">
@@ -159,7 +150,6 @@
 
 
         <!-- STOCK -->
-
         <div class="stat">
 
           <span class="label">
@@ -186,7 +176,6 @@
 
 
       <!-- STATUS -->
-
       <div class="status-row">
 
         <span class="label">
@@ -210,7 +199,6 @@
 
 
     <!-- EMPTY STATE -->
-
     <div
       class="empty-state"
       *ngIf="!products.length"
@@ -236,13 +224,13 @@
 
 
 <!-- EDIT PRODUCT DIALOG -->
-
 <app-edit-product-dialog
   [visible]="showEditDialog"
   [product]="selectedProduct"
   (save)="onProductSave($event)"
   (visibleChange)="onDialogClose()"
-></app-edit-product-dialog>
+>
+</app-edit-product-dialog>
 
 
 <!-- ADD PRODUCT DIALOG -->
@@ -251,4 +239,5 @@
   [visible]="showAddDialog"
   (save)="onProductAdd($event)"
   (visibleChange)="onAddDialogClose()"
-></app-add-product-dialog>
+>
+</app-add-product-dialog>

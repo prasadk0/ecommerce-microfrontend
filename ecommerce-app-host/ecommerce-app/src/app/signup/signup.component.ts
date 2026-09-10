@@ -26,6 +26,10 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SIGNUP_CONSTANTS } from '../app.constant';
+import constantsJson from '../../assets/app-fallback.json';
+
+import { deepMerge } from 'src/app/utils/deep-merge';
+
 import { AuthService } from '../services/auth.service';
 
 
@@ -38,9 +42,15 @@ export class SignupComponent {
 
   private readonly destroyRef = inject(DestroyRef);
 
-  private readonly signupSubject = new Subject<void>();
+  private readonly signupSubject =
+    new Subject<void>();
 
   readonly signupForm: FormGroup;
+
+  readonly constants = deepMerge(
+    SIGNUP_CONSTANTS,
+    constantsJson.SIGNUP_CONSTANTS
+  );
 
   submitted = false;
 
@@ -146,7 +156,8 @@ export class SignupComponent {
       return EMPTY;
     }
 
-    const formValue = this.signupForm.getRawValue();
+    const formValue =
+      this.signupForm.getRawValue();
 
     const requestPayload = {
       name: formValue.fullName.trim(),
@@ -156,23 +167,31 @@ export class SignupComponent {
     };
 
 
-    return this.authService.signup(requestPayload).pipe(
+    return this.authService
+      .signup(requestPayload)
+      .pipe(
 
-      tap((response) => {
+        tap((response) => {
 
-        console.log('Signup successful:', response);
+          console.log(
+            'Signup successful:',
+            response
+          );
 
-        this.router.navigate(['/login']);
+          this.router.navigate(['/login']);
 
-      }),
+        }),
 
-      catchError((error) => {
+        catchError((error) => {
 
-        console.error('Signup failed:', error);
+          console.error(
+            'Signup failed:',
+            error
+          );
 
-        return EMPTY;
-      })
-    );
+          return EMPTY;
+        })
+      );
   }
 
 
@@ -182,7 +201,8 @@ export class SignupComponent {
       control: AbstractControl
     ): ValidationErrors | null => {
 
-      const password = control.get('password')?.value;
+      const password =
+        control.get('password')?.value;
 
       const confirmPassword =
         control.get('confirmPassword')?.value;
@@ -246,7 +266,8 @@ export class SignupComponent {
 
 
   togglePassword(): void {
-    this.showPassword = !this.showPassword;
+    this.showPassword =
+      !this.showPassword;
   }
 
 
@@ -257,6 +278,6 @@ export class SignupComponent {
 
 
   revampFallback() {
-    return SIGNUP_CONSTANTS;
+    return this.constants;
   }
 }

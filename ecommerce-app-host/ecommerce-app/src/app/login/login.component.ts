@@ -1,10 +1,28 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject
+} from '@angular/core';
+
 import { Router } from '@angular/router';
-import { exhaustMap, EMPTY, catchError, tap, Subject } from 'rxjs';
+
+import {
+  exhaustMap,
+  EMPTY,
+  catchError,
+  tap,
+  Subject
+} from 'rxjs';
+
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { LOGIN_CONSTANTS } from '../app.constant';
+import constantsJson from '../../assets/app-fallback.json';
+
+import { deepMerge } from 'src/app/utils/deep-merge';
+
 import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -13,8 +31,14 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent {
 
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly destroyRef =
+    inject(DestroyRef);
 
+
+  readonly constants = deepMerge(
+    LOGIN_CONSTANTS,
+    constantsJson.LOGIN_CONSTANTS
+  );
 
 
   loginData = {
@@ -23,63 +47,77 @@ export class LoginComponent {
     rememberMe: false
   };
 
+
   showPassword = false;
 
-  /**
-   * Emits when login button is clicked.
-   */
-  private readonly loginSubject = new Subject<void>();
+
+  private readonly loginSubject =
+    new Subject<void>();
+
 
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router
   ) {
-    this.loginSubject.pipe(
 
-      // Ignore additional clicks while login request is running
-      exhaustMap(() => {
+    this.loginSubject
+      .pipe(
 
-        const userData = {
-          username: this.loginData.email,
-          password: this.loginData.password
-        };
+        exhaustMap(() => {
 
-        return this.authService.login(userData).pipe(
+          const userData = {
+            username: this.loginData.email,
+            password: this.loginData.password
+          };
 
-          tap((response) => {
+          return this.authService
+            .login(userData)
+            .pipe(
 
-            console.log('Login successful');
+              tap((response) => {
 
-            // localStorage.setItem(
-            //   'token',
-            //   response.token
-            // );
+                console.log(
+                  'Login successful'
+                );
 
-            this.authService.saveToken(response.token)
-            this.router.navigate(['/welcome']);
+                this.authService.saveToken(
+                  response.token
+                );
 
-          }),
+                this.router.navigate([
+                  '/welcome'
+                ]);
 
-          catchError((error) => {
+              }),
 
-            console.error('Login failed:', error);
+              catchError((error) => {
 
-            return EMPTY;
-          })
-        );
-      }),
+                console.error(
+                  'Login failed:',
+                  error
+                );
 
-      // Automatically unsubscribe when component is destroyed
-      takeUntilDestroyed(this.destroyRef)
+                return EMPTY;
+              })
+            );
+        }),
 
-    ).subscribe();
+        takeUntilDestroyed(
+          this.destroyRef
+        )
+
+      )
+      .subscribe();
   }
+
 
   onLogin(): void {
     this.loginSubject.next();
   }
 
+
   revampFallback() {
-    return LOGIN_CONSTANTS;
+    return this.constants;
   }
+
 }

@@ -10,6 +10,8 @@ import {
 } from '@angular/router';
 
 import { PRODUCTS_CONSTANTS } from '../app.constant';
+import constantsJson from '../../assets/app-fallback.json';
+import { deepMerge } from '../utils/deep-merge';
 
 @Component({
   selector: 'app-products',
@@ -19,7 +21,14 @@ import { PRODUCTS_CONSTANTS } from '../app.constant';
 })
 export class ProductsComponent {
 
-  products = [...PRODUCTS_CONSTANTS.TABLE.PRODUCTS];
+  readonly constants = deepMerge(
+    PRODUCTS_CONSTANTS,
+    constantsJson.PRODUCTS_CONSTANTS
+  );
+
+  products = [
+    ...this.constants.TABLE.PRODUCTS
+  ];
 
   showEditDialog = false;
   selectedProduct: any = null;
@@ -34,7 +43,7 @@ export class ProductsComponent {
 
   viewProduct(product: any): void {
     this.router.navigate([product.id], {
-      relativeTo: this.route
+        relativeTo: this.route
     });
   }
 
@@ -124,13 +133,18 @@ export class ProductsComponent {
       .map(product => Number(product.id))
       .filter(id => !isNaN(id));
 
+    if (!numericIds.length) {
+      return '1';
+    }
+
     const maxId = Math.max(...numericIds);
 
     return String(maxId + 1);
   }
 
+
   revampFallback() {
-    return PRODUCTS_CONSTANTS;
+    return this.constants;
   }
 
   trackByProduct(

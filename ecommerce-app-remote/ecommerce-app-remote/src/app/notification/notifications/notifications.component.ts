@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
+
 import { NOTIFICATIONS_CONSTANTS } from 'src/app/app.constant';
+
+import constantsJson from '../../../assets/app-fallback.json';
+
+import { deepMerge } from 'src/app/utils/deep-merge';
 
 interface Notification {
   id: number;
@@ -19,6 +24,11 @@ interface Notification {
 export class NotificationsComponent {
 
   activeFilter = 'all';
+
+  readonly constants = deepMerge(
+    NOTIFICATIONS_CONSTANTS,
+    constantsJson.NOTIFICATIONS_CONSTANTS
+  );
 
   notifications: Notification[] = [
 
@@ -111,6 +121,7 @@ export class NotificationsComponent {
 
 
   get unreadCount(): number {
+
     return this.notifications.filter(
       notification => !notification.read
     ).length;
@@ -118,6 +129,7 @@ export class NotificationsComponent {
 
 
   get orderCount(): number {
+
     return this.notifications.filter(
       notification => notification.type === 'order'
     ).length;
@@ -125,6 +137,7 @@ export class NotificationsComponent {
 
 
   get productCount(): number {
+
     return this.notifications.filter(
       notification => notification.type === 'product'
     ).length;
@@ -132,6 +145,7 @@ export class NotificationsComponent {
 
 
   get systemCount(): number {
+
     return this.notifications.filter(
       notification => notification.type === 'system'
     ).length;
@@ -139,16 +153,19 @@ export class NotificationsComponent {
 
 
   setFilter(filter: string): void {
+
     this.activeFilter = filter;
   }
 
 
   markAsRead(notification: Notification): void {
+
     notification.read = true;
   }
 
 
   markAllAsRead(): void {
+
     this.notifications.forEach(notification => {
       notification.read = true;
     });
@@ -162,12 +179,15 @@ export class NotificationsComponent {
 
     event.stopPropagation();
 
-    this.notifications = this.notifications.filter(
-      item => item.id !== notification.id
-    );
+    this.notifications =
+      this.notifications.filter(
+        item => item.id !== notification.id
+      );
   }
 
+
   revampFallback() {
-    return NOTIFICATIONS_CONSTANTS;
+
+    return this.constants;
   }
 }

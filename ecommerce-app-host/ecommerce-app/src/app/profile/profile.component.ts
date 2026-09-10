@@ -4,7 +4,12 @@ import {
 } from '@angular/core';
 
 import { Router } from '@angular/router';
+
 import { PROFILE_FALLBACK } from '../app.constant';
+import constantsJson from '../../assets/app-fallback.json';
+
+import { deepMerge } from 'src/app/utils/deep-merge';
+
 
 interface Profile {
   name: string;
@@ -15,6 +20,7 @@ interface Profile {
   location: string;
 }
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -23,7 +29,13 @@ interface Profile {
 })
 export class ProfileComponent {
 
+  readonly constants = deepMerge(
+    PROFILE_FALLBACK,
+    constantsJson.PROFILE_FALLBACK
+  );
+
   isEditing = false;
+
 
   profile: Profile = {
     name: 'Admin',
@@ -34,32 +46,39 @@ export class ProfileComponent {
     location: 'Pune, Maharashtra'
   };
 
-  private originalProfile: Profile = { ...this.profile };
+
+  private originalProfile: Profile = {
+    ...this.profile
+  };
 
 
   constructor(
-    private router: Router
+    private readonly router: Router
   ) {}
 
 
   revampFallback() {
-    return PROFILE_FALLBACK;
+    return this.constants;
   }
 
 
   toggleEdit(): void {
+
     this.isEditing = !this.isEditing;
 
     if (this.isEditing) {
-      this.originalProfile = { ...this.profile };
+      this.originalProfile = {
+        ...this.profile
+      };
     }
   }
 
 
   saveProfile(): void {
 
-    // Keep a copy for cancel functionality
-    this.originalProfile = { ...this.profile };
+    this.originalProfile = {
+      ...this.profile
+    };
 
     this.isEditing = false;
 
@@ -85,6 +104,8 @@ export class ProfileComponent {
 
 
   changePassword(): void {
-    this.router.navigate(['/change-password']);
+    this.router.navigate([
+      '/change-password'
+    ]);
   }
 }

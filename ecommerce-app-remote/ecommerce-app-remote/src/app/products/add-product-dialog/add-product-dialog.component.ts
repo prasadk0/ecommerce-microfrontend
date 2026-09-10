@@ -11,7 +11,10 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+
 import { PRODUCTS_CONSTANTS } from 'src/app/app.constant';
+import constantsJson from '../../../assets/app-fallback.json';
+import { deepMerge } from 'src/app/utils/deep-merge';
 
 @Component({
   selector: 'app-add-product-dialog',
@@ -22,25 +25,18 @@ export class AddProductDialogComponent implements OnInit {
 
   @Input() visible = false;
 
-  @Output() visibleChange = new EventEmitter<boolean>();
-  @Output() save = new EventEmitter<any>();
+  @Output() visibleChange =
+    new EventEmitter<boolean>();
+
+  @Output() save =
+    new EventEmitter<any>();
 
   productForm!: FormGroup;
 
-  statusOptions = [
-    {
-      label: 'Active',
-      value: 'Active'
-    },
-    {
-      label: 'Inactive',
-      value: 'Inactive'
-    },
-    {
-      label: 'Out of Stock',
-      value: 'Out of Stock'
-    }
-  ];
+  readonly constants = deepMerge(
+    PRODUCTS_CONSTANTS,
+    constantsJson.PRODUCTS_CONSTANTS
+  );
 
   constructor(
     private fb: FormBuilder
@@ -51,11 +47,15 @@ export class AddProductDialogComponent implements OnInit {
   }
 
   private initializeForm(): void {
+
     this.productForm = this.fb.group({
-      id: [''],
+
+      id: [
+        this.constants.ADD_PRODUCT.DEFAULTS.ID
+      ],
 
       name: [
-        '',
+        this.constants.ADD_PRODUCT.DEFAULTS.NAME,
         [
           Validators.required,
           Validators.maxLength(100)
@@ -63,14 +63,14 @@ export class AddProductDialogComponent implements OnInit {
       ],
 
       description: [
-        '',
+        this.constants.ADD_PRODUCT.DEFAULTS.DESCRIPTION,
         [
           Validators.maxLength(500)
         ]
       ],
 
       category: [
-        '',
+        this.constants.ADD_PRODUCT.DEFAULTS.CATEGORY,
         [
           Validators.required,
           Validators.maxLength(100)
@@ -78,7 +78,7 @@ export class AddProductDialogComponent implements OnInit {
       ],
 
       price: [
-        0,
+        this.constants.ADD_PRODUCT.DEFAULTS.PRICE,
         [
           Validators.required,
           Validators.min(0)
@@ -86,7 +86,7 @@ export class AddProductDialogComponent implements OnInit {
       ],
 
       stock: [
-        0,
+        this.constants.ADD_PRODUCT.DEFAULTS.STOCK,
         [
           Validators.required,
           Validators.min(0)
@@ -94,12 +94,12 @@ export class AddProductDialogComponent implements OnInit {
       ],
 
       status: [
-        'Active',
+        this.constants.ADD_PRODUCT.DEFAULTS.STATUS,
         Validators.required
       ],
 
       icon: [
-        '📦',
+        this.constants.ADD_PRODUCT.DEFAULTS.ICON,
         [
           Validators.maxLength(10)
         ]
@@ -108,15 +108,30 @@ export class AddProductDialogComponent implements OnInit {
   }
 
   open(): void {
+
     this.productForm.reset({
-      id: '',
-      name: '',
-      description: '',
-      category: '',
-      price: 0,
-      stock: 0,
-      status: 'Active',
-      icon: '📦'
+
+      id: this.constants.ADD_PRODUCT.DEFAULTS.ID,
+
+      name: this.constants.ADD_PRODUCT.DEFAULTS.NAME,
+
+      description:
+        this.constants.ADD_PRODUCT.DEFAULTS.DESCRIPTION,
+
+      category:
+        this.constants.ADD_PRODUCT.DEFAULTS.CATEGORY,
+
+      price:
+        this.constants.ADD_PRODUCT.DEFAULTS.PRICE,
+
+      stock:
+        this.constants.ADD_PRODUCT.DEFAULTS.STOCK,
+
+      status:
+        this.constants.ADD_PRODUCT.DEFAULTS.STATUS,
+
+      icon:
+        this.constants.ADD_PRODUCT.DEFAULTS.ICON
     });
 
     this.productForm.markAsPristine();
@@ -126,7 +141,9 @@ export class AddProductDialogComponent implements OnInit {
   }
 
   saveProduct(): void {
+
     if (this.productForm.invalid) {
+
       this.productForm.markAllAsTouched();
 
       return;
@@ -142,13 +159,16 @@ export class AddProductDialogComponent implements OnInit {
   }
 
   close(): void {
+
     this.visible = false;
 
     this.visibleChange.emit(false);
   }
 
   isInvalid(controlName: string): boolean {
-    const control = this.productForm.get(controlName);
+
+    const control =
+      this.productForm.get(controlName);
 
     return !!(
       control &&
@@ -158,8 +178,12 @@ export class AddProductDialogComponent implements OnInit {
   }
 
   getControl(controlName: string) {
+
     return this.productForm.get(controlName);
   }
 
-  revampFallback() { return PRODUCTS_CONSTANTS; }
+  revampFallback() {
+
+    return this.constants;
+  }
 }
