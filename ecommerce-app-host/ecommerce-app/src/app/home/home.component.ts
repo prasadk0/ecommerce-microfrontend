@@ -4,6 +4,10 @@ import {
 } from '@angular/core';
 
 import { HOME_CONSTANTS } from '../app.constant';
+import constantsJson from '../../assets/app-fallback.json';
+
+import { deepMerge } from 'src/app/utils/deep-merge';
+
 
 @Component({
   selector: 'app-home',
@@ -13,7 +17,14 @@ import { HOME_CONSTANTS } from '../app.constant';
 })
 export class HomeComponent {
 
+  readonly constants = deepMerge(
+    HOME_CONSTANTS,
+    constantsJson.HOME_CONSTANTS
+  );
+
+
   stats = [
+
     {
       title: 'Total Products',
       value: '1,248',
@@ -21,6 +32,7 @@ export class HomeComponent {
       icon: '▣',
       type: 'blue'
     },
+
     {
       title: 'Total Orders',
       value: '856',
@@ -28,6 +40,7 @@ export class HomeComponent {
       icon: '☷',
       type: 'green'
     },
+
     {
       title: 'Revenue',
       value: '₹8.42L',
@@ -35,6 +48,7 @@ export class HomeComponent {
       icon: '₹',
       type: 'purple'
     },
+
     {
       title: 'Customers',
       value: '3,642',
@@ -42,9 +56,12 @@ export class HomeComponent {
       icon: '♙',
       type: 'orange'
     }
+
   ];
 
+
   recentOrders = [
+
     {
       id: '#ORD-10245',
       customer: 'Rahul Sharma',
@@ -52,6 +69,7 @@ export class HomeComponent {
       amount: '₹2,499',
       status: 'Delivered'
     },
+
     {
       id: '#ORD-10244',
       customer: 'Priya Patil',
@@ -59,6 +77,7 @@ export class HomeComponent {
       amount: '₹4,999',
       status: 'Processing'
     },
+
     {
       id: '#ORD-10243',
       customer: 'Amit Kumar',
@@ -66,6 +85,7 @@ export class HomeComponent {
       amount: '₹1,299',
       status: 'Shipped'
     },
+
     {
       id: '#ORD-10242',
       customer: 'Sneha Joshi',
@@ -73,17 +93,28 @@ export class HomeComponent {
       amount: '₹1,899',
       status: 'Delivered'
     }
+
   ];
 
+
   revampFallback() {
-    return HOME_CONSTANTS;
+    return this.constants;
   }
 
-  trackByStat(index: number, stat: any): string {
+
+  trackByStat(
+    index: number,
+    stat: any
+  ): string {
     return stat.title;
   }
 
-  trackByOrder(index: number, order: any): string {
+
+  trackByOrder(
+    index: number,
+    order: any
+  ): string {
     return order.id;
   }
+
 }

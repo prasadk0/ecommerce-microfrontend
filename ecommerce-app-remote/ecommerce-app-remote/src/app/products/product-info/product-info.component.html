@@ -1,0 +1,329 @@
+<section class="product-info-page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goBack()">
+
+      <i class="pi pi-arrow-left"></i>
+
+      <span>
+        {{ revampFallback().PRODUCT_INFO.PAGE.BACK_TO_PRODUCTS }}
+      </span>
+
+    </button>
+
+
+    <div class="header-title">
+
+      <span>
+        {{ revampFallback().PRODUCT_INFO.PAGE.PRODUCTS }}
+      </span>
+
+      <i class="pi pi-angle-right"></i>
+
+      <strong>
+        {{ revampFallback().PRODUCT_INFO.PAGE.PRODUCT_DETAILS }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- PRODUCT DETAILS -->
+  <div
+    *ngIf="product"
+    class="product-details">
+
+
+    <!-- =========================
+         IMAGE SECTION
+    ========================== -->
+
+    <div class="product-images">
+
+      <div
+        class="main-image-container"
+        #mainImageContainer
+        (mouseenter)="onImageMouseEnter()"
+        (mouseleave)="onImageMouseLeave()"
+        (mousemove)="onImageMouseMove($event)">
+
+        <img
+          class="main-product-image"
+          [src]="product.images[currentImageIndex]"
+          [alt]="product.name"
+        />
+
+
+        <!-- ZOOM LENS -->
+        <div
+          *ngIf="showZoom"
+          class="zoom-lens"
+          [ngStyle]="lensStyle">
+        </div>
+
+
+        <!-- PREVIOUS -->
+        <button
+          type="button"
+          class="carousel-btn previous"
+          (click)="previousImage()">
+
+          <i class="pi pi-chevron-left"></i>
+
+        </button>
+
+
+        <!-- NEXT -->
+        <button
+          type="button"
+          class="carousel-btn next"
+          (click)="nextImage()">
+
+          <i class="pi pi-chevron-right"></i>
+
+        </button>
+
+
+        <!-- COUNTER -->
+        <div class="image-counter">
+
+          {{ currentImageIndex + 1 }}
+          /
+          {{ product.images.length }}
+
+        </div>
+
+
+        <!-- ZOOM RESULT -->
+        <div
+          *ngIf="showZoom"
+          class="zoom-result"
+          [ngStyle]="zoomResultStyle">
+        </div>
+
+      </div>
+
+
+      <!-- THUMBNAILS -->
+      <div class="carousel-thumbnails">
+
+        <button
+          type="button"
+          *ngFor="
+            let image of product.images;
+            let i = index
+          "
+          class="thumbnail"
+          [class.active]="i === currentImageIndex"
+          (click)="selectImage(i)">
+
+          <img
+            [src]="image"
+            [alt]="product.name"
+          />
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         PRODUCT INFORMATION
+    ========================== -->
+
+    <div class="product-content">
+
+
+      <!-- PRODUCT HEADING -->
+      <div class="product-heading">
+
+        <div>
+
+          <h1>
+            {{ product.name }}
+          </h1>
+
+          <p class="product-id">
+
+            {{ revampFallback().PRODUCT_INFO.LABELS.PRODUCT_ID }}:
+            #{{ product.id }}
+
+          </p>
+
+        </div>
+
+
+        <span class="status-badge">
+
+          <span class="status-dot"></span>
+
+          {{ product.status }}
+
+        </span>
+
+      </div>
+
+
+      <!-- DESCRIPTION -->
+      <p class="description">
+
+        {{ product.description }}
+
+      </p>
+
+
+      <!-- PRICE -->
+      <div class="price-section">
+
+        <span class="price-label">
+
+          {{ revampFallback().PRODUCT_INFO.LABELS.PRICE }}
+
+        </span>
+
+        <strong class="price">
+
+          ₹{{ product.price | number }}
+
+        </strong>
+
+      </div>
+
+
+      <!-- INFORMATION -->
+      <div class="product-info-grid">
+
+
+        <!-- CATEGORY -->
+        <div class="info-item">
+
+          <div class="info-icon">
+
+            <i class="pi pi-tag"></i>
+
+          </div>
+
+          <div>
+
+            <span>
+              {{ revampFallback().PRODUCT_INFO.LABELS.CATEGORY }}
+            </span>
+
+            <strong>
+              {{ product.category }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- STOCK -->
+        <div class="info-item">
+
+          <div class="info-icon">
+
+            <i class="pi pi-box"></i>
+
+          </div>
+
+          <div>
+
+            <span>
+              {{ revampFallback().PRODUCT_INFO.LABELS.STOCK }}
+            </span>
+
+            <strong>
+
+              {{ product.stock }}
+              {{ revampFallback().PRODUCT_INFO.LABELS.UNITS }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+        <div class="info-item">
+
+          <div class="info-icon">
+
+            <i class="pi pi-check-circle"></i>
+
+          </div>
+
+          <div>
+
+            <span>
+              {{ revampFallback().PRODUCT_INFO.LABELS.STATUS }}
+            </span>
+
+            <strong>
+              {{ product.status }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- PRODUCT ID -->
+        <div class="info-item">
+
+          <div class="info-icon">
+
+            <i class="pi pi-hashtag"></i>
+
+          </div>
+
+          <div>
+
+            <span>
+              {{ revampFallback().PRODUCT_INFO.LABELS.PRODUCT_ID }}
+            </span>
+
+            <strong>
+              #{{ product.id }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- NOT FOUND -->
+  <div
+    *ngIf="!product"
+    class="not-found">
+
+    <i class="pi pi-exclamation-circle"></i>
+
+
+    <h2>
+      {{ revampFallback().PRODUCT_INFO.NOT_FOUND.TITLE }}
+    </h2>
+
+
+    <p>
+      {{ revampFallback().PRODUCT_INFO.NOT_FOUND.MESSAGE }}
+    </p>
+
+  </div>
+
+</section>

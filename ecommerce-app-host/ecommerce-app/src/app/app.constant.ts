@@ -4,7 +4,6 @@ export const NAVBAR_FALLBACK = {
     'home': 'Home',
     'products': 'Products',
     'orders': 'Orders',
-    'data-generator': 'Test Data',
     'notifications': 'Notifications',
     'profile': 'Profile',
     'logout': 'Logout'
@@ -186,3 +185,222 @@ export const HOME_CONSTANTS = {
   }
 
 };
+
+export const SIGNUP_CONSTANTS = {
+   PAGE_TITLE: 'Create Account',
+
+  PAGE_SUBTITLE:
+    'Sign up to get started with your account',
+
+  FULL_NAME_LABEL: 'Full Name',
+
+  FULL_NAME_PLACEHOLDER:
+    'Enter your full name',
+
+  FULL_NAME_REQUIRED:
+    'Full name is required.',
+
+  FULL_NAME_MIN_LENGTH:
+    'Full name must be at least 3 characters.',
+
+  FULL_NAME_MAX_LENGTH:
+    'Full name cannot exceed 50 characters.',
+
+  FULL_NAME_PATTERN:
+    'Full name can contain only letters and spaces.',
+
+
+  USERNAME_LABEL: 'Username',
+
+  USERNAME_PLACEHOLDER:
+    'Enter your username',
+
+  USERNAME_REQUIRED:
+    'Username is required.',
+
+  USERNAME_MIN_LENGTH:
+    'Username must be at least 3 characters.',
+
+  USERNAME_MAX_LENGTH:
+    'Username cannot exceed 20 characters.',
+
+  USERNAME_PATTERN:
+    'Username can contain letters, numbers and underscore only.',
+
+
+  EMAIL_LABEL: 'Email',
+
+  EMAIL_PLACEHOLDER:
+    'Enter your email',
+
+  EMAIL_REQUIRED:
+    'Email is required.',
+
+  EMAIL_INVALID:
+    'Please enter a valid email address.',
+
+
+  PASSWORD_LABEL: 'Password',
+
+  PASSWORD_PLACEHOLDER:
+    'Enter your password',
+
+  PASSWORD_REQUIRED:
+    'Password is required.',
+
+  PASSWORD_MIN_LENGTH:
+    'Password must be at least 8 characters.',
+
+  PASSWORD_MAX_LENGTH:
+    'Password cannot exceed 30 characters.',
+
+  PASSWORD_PATTERN:
+    'Password must contain uppercase, lowercase, number and special character.',
+
+
+  CONFIRM_PASSWORD_LABEL:
+    'Confirm Password',
+
+  CONFIRM_PASSWORD_PLACEHOLDER:
+    'Re-enter your password',
+
+  CONFIRM_PASSWORD_REQUIRED:
+    'Please confirm your password.',
+
+  PASSWORD_NOT_MATCH:
+    'Passwords do not match.',
+
+
+  TERMS_TEXT:
+    'I agree to the Terms and Conditions.',
+
+  TERMS_REQUIRED:
+    'You must accept the Terms and Conditions.',
+
+
+  SIGNUP_BUTTON:
+    'Sign Up',
+
+  ALREADY_HAVE_ACCOUNT:
+    'Already have an account?',
+
+  SIGN_IN:
+    'Sign In',
+
+
+  SHOW_PASSWORD:
+    'Show',
+
+  HIDE_PASSWORD:
+    'Hide',
+
+
+  SIGNUP_FAILED:
+    'Signup failed. Please try again.'
+
+};
+
+export const LOGIN_CONSTANTS = {
+  PAGE_TITLE: 'Welcome Back',
+  PAGE_SUBTITLE: 'Sign in to continue to your account',
+
+  EMAIL_LABEL: 'Username',
+  EMAIL_PLACEHOLDER: 'Enter your username',
+
+  PASSWORD_LABEL: 'Password',
+  PASSWORD_PLACEHOLDER: 'Enter your password',
+
+  REMEMBER_ME: 'Remember me',
+
+  FORGOT_PASSWORD: 'Forgot Password?',
+
+  LOGIN_BUTTON: 'Sign In',
+
+  DONT_HAVE_ACCOUNT: "Don't have an account?",
+  SIGN_UP: 'Sign Up',
+
+  LOGIN_SUCCESS: 'Login successful',
+  LOGIN_FAILED: 'Invalid email or password'
+};
+
+
+export const PROFILE_FALLBACK = {
+
+  PAGE_HEADER: {
+    TITLE: 'My Profile',
+    DESCRIPTION: 'Manage your personal information and account settings.'
+  },
+
+  PROFILE: {
+    STATUS: 'Active'
+  },
+
+  PERSONAL_INFO: {
+    TITLE: 'Personal Information',
+    DESCRIPTION: 'View and update your personal details.'
+  },
+
+  FIELDS: {
+    NAME: 'Full Name',
+    EMAIL: 'Email Address',
+    PHONE: 'Phone Number',
+    ROLE: 'Role',
+    MEMBER_SINCE: 'Member Since',
+    LOCATION: 'Location'
+  },
+
+  SECURITY: {
+    TITLE: 'Security',
+    DESCRIPTION: 'Manage your account security and login settings.',
+
+    PASSWORD_TITLE: 'Password',
+    PASSWORD_DESCRIPTION: 'Keep your account secure with a strong password.',
+
+    LOGIN_TITLE: 'Login Security',
+    LOGIN_DESCRIPTION: 'Your account is protected by authentication.',
+
+    ENABLED: 'Enabled'
+  },
+
+  BUTTONS: {
+    EDIT: 'Edit Profile',
+    SAVE: 'Save Changes',
+    CANCEL: 'Cancel',
+    CHANGE_PASSWORD: 'Change Password'
+  }
+
+};
+
+export const FORGOT_PASSWORD_CONSTANTS = {
+
+  PAGE: {
+    TITLE: 'Forgot Password?',
+    DESCRIPTION:
+      "Enter your email address and we'll send you instructions to reset your password."
+  },
+
+  FIELDS: {
+    EMAIL: {
+      LABEL: 'Email Address',
+      PLACEHOLDER: 'Enter your email address'
+    }
+  },
+
+  VALIDATION: {
+    EMAIL_REQUIRED: 'Email is required.',
+    EMAIL_INVALID: 'Please enter a valid email address.'
+  },
+
+  ACTIONS: {
+    SEND_LINK: 'Send Reset Link',
+    BACK_TO_LOGIN: 'Back to Login'
+  },
+
+  SUCCESS: {
+    TITLE: 'Check Your Email',
+    MESSAGE:
+      'If an account exists with this email address, you will receive a password reset link shortly.'
+  }
+
+};
+

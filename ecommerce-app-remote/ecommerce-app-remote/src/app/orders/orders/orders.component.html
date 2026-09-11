@@ -1,0 +1,432 @@
+<section class="orders-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div class="header-content">
+
+      <h1>
+        {{ revampFallback().PAGE_HEADER.TITLE }}
+      </h1>
+
+      <p>
+        {{ revampFallback().PAGE_HEADER.DESCRIPTION }}
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="exportToExcel()">
+
+        <i class="pi pi-download"></i>
+
+        {{ revampFallback().PAGE_HEADER.EXPORT }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- STATS -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+
+      <p class="stat-label">
+        {{ revampFallback().STATS.TOTAL_ORDERS }}
+      </p>
+
+      <p class="stat-value">
+        {{ totalOrders }}
+      </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <p class="stat-label">
+        {{ revampFallback().STATS.PENDING }}
+      </p>
+
+      <p class="stat-value stat-pending">
+        {{ pendingCount }}
+      </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <p class="stat-label">
+        {{ revampFallback().STATS.PROCESSING }}
+      </p>
+
+      <p class="stat-value stat-processing">
+        {{ processingCount }}
+      </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <p class="stat-label">
+        {{ revampFallback().STATS.DELIVERED }}
+      </p>
+
+      <p class="stat-value stat-delivered">
+        {{ deliveredCount }}
+      </p>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <p class="stat-label">
+        {{ revampFallback().STATS.REVENUE }}
+      </p>
+
+      <p class="stat-value">
+        {{ totalRevenue | currency:'INR':'symbol':'1.0-0' }}
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- TABLE CARD -->
+  <section class="table-card">
+
+    <div class="card-header">
+
+      <div class="header-content">
+
+        <h2>
+          {{ revampFallback().TABLE.TITLE }}
+        </h2>
+
+        <p>
+          {{ revampFallback().TABLE.DESCRIPTION }}
+        </p>
+
+      </div>
+
+      <span class="order-count">
+        {{ filteredOrders.length }} Orders
+      </span>
+
+    </div>
+
+
+    <!-- TOOLBAR -->
+    <div class="table-toolbar">
+
+      <!-- SEARCH -->
+      <div class="search-box">
+
+        <i class="pi pi-search search-icon"></i>
+
+        <input
+          type="text"
+          [value]="searchTerm"
+          [placeholder]="
+            revampFallback().SEARCH.PLACEHOLDER
+          "
+          (input)="
+            onSearchInput(
+              $any($event.target).value
+            )
+          " />
+
+      </div>
+
+
+      <!-- STATUS FILTER -->
+      <select
+        class="status-select"
+        [ngModel]="statusFilter"
+        (ngModelChange)="onStatusChange($event)">
+
+        <option
+          *ngFor="
+            let status of
+            revampFallback().TABLE.STATUSES
+          "
+          [ngValue]="status">
+
+          {{ status }}
+
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- TABLE -->
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              {{ revampFallback().TABLE.HEADERS.ORDER_ID }}
+            </th>
+
+            <th>
+              {{ revampFallback().TABLE.HEADERS.CUSTOMER }}
+            </th>
+
+            <th>
+              {{ revampFallback().TABLE.HEADERS.PRODUCT }}
+            </th>
+
+            <th>
+              {{ revampFallback().TABLE.HEADERS.AMOUNT }}
+            </th>
+
+            <th>
+              {{ revampFallback().TABLE.HEADERS.DATE }}
+            </th>
+
+            <th>
+              {{ revampFallback().TABLE.HEADERS.STATUS }}
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let order of pagedOrders;
+              trackBy: trackByOrder
+            ">
+
+            <!-- ORDER ID -->
+            <td class="order-id">
+
+              <button
+                type="button"
+                class="order-id-link"
+                (click)="viewOrder(order)"
+                [attr.aria-label]="
+                  revampFallback().ACTIONS.VIEW +
+                  ' ' +
+                  order.id
+                ">
+
+                {{ order.id }}
+
+              </button>
+
+            </td>
+
+
+            <!-- CUSTOMER -->
+            <td>
+
+              <div class="customer-cell">
+
+                <span class="customer-name">
+                  {{ order.customerName }}
+                </span>
+
+                <span class="customer-email">
+                  {{ order.customerEmail }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- PRODUCT -->
+            <td>
+
+              <div class="product-cell">
+
+                <span class="product-icon">
+                  {{ getIcon(order.product) }}
+                </span>
+
+                <span>
+
+                  {{ order.product }}
+
+                  <span
+                    class="items-count"
+                    *ngIf="
+                      (order.itemsCount ?? 0) > 1
+                    ">
+
+                    +{{
+                      (order.itemsCount ?? 1) - 1
+                    }}
+                    more
+
+                  </span>
+
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- AMOUNT -->
+            <td class="amount-cell">
+
+              {{
+                order.amount
+                  | currency:'INR':'symbol':'1.0-0'
+              }}
+
+            </td>
+
+
+            <!-- DATE -->
+            <td class="date-cell">
+
+              {{
+                order.date
+                  | date:'dd MMM y'
+              }}
+
+            </td>
+
+
+            <!-- STATUS -->
+            <td>
+
+              <span
+                class="status"
+                [ngClass]="
+                  statusClass(order.status)
+                ">
+
+                {{ order.status }}
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+      <!-- EMPTY STATE -->
+      <div
+        class="empty-state"
+        *ngIf="!pagedOrders.length">
+
+        <div class="empty-icon">
+          <i class="pi pi-inbox"></i>
+        </div>
+
+        <h3>
+          {{ revampFallback().EMPTY_STATE.TITLE }}
+        </h3>
+
+        <p>
+          {{ revampFallback().EMPTY_STATE.DESCRIPTION }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- FOOTER / PAGINATION -->
+    <div class="table-footer">
+
+      <p class="results-count">
+
+        Showing
+        {{ pagedOrders.length }}
+        of
+        {{ filteredOrders.length }}
+        orders
+
+      </p>
+
+
+      <div class="pagination">
+
+        <!-- PREVIOUS -->
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="currentPage === 1"
+          (click)="
+            goToPage(currentPage - 1)
+          ">
+
+          <i class="pi pi-chevron-left"></i>
+
+          Prev
+
+        </button>
+
+
+        <!-- PAGE INFO -->
+        <span class="page-info">
+
+          Page
+          {{ currentPage }}
+          of
+          {{ totalPages }}
+
+        </span>
+
+
+        <!-- NEXT -->
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="
+            currentPage === totalPages
+          "
+          (click)="
+            goToPage(currentPage + 1)
+          ">
+
+          Next
+
+          <i class="pi pi-chevron-right"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+<!-- ORDER TRACKING DIALOG -->
+<app-order-tracking-dialog
+  [visible]="showOrderTracking"
+  [order]="selectedOrder"
+  (visibleChange)="closeOrderTracking()">
+</app-order-tracking-dialog>

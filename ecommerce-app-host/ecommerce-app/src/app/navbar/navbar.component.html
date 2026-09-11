@@ -1,6 +1,6 @@
 <nav class="navbar">
 
-  <div class="navbar-brand">
+  <div routerLink="/" class="navbar-brand">
 
     <div class="brand-logo">
       EC
@@ -21,9 +21,9 @@
       routerLink="/"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-      class="nav-link"
-    >
-      <span class="nav-icon">⌂</span>
+      class="nav-link">
+
+      <i class="pi pi-home nav-icon"></i>
 
       <span>
         {{ revampFallback().navbar.home }}
@@ -34,9 +34,9 @@
     <a
       routerLink="/products"
       routerLinkActive="active"
-      class="nav-link"
-    >
-      <span class="nav-icon">▣</span>
+      class="nav-link">
+
+      <i class="pi pi-box nav-icon"></i>
 
       <span>
         {{ revampFallback().navbar.products }}
@@ -47,9 +47,9 @@
     <a
       routerLink="/orders"
       routerLinkActive="active"
-      class="nav-link"
-    >
-      <span class="nav-icon">☷</span>
+      class="nav-link">
+
+      <i class="pi pi-shopping-cart nav-icon"></i>
 
       <span>
         {{ revampFallback().navbar.orders }}
@@ -57,17 +57,6 @@
     </a>
 
 
-    <a
-      routerLink="/data-generator"
-      routerLinkActive="active"
-      class="nav-link"
-    >
-      <span class="nav-icon">⚙</span>
-
-      <span>
-        {{ revampFallback().navbar['data-generator'] }}
-      </span>
-    </a>
 
   </div>
 
@@ -81,9 +70,11 @@
     <button
       type="button"
       class="notification-btn"
-      [attr.aria-label]="revampFallback().navbar.notifications"
-    >
-      <span class="notification-icon">♧</span>
+      [attr.aria-label]="revampFallback().navbar.notifications"   routerLink="/notification"
+      routerLinkActive="active"
+     >
+
+      <i class="pi pi-bell notification-icon"></i>
 
       <span class="notification-badge">
         3
@@ -104,7 +95,7 @@
         A
       </div>
 
-      <div class="profile-details">
+      <div routerLink="/profile" class="profile-details">
 
         <span class="profile-name">
           Admin
@@ -116,9 +107,7 @@
 
       </div>
 
-      <span class="profile-arrow">
-        ⌄
-      </span>
+      <i class="pi pi-chevron-down profile-arrow"></i>
 
     </div>
 
@@ -130,8 +119,10 @@
       class="logout-btn"
       (click)="logout()"
       [attr.aria-label]="revampFallback().navbar.logout"
-    >
-      ↪
+      [title]="revampFallback().navbar.logout">
+
+      <i class="pi pi-sign-out"></i>
+
     </button>
 
 
@@ -141,11 +132,10 @@
       type="button"
       class="mobile-menu-btn"
       (click)="toggleMenu()"
-      aria-label="Toggle navigation"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
+      aria-label="Toggle navigation">
+
+      <i class="pi pi-bars"></i>
+
     </button>
 
   </div>
@@ -155,18 +145,15 @@
 
 <!-- ================= MOBILE MENU ================= -->
 
-<div
-  class="mobile-menu"
-  [class.open]="isMenuOpen"
->
+<div class="mobile-menu" [class.open]="isMenuOpen">
 
   <a
     routerLink="/"
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"
-    (click)="closeMenu()"
-  >
-    <span>⌂</span>
+    (click)="closeMenu">
+
+    <i class="pi pi-home"></i>
 
     {{ revampFallback().navbar.home }}
   </a>
@@ -175,9 +162,9 @@
   <a
     routerLink="/products"
     routerLinkActive="active"
-    (click)="closeMenu()"
-  >
-    <span>▣</span>
+    (click)="closeMenu()">
+
+    <i class="pi pi-box"></i>
 
     {{ revampFallback().navbar.products }}
   </a>
@@ -186,33 +173,21 @@
   <a
     routerLink="/orders"
     routerLinkActive="active"
-    (click)="closeMenu()"
-  >
-    <span>☷</span>
+    (click)="closeMenu()">
+
+    <i class="pi pi-shopping-cart"></i>
 
     {{ revampFallback().navbar.orders }}
   </a>
-
-
-  <a
-    routerLink="/data-generator"
-    routerLinkActive="active"
-    (click)="closeMenu()"
-  >
-    <span>⚙</span>
-
-    {{ revampFallback().navbar['data-generator'] }}
-  </a>
-
 
   <div class="mobile-divider"></div>
 
 
   <a
     routerLink="/profile"
-    (click)="closeMenu()"
-  >
-    <span>♙</span>
+    (click)="closeMenu()">
+
+    <i class="pi pi-user"></i>
 
     Profile
   </a>
@@ -220,9 +195,9 @@
 
   <a
     routerLink="/settings"
-    (click)="closeMenu()"
-  >
-    <span>⚙</span>
+    (click)="closeMenu()">
+
+    <i class="pi pi-cog"></i>
 
     Settings
   </a>
@@ -234,9 +209,9 @@
   <button
     type="button"
     class="mobile-logout"
-    (click)="logout()"
-  >
-    <span>↪</span>
+    (click)="logout()">
+
+    <i class="pi pi-sign-out"></i>
 
     {{ revampFallback().navbar.logout }}
   </button>

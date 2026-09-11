@@ -1,0 +1,83 @@
+<p-dialog
+  [(visible)]="showWelcomeDialog"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '650px' }"
+  styleClass="welcome-dialog">
+
+  <div class="welcome-container">
+
+    <!-- Welcome Header -->
+    <div class="welcome-header">
+      <div class="welcome-icon">
+        <i class="pi pi-sparkles"></i>
+      </div>
+
+      <div>
+        <h2>Welcome! 👋</h2>
+        <p>We're happy to have you here.</p>
+      </div>
+    </div>
+
+
+    <!-- Carousel -->
+    <p-carousel
+      [value]="welcomeSlides"
+      [numVisible]="1"
+      [numScroll]="1"
+      [circular]="false"
+      [showNavigators]="true"
+      [showIndicators]="true">
+
+      <ng-template let-slide pTemplate="item">
+
+        <div class="welcome-slide">
+
+          <div class="slide-icon">
+            <i [class]="slide.icon"></i>
+          </div>
+
+          <h3>
+            {{ slide.title }}
+          </h3>
+
+          <p>
+            {{ slide.description }}
+          </p>
+
+        </div>
+
+      </ng-template>
+
+    </p-carousel>
+
+
+    <!-- Footer -->
+    <div class="welcome-footer">
+
+      <button
+        type="button"
+        class="skip-btn"
+        (click)="closeWelcomeDialog()">
+
+        Skip
+
+      </button>
+
+      <button
+        type="button"
+        class="continue-btn"
+        (click)="closeWelcomeDialog()">
+
+        Get Started
+        <i class="pi pi-arrow-right"></i>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</p-dialog>

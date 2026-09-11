@@ -33,6 +33,8 @@ module.exports = {
       filename: "remoteEntry.js",
       exposes: {
         './ProductsModule': './src/app/products/products.module.ts',
+        './OrdersModule': './src/app/orders/orders.module.ts',
+         './NotificationModule': './src/app/notification/notification.module.ts',
       },
 
       // For hosts (please adjust)
@@ -46,6 +48,17 @@ module.exports = {
         "@angular/common": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
         "@angular/common/http": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
         "@angular/router": { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+        "primeng": {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '16.9.1'
+        },
+
+        "primeicons": {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: '8.0.0'
+        },
 
         ...sharedMappings.getDescriptors()
       })

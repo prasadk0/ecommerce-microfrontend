@@ -1,0 +1,326 @@
+<div class="signup-page">
+
+  <div class="signup-container">
+
+    <section class="signup-header">
+
+      <h1>
+        {{ revampFallback().PAGE_TITLE }}
+      </h1>
+
+      <p>
+        {{ revampFallback().PAGE_SUBTITLE }}
+      </p>
+
+    </section>
+
+
+    <form
+      [formGroup]="signupForm"
+      (ngSubmit)="onSignup()"
+      class="signup-form"
+      novalidate
+    >
+
+      <!-- Full Name -->
+      <div class="form-group">
+
+        <label for="fullName">
+          {{ revampFallback().FULL_NAME_LABEL }}
+        </label>
+
+        <input
+          id="fullName"
+          type="text"
+          formControlName="fullName"
+          [placeholder]="revampFallback().FULL_NAME_PLACEHOLDER"
+          autocomplete="name"
+          [class.invalid]="isFieldInvalid('fullName')"
+        />
+
+        <div
+          class="error-message"
+          *ngIf="isFieldInvalid('fullName')"
+        >
+
+          <span *ngIf="hasError('fullName', 'required')">
+            {{ revampFallback().FULL_NAME_REQUIRED }}
+          </span>
+
+          <span *ngIf="hasError('fullName', 'minlength')">
+            {{ revampFallback().FULL_NAME_MIN_LENGTH }}
+          </span>
+
+          <span *ngIf="hasError('fullName', 'maxlength')">
+            {{ revampFallback().FULL_NAME_MAX_LENGTH }}
+          </span>
+
+          <span *ngIf="hasError('fullName', 'pattern')">
+            {{ revampFallback().FULL_NAME_PATTERN }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Username -->
+      <div class="form-group">
+
+        <label for="username">
+          {{ revampFallback().USERNAME_LABEL }}
+        </label>
+
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          [placeholder]="revampFallback().USERNAME_PLACEHOLDER"
+          autocomplete="username"
+          [class.invalid]="isFieldInvalid('username')"
+        />
+
+        <div
+          class="error-message"
+          *ngIf="isFieldInvalid('username')"
+        >
+
+          <span *ngIf="hasError('username', 'required')">
+            {{ revampFallback().USERNAME_REQUIRED }}
+          </span>
+
+          <span *ngIf="hasError('username', 'minlength')">
+            {{ revampFallback().USERNAME_MIN_LENGTH }}
+          </span>
+
+          <span *ngIf="hasError('username', 'maxlength')">
+            {{ revampFallback().USERNAME_MAX_LENGTH }}
+          </span>
+
+          <span *ngIf="hasError('username', 'pattern')">
+            {{ revampFallback().USERNAME_PATTERN }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Email -->
+      <div class="form-group">
+
+        <label for="email">
+          {{ revampFallback().EMAIL_LABEL }}
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          [placeholder]="revampFallback().EMAIL_PLACEHOLDER"
+          autocomplete="email"
+          [class.invalid]="isFieldInvalid('email')"
+        />
+
+        <div
+          class="error-message"
+          *ngIf="isFieldInvalid('email')"
+        >
+
+          <span *ngIf="hasError('email', 'required')">
+            {{ revampFallback().EMAIL_REQUIRED }}
+          </span>
+
+          <span *ngIf="hasError('email', 'email')">
+            {{ revampFallback().EMAIL_INVALID }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Password -->
+      <div class="form-group">
+
+        <label for="password">
+          {{ revampFallback().PASSWORD_LABEL }}
+        </label>
+
+        <div class="password-wrapper">
+
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            [placeholder]="revampFallback().PASSWORD_PLACEHOLDER"
+            autocomplete="new-password"
+            [class.invalid]="isFieldInvalid('password')"
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="togglePassword()"
+            [attr.aria-label]="
+              showPassword
+                ? revampFallback().HIDE_PASSWORD
+                : revampFallback().SHOW_PASSWORD
+            "
+          >
+            {{
+              showPassword
+                ? revampFallback().HIDE_PASSWORD
+                : revampFallback().SHOW_PASSWORD
+            }}
+          </button>
+
+        </div>
+
+        <div
+          class="error-message"
+          *ngIf="isFieldInvalid('password')"
+        >
+
+          <span *ngIf="hasError('password', 'required')">
+            {{ revampFallback().PASSWORD_REQUIRED }}
+          </span>
+
+          <span *ngIf="hasError('password', 'minlength')">
+            {{ revampFallback().PASSWORD_MIN_LENGTH }}
+          </span>
+
+          <span *ngIf="hasError('password', 'maxlength')">
+            {{ revampFallback().PASSWORD_MAX_LENGTH }}
+          </span>
+
+          <span *ngIf="hasError('password', 'pattern')">
+            {{ revampFallback().PASSWORD_PATTERN }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+
+        <label for="confirmPassword">
+          {{ revampFallback().CONFIRM_PASSWORD_LABEL }}
+        </label>
+
+        <div class="password-wrapper">
+
+          <input
+            id="confirmPassword"
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            [placeholder]="
+              revampFallback().CONFIRM_PASSWORD_PLACEHOLDER
+            "
+            autocomplete="new-password"
+            [class.invalid]="
+              isFieldInvalid('confirmPassword') ||
+              hasPasswordMismatch()
+            "
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="toggleConfirmPassword()"
+            [attr.aria-label]="
+              showConfirmPassword
+                ? revampFallback().HIDE_PASSWORD
+                : revampFallback().SHOW_PASSWORD
+            "
+          >
+            {{
+              showConfirmPassword
+                ? revampFallback().HIDE_PASSWORD
+                : revampFallback().SHOW_PASSWORD
+            }}
+          </button>
+
+        </div>
+
+        <div
+          class="error-message"
+          *ngIf="
+            isFieldInvalid('confirmPassword') ||
+            hasPasswordMismatch()
+          "
+        >
+
+          <span
+            *ngIf="
+              hasError(
+                'confirmPassword',
+                'required'
+              )
+            "
+          >
+            {{ revampFallback().CONFIRM_PASSWORD_REQUIRED }}
+          </span>
+
+          <span *ngIf="hasPasswordMismatch()">
+            {{ revampFallback().PASSWORD_NOT_MATCH }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Terms -->
+      <div class="terms">
+
+        <input
+          id="terms"
+          type="checkbox"
+          formControlName="terms"
+        />
+
+        <label for="terms">
+          {{ revampFallback().TERMS_TEXT }}
+        </label>
+
+      </div>
+
+      <div
+        class="error-message terms-error"
+        *ngIf="isFieldInvalid('terms')"
+      >
+        {{ revampFallback().TERMS_REQUIRED }}
+      </div>
+
+
+      <!-- Signup Button -->
+      <button
+        type="submit"
+        class="signup-btn"
+        [disabled]="signupForm.invalid"
+      >
+        {{ revampFallback().SIGNUP_BUTTON }}
+      </button>
+
+
+      <!-- Sign In -->
+      <div class="signin-link">
+
+        <span>
+          {{ revampFallback().ALREADY_HAVE_ACCOUNT }}
+        </span>
+
+        <a routerLink="/login">
+          {{ revampFallback().SIGN_IN }}
+        </a>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

@@ -1,1 +1,141 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html,
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.edit-product-dialog {
+  width: 600px !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.edit-product-dialog .p-dialog-header {
+  padding: 20px 24px !important;
+  background: #ffffff !important;
+
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.edit-product-dialog .p-dialog-title {
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+
+.edit-product-dialog .p-dialog-content {
+  padding: 24px !important;
+  background: #ffffff !important;
+}
+
+.edit-product-dialog .p-dialog-footer {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+
+  gap: 10px !important;
+
+  padding: 16px 24px !important;
+
+  background: #ffffff !important;
+
+  border-top: 1px solid #e5e7eb !important;
+}
+
+.edit-product-dialog input.p-inputtext {
+  width: 100% !important;
+  height: 42px !important;
+
+  padding: 10px 12px !important;
+
+  box-sizing: border-box !important;
+
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+
+  font-size: 14px !important;
+}
+
+.edit-product-dialog textarea.p-inputtextarea {
+  width: 100% !important;
+
+  min-height: 100px !important;
+
+  padding: 10px 12px !important;
+
+  box-sizing: border-box !important;
+
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+
+  font-size: 14px !important;
+
+  resize: vertical !important;
+}
+
+.edit-product-dialog .p-inputnumber {
+  display: flex !important;
+
+  width: 100% !important;
+}
+
+.edit-product-dialog .p-inputnumber-input {
+  width: 100% !important;
+
+  height: 42px !important;
+
+  box-sizing: border-box !important;
+
+  font-size: 14px !important;
+}
+
+.edit-product-dialog .p-dropdown {
+  width: 100% !important;
+
+  min-height: 42px !important;
+
+  border-radius: 6px !important;
+}
+
+.edit-product-dialog .p-dropdown-label {
+  display: flex !important;
+  align-items: center !important;
+
+  min-height: 42px !important;
+
+  padding: 0 12px !important;
+
+  font-size: 14px !important;
+}
+
+.edit-product-dialog .p-dialog-footer .p-button {
+  min-height: 38px !important;
+
+  padding: 8px 16px !important;
+
+  border-radius: 6px !important;
+
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+@media (max-width: 576px) {
+
+  .edit-product-dialog {
+    width: 95vw !important;
+  }
+
+  .edit-product-dialog .p-dialog-content {
+    padding: 18px !important;
+  }
+
+  .edit-product-dialog .p-dialog-header {
+    padding: 16px 18px !important;
+  }
+
+  .edit-product-dialog .p-dialog-footer {
+    padding: 14px 18px !important;
+  }
+}

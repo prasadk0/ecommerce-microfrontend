@@ -1,0 +1,304 @@
+<section class="notification-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+
+      <div class="breadcrumb">
+
+        <span>
+          {{ revampFallback().BREADCRUMB.DASHBOARD }}
+        </span>
+
+        <i class="pi pi-angle-right"></i>
+
+        <strong>
+          {{ revampFallback().BREADCRUMB.NOTIFICATIONS }}
+        </strong>
+
+      </div>
+
+      <h1>
+        {{ revampFallback().PAGE_HEADER.TITLE }}
+      </h1>
+
+      <p>
+        {{ revampFallback().PAGE_HEADER.DESCRIPTION }}
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="mark-all-btn"
+      (click)="markAllAsRead()">
+
+      <i class="pi pi-check"></i>
+
+      {{ revampFallback().PAGE_HEADER.MARK_ALL_AS_READ }}
+
+    </button>
+
+  </div>
+
+
+  <!-- SUMMARY CARDS -->
+  <div class="notification-summary">
+
+    <!-- UNREAD -->
+    <div class="summary-card">
+
+      <div class="summary-icon unread">
+        <i class="pi pi-bell"></i>
+      </div>
+
+      <div>
+
+        <span>
+          {{ revampFallback().SUMMARY.UNREAD }}
+        </span>
+
+        <strong>
+          {{ unreadCount }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ORDERS -->
+    <div class="summary-card">
+
+      <div class="summary-icon orders">
+        <i class="pi pi-shopping-cart"></i>
+      </div>
+
+      <div>
+
+        <span>
+          {{ revampFallback().SUMMARY.ORDERS }}
+        </span>
+
+        <strong>
+          {{ orderCount }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+    <div class="summary-card">
+
+      <div class="summary-icon products">
+        <i class="pi pi-box"></i>
+      </div>
+
+      <div>
+
+        <span>
+          {{ revampFallback().SUMMARY.PRODUCTS }}
+        </span>
+
+        <strong>
+          {{ productCount }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- SYSTEM -->
+    <div class="summary-card">
+
+      <div class="summary-icon system">
+        <i class="pi pi-info-circle"></i>
+      </div>
+
+      <div>
+
+        <span>
+          {{ revampFallback().SUMMARY.SYSTEM }}
+        </span>
+
+        <strong>
+          {{ systemCount }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- NOTIFICATION CONTAINER -->
+  <div class="notification-card">
+
+    <!-- FILTER HEADER -->
+    <div class="notification-toolbar">
+
+      <div class="tabs">
+
+        <!-- ALL -->
+        <button
+          type="button"
+          [class.active]="activeFilter === 'all'"
+          (click)="setFilter('all')">
+
+          {{ revampFallback().TABS.ALL }}
+
+        </button>
+
+
+        <!-- UNREAD -->
+        <button
+          type="button"
+          [class.active]="activeFilter === 'unread'"
+          (click)="setFilter('unread')">
+
+          {{ revampFallback().TABS.UNREAD }}
+
+          <span class="tab-count">
+            {{ unreadCount }}
+          </span>
+
+        </button>
+
+
+        <!-- ORDERS -->
+        <button
+          type="button"
+          [class.active]="activeFilter === 'orders'"
+          (click)="setFilter('orders')">
+
+          {{ revampFallback().TABS.ORDERS }}
+
+        </button>
+
+
+        <!-- PRODUCTS -->
+        <button
+          type="button"
+          [class.active]="activeFilter === 'products'"
+          (click)="setFilter('products')">
+
+          {{ revampFallback().TABS.PRODUCTS }}
+
+        </button>
+
+      </div>
+
+
+      <!-- FILTER BUTTON -->
+      <button
+        type="button"
+        class="filter-btn">
+
+        <i class="pi pi-filter"></i>
+
+        {{ revampFallback().TOOLBAR.FILTER }}
+
+      </button>
+
+    </div>
+
+
+    <!-- NOTIFICATION LIST -->
+    <div class="notification-list">
+
+      <div
+        *ngFor="let notification of filteredNotifications"
+        class="notification-item"
+        [class.unread]="!notification.read"
+        (click)="markAsRead(notification)">
+
+        <!-- ICON -->
+        <div
+          class="notification-icon"
+          [ngClass]="notification.type">
+
+          <i [class]="notification.icon"></i>
+
+        </div>
+
+
+        <!-- CONTENT -->
+        <div class="notification-content">
+
+          <div class="notification-title-row">
+
+            <h3>
+              {{ notification.title }}
+            </h3>
+
+            <span
+              *ngIf="!notification.read"
+              class="unread-dot">
+            </span>
+
+          </div>
+
+
+          <p>
+            {{ notification.message }}
+          </p>
+
+
+          <span class="notification-time">
+
+            <i class="pi pi-clock"></i>
+
+            {{ notification.time }}
+
+          </span>
+
+        </div>
+
+
+        <!-- DELETE -->
+        <button
+          type="button"
+          class="delete-btn"
+          (click)="deleteNotification(notification, $event)"
+          [attr.aria-label]="revampFallback().ACTIONS.DELETE"
+          [title]="revampFallback().ACTIONS.DELETE">
+
+          <i class="pi pi-trash"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- EMPTY STATE -->
+      <div
+        *ngIf="filteredNotifications.length === 0"
+        class="empty-state">
+
+        <div class="empty-icon">
+
+          <i class="pi pi-bell-slash"></i>
+
+        </div>
+
+        <h3>
+          {{ revampFallback().EMPTY_STATE.TITLE }}
+        </h3>
+
+        <p>
+          {{ revampFallback().EMPTY_STATE.DESCRIPTION }}
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
