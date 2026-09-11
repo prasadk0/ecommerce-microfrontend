@@ -1,14 +1,25 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component
+} from '@angular/core';
+
+import { Observable } from 'rxjs';
+
 import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.component.html',
-  styleUrls: ['./loader.component.scss']
+  styleUrls: ['./loader.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoaderComponent {
 
-  isLoading$ = this.loaderService.isLoading$;
+  isLoading$!: Observable<boolean>;
 
-  constructor(private loaderService: LoaderService) {}
+  constructor(
+    private loaderService: LoaderService
+  ) {
+    this.isLoading$ = this.loaderService.isLoading$;
+  }
 }

@@ -23,6 +23,8 @@ import {
   getProductIcon,
   ORDERS_CONSTANTS
 } from 'src/app/app.constant';
+import constantsJson from '../../../assets/app-fallback.json'
+import { deepMerge, mergeProducts } from 'src/app/utils/deep-merge';
 
 import * as XLSX from 'xlsx';
 
@@ -34,16 +36,21 @@ import * as XLSX from 'xlsx';
 })
 export class OrdersComponent implements OnInit, OnDestroy {
 
-  private readonly allOrders: Order[] = [
-    ...ORDERS_CONSTANTS.TABLE.ORDERS
-  ];
+ readonly constants = deepMerge(
+    ORDERS_CONSTANTS,
+    constantsJson.ORDERS_CONSTANTS
+  );
 
-  readonly constants = ORDERS_CONSTANTS;
+  private readonly allOrders: Order[] =
+    mergeProducts(
+      ORDERS_CONSTANTS.TABLE.ORDERS,
+      constantsJson.ORDERS_CONSTANTS.TABLE.ORDERS
+    );
 
   searchTerm = '';
 
   statusFilter: OrderStatus | 'All' =
-    ORDERS_CONSTANTS.FILTER.STATUS_ALL as
+    this.constants.FILTER.STATUS_ALL as
     | OrderStatus
     | 'All';
 
@@ -103,7 +110,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
           this.updateOrders();
 
-          this.cdr.detectChanges();
+          this.cdr.markForCheck();
         }
       );
   }
@@ -150,7 +157,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     this.updateOrders();
 
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   private updateOrders(): void {
@@ -170,9 +177,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     const allStatus =
       this.normalize(
         String(
-          ORDERS_CONSTANTS
-            .FILTER
-            .STATUS_ALL
+          this.constants.FILTER.STATUS_ALL
         )
       );
 
@@ -290,7 +295,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     this.updatePagedOrders();
 
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   viewOrder(
@@ -303,7 +308,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     this.showOrderTracking = true;
 
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   closeOrderTracking(): void {
@@ -312,7 +317,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
     this.selectedOrder = null;
 
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   trackByOrder(
@@ -399,6 +404,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
           0
         );
   }
+
+  // ============================================================
+  // NORMALIZE
+  // ============================================================
 
   private normalize(
     value: string

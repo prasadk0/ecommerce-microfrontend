@@ -1,5 +1,18 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+
+import { PRODUCTS_CONSTANTS } from 'src/app/app.constant';
+import constantsJson from '../../../assets/app-fallback.json';
+import { deepMerge } from 'src/app/utils/deep-merge';
 
 @Component({
   selector: 'app-product-info',
@@ -10,9 +23,14 @@ export class ProductInfoComponent implements OnInit {
 
   product: any;
 
+  readonly constants = deepMerge(
+    PRODUCTS_CONSTANTS,
+    constantsJson.PRODUCTS_CONSTANTS
+  );
+
   products = [
     {
-      id: 1,
+      id: 3,
       name: 'Laptop',
       description: 'High-performance laptop for work and development.',
       category: 'Electronics',
@@ -42,7 +60,7 @@ export class ProductInfoComponent implements OnInit {
       ]
     },
     {
-      id: 3,
+      id: 1,
       name: 'Wireless Headphones',
       description: 'Noise-cancelling wireless headphones.',
       category: 'Accessories',
@@ -58,51 +76,68 @@ export class ProductInfoComponent implements OnInit {
     }
   ];
 
+  currentImageIndex = 0;
+
+  @ViewChild('mainImageContainer')
+  mainImageContainer!: ElementRef<HTMLDivElement>;
+
+  showZoom = false;
+
+  lensStyle: { [key: string]: string } = {};
+
+  zoomResultStyle: { [key: string]: string } = {};
+
+  private lensSize = 150;
+
+  private zoomRatio = 2.5;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.product = this.products.find(product => product.id === id);
+
+    const id = Number(
+      this.route.snapshot.paramMap.get('id')
+    );
+
+    this.product =
+      this.products.find(
+        product => product.id === id
+      );
   }
 
   goBack(): void {
     this.router.navigate(['/products']);
   }
 
-  currentImageIndex = 0;
-
   nextImage(): void {
+
     if (!this.product?.images?.length) {
       return;
     }
+
     this.currentImageIndex =
-      (this.currentImageIndex + 1) % this.product.images.length;
+      (this.currentImageIndex + 1) %
+      this.product.images.length;
   }
 
   previousImage(): void {
+
     if (!this.product?.images?.length) {
       return;
     }
+
     this.currentImageIndex =
-      (this.currentImageIndex - 1 + this.product.images.length)
-      % this.product.images.length;
+      (this.currentImageIndex - 1 +
+        this.product.images.length) %
+      this.product.images.length;
   }
 
   selectImage(index: number): void {
     this.currentImageIndex = index;
   }
-
-  @ViewChild('mainImageContainer') mainImageContainer!: ElementRef<HTMLDivElement>;
-
-  showZoom = false;
-  lensStyle: { [key: string]: string } = {};
-  zoomResultStyle: { [key: string]: string } = {};
-
-  private lensSize = 150; 
-  private zoomRatio = 2.5;
 
   onImageMouseEnter(): void {
     this.showZoom = true;
@@ -113,35 +148,84 @@ export class ProductInfoComponent implements OnInit {
   }
 
   onImageMouseMove(event: MouseEvent): void {
-    if (!this.mainImageContainer) {
+
+    if (
+      !this.mainImageContainer ||
+      !this.product?.images?.length
+    ) {
       return;
     }
 
-    const container = this.mainImageContainer.nativeElement;
-    const rect = container.getBoundingClientRect();
+    const container =
+      this.mainImageContainer.nativeElement;
 
-    let x = event.clientX - rect.left;
-    let y = event.clientY - rect.top;
+    const rect =
+      container.getBoundingClientRect();
 
-    const halfLens = this.lensSize / 2;
+    let x =
+      event.clientX - rect.left;
 
-    x = Math.max(halfLens, Math.min(x, rect.width - halfLens));
-    y = Math.max(halfLens, Math.min(y, rect.height - halfLens));
+    let y =
+      event.clientY - rect.top;
+
+    const halfLens =
+      this.lensSize / 2;
+
+    x = Math.max(
+      halfLens,
+      Math.min(
+        x,
+        rect.width - halfLens
+      )
+    );
+
+    y = Math.max(
+      halfLens,
+      Math.min(
+        y,
+        rect.height - halfLens
+      )
+    );
 
     this.lensStyle = {
-      width: `${this.lensSize}px`,
-      height: `${this.lensSize}px`,
-      left: `${x - halfLens}px`,
-      top: `${y - halfLens}px`
+
+      width:
+        `${this.lensSize}px`,
+
+      height:
+        `${this.lensSize}px`,
+
+      left:
+        `${x - halfLens}px`,
+
+      top:
+        `${y - halfLens}px`
     };
 
-    const bgX = (x - halfLens) * this.zoomRatio;
-    const bgY = (y - halfLens) * this.zoomRatio;
+    const bgX =
+      (x - halfLens) *
+      this.zoomRatio;
+
+    const bgY =
+      (y - halfLens) *
+      this.zoomRatio;
 
     this.zoomResultStyle = {
-      backgroundImage: `url(${this.product.images[this.currentImageIndex]})`,
-      backgroundSize: `${rect.width * this.zoomRatio}px ${rect.height * this.zoomRatio}px`,
-      backgroundPosition: `-${bgX}px -${bgY}px`
+
+      backgroundImage:
+        `url(${this.product.images[this.currentImageIndex]})`,
+
+      backgroundSize:
+        `${rect.width * this.zoomRatio}px ` +
+        `${rect.height * this.zoomRatio}px`,
+
+      backgroundPosition:
+        `-${bgX}px -${bgY}px`
     };
   }
+
+  revampFallback() {
+    return this.constants;
+  }
+
 }

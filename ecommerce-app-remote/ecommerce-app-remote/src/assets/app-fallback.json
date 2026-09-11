@@ -2,7 +2,7 @@
   "PRODUCTS_CONSTANTS": {
     "PAGE_HEADER": {
       "TITLE": "Products",
-      "DESCRIPTION": "Manage your Products and inventory",
+      "DESCRIPTION": "Manage your products and inventory",
       "ADD_PRODUCT": "Add Product"
     },
 
@@ -16,6 +16,63 @@
       "CATEGORY_ALL": "All Categories",
       "STATUS_LABEL": "Status",
       "STATUS_ALL": "All Statuses"
+    },
+
+    "FILTERS": {
+      "SEARCH": {
+        "PLACEHOLDER": "Search products...",
+        "ARIA_LABEL": "Search products",
+        "CLEAR_ARIA_LABEL": "Clear search",
+        "CLEAR_TITLE": "Clear search"
+      },
+
+      "CATEGORY": {
+        "LABEL": "Category",
+        "ALL": "All Categories"
+      },
+
+      "PRICE": {
+        "LABEL": "Price",
+        "ALL": "All Prices",
+        "RANGES": {
+          "ZERO_TO_THOUSAND": "₹0 - ₹1,000",
+          "THOUSAND_TO_FIVE_THOUSAND": "₹1,000 - ₹5,000",
+          "FIVE_THOUSAND_TO_TEN_THOUSAND": "₹5,000 - ₹10,000",
+          "TEN_THOUSAND_PLUS": "₹10,000+"
+        }
+      },
+
+      "STOCK": {
+        "LABEL": "Stock",
+        "ALL": "All Stock",
+        "IN_STOCK": "In Stock",
+        "LOW_STOCK": "Low Stock",
+        "OUT_OF_STOCK": "Out of Stock"
+      },
+
+      "STATUS": {
+        "LABEL": "Status",
+        "ALL": "All Status"
+      },
+
+      "SORT": {
+        "LABEL": "Sort By",
+        "DEFAULT": "Default",
+        "NAME_ASC": "Name: A → Z",
+        "NAME_DESC": "Name: Z → A",
+        "PRICE_LOW_HIGH": "Price: Low → High",
+        "PRICE_HIGH_LOW": "Price: High → Low",
+        "STOCK_LOW_HIGH": "Stock: Low → High",
+        "STOCK_HIGH_LOW": "Stock: High → Low"
+      },
+
+      "CLEAR": "Clear"
+    },
+
+    "FILTER_RESULT": {
+      "SHOWING": "Showing",
+      "OF": "of",
+      "PRODUCTS": "products"
     },
 
     "TABLE": {
@@ -34,10 +91,10 @@
       "PRODUCTS": [
         {
           "id": 1,
-          "name": "Wireless Headphones",
+          "name": "Wireless Headphonessss",
           "description": "Premium wireless headphones",
           "category": "Electronics",
-          "price": "₹2,499",
+          "price": 2499,
           "stock": 128,
           "status": "In Stock",
           "icon": "🎧"
@@ -47,7 +104,7 @@
           "name": "Smart Watch",
           "description": "Advanced fitness smart watch",
           "category": "Electronics",
-          "price": "₹4,999",
+          "price": 4999,
           "stock": 96,
           "status": "In Stock",
           "icon": "⌚"
@@ -57,7 +114,7 @@
           "name": "Laptop Stand",
           "description": "Adjustable aluminum laptop stand",
           "category": "Accessories",
-          "price": "₹1,799",
+          "price": 1799,
           "stock": 82,
           "status": "In Stock",
           "icon": "💻"
@@ -67,7 +124,7 @@
           "name": "Bluetooth Speaker",
           "description": "Portable wireless speaker",
           "category": "Electronics",
-          "price": "₹1,899",
+          "price": 1899,
           "stock": 74,
           "status": "In Stock",
           "icon": "🔊"
@@ -77,7 +134,7 @@
           "name": "USB-C Hub",
           "description": "Multi-port USB-C adapter",
           "category": "Accessories",
-          "price": "₹1,299",
+          "price": 1299,
           "stock": 12,
           "status": "Low Stock",
           "icon": "🔌"
@@ -87,7 +144,7 @@
           "name": "Gaming Mouse",
           "description": "High precision gaming mouse",
           "category": "Gaming",
-          "price": "₹1,599",
+          "price": 1599,
           "stock": 0,
           "status": "Out of Stock",
           "icon": "🖱️"
@@ -103,7 +160,8 @@
 
     "EMPTY_STATE": {
       "TITLE": "No Products Found",
-      "DESCRIPTION": "There are no products matching your search."
+      "DESCRIPTION": "There are no products matching your search.",
+      "CLEAR_BUTTON": "Clear Filters"
     },
 
     "ADD_PRODUCT": {

@@ -60,3 +60,29 @@ export function deepMerge(
 
     return result;
 }
+
+export function mergeProducts(
+  defaultProducts: any[],
+  jsonProducts: any[]
+): any[] {
+
+  const result = [...defaultProducts];
+
+  jsonProducts.forEach(jsonProduct => {
+
+    const index = result.findIndex(
+      product => product.id === jsonProduct.id
+    );
+
+    if (index === -1) {
+      result.push(jsonProduct);
+      return;
+    }
+    result[index] = {
+      ...result[index],
+      ...jsonProduct
+    };
+  });
+
+  return result;
+}
