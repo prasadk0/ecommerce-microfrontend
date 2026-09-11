@@ -9,17 +9,7 @@ import { PROFILE_FALLBACK } from '../app.constant';
 import constantsJson from '../../assets/app-fallback.json';
 
 import { deepMerge } from 'src/app/utils/deep-merge';
-
-
-interface Profile {
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
-  memberSince: string;
-  location: string;
-}
-
+import { Profile } from './profile.interface';
 
 @Component({
   selector: 'app-profile',

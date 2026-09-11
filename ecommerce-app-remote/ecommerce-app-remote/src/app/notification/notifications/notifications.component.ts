@@ -5,16 +5,9 @@ import { NOTIFICATIONS_CONSTANTS } from 'src/app/app.constant';
 import constantsJson from '../../../assets/app-fallback.json';
 
 import { deepMerge } from 'src/app/utils/deep-merge';
+import { Notification } from './notification.interface';
 
-interface Notification {
-  id: number;
-  title: string;
-  message: string;
-  type: 'order' | 'product' | 'system';
-  icon: string;
-  time: string;
-  read: boolean;
-}
+
 
 @Component({
   selector: 'app-notifications',

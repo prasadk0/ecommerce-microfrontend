@@ -12,14 +12,9 @@ import { ORDERS_CONSTANTS } from '../../app.constant';
 
 import constantsJson from '../../../assets/app-fallback.json';
 import { deepMerge } from 'src/app/utils/deep-merge';
+import { OrderTimelineStep } from './order-tracking.interface';
 
-interface OrderTimelineStep {
-  label: string;
-  description: string;
-  date?: string;
-  completed: boolean;
-  current: boolean;
-}
+
 
 @Component({
   selector: 'app-order-tracking-dialog',

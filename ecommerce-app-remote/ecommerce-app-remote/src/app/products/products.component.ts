@@ -11,7 +11,7 @@ import {
 
 import { PRODUCTS_CONSTANTS } from '../app.constant';
 import constantsJson from '../../assets/app-fallback.json';
-import { deepMerge } from '../utils/deep-merge';
+import { deepMerge, mergeProducts } from '../utils/deep-merge';
 
 @Component({
   selector: 'app-products',
@@ -26,9 +26,10 @@ export class ProductsComponent {
     constantsJson.PRODUCTS_CONSTANTS
   );
 
-  products = [
-    ...this.constants.TABLE.PRODUCTS
-  ];
+  products =  mergeProducts(
+    PRODUCTS_CONSTANTS.TABLE.PRODUCTS,
+    constantsJson.PRODUCTS_CONSTANTS.TABLE.PRODUCTS
+  );
 
   filteredProducts = [
     ...this.products
